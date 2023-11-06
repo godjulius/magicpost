@@ -4,10 +4,14 @@ import { useState } from "react";
 import "./index.css";
 import Slideshow from "./slideShow/slideShow.js";
 import LookupPostal from "./lookupPostal/lookupPostal.js";
+import TopHeader from "./topHeader/topHeader.js";
+import BotHeader from "./botHeader/botHeader.js";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
 <>
+<TopHeader />
+<BotHeader />
 <Slideshow />
 <LookupPostal />
 </>
