@@ -20,7 +20,7 @@ export default function MainCol({
           placeholder="Nhập mã bưu gửi"
           onChange={onChangeSearchField}
         />
-        <div className="btn-search" onClick={onClickSearchBtn}>
+        <div className="btn-searchhh" onClick={onClickSearchBtn}>
           <img src={searchIconUrl} alt="" />
         </div>
       </div>

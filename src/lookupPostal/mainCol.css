@@ -38,21 +38,22 @@
     margin-top: 0px;
 }
 
-.main-col .btn-search {
+.main-col .btn-searchhh {
     background: #0072bc;
     border: 1px solid rgba(0,0,0,.1);
     border-radius: 4px;
     margin-left: 10px;
     padding: 13px 0;
     width: 50px;
-    /* height: 50px; */
+    height: 50px;
     text-align: center;
     transition: all .5s;
     cursor: pointer;
 }
 
-.main-col .btn-search img {
-    width: 16.5px;
+.main-col .btn-searchhh img {
+    width: 20px;
+    margin-bottom: 6px;
 }
 
 

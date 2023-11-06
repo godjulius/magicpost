@@ -4,6 +4,11 @@
     padding: 50px 0;
 }
 
+#lookup-postal img{
+    display: inline;
+    vertical-align: auto;
+}
+
 .container-middle {
     margin: 0 auto;
     max-width: 1200px;

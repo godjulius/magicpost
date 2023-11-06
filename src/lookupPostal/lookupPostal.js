@@ -29,7 +29,7 @@ export default function LookupPostal() {
   }
 
   return (
-    <div className="lookup-postal">
+    <div className="lookup-postal" id="lookup-postal">
       <div className="container-middle">
         <div className="row">
           <MainCol
