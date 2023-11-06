@@ -1,0 +1,19 @@
+.sub-col {
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.sub-col a {
+    color: #0072bc;
+    font-size: 18px;
+    text-transform: uppercase;
+    margin-bottom: 0;
+    line-height: 16px;
+    text-decoration: none;
+}
+
+.sub-col a p {
+    padding : 0px 10px 0px 10px;
+}

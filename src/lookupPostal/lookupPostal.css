@@ -1,0 +1,30 @@
+.lookup-postal {
+    width: 100%;
+    background-color: #f5cc71;
+    padding: 50px 0;
+}
+
+.container-middle {
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+.row {
+    display: flex;
+}
+.sub {
+    display: flex;
+}
+
+@media (max-width:961px) {
+    .row {
+        display: block;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+    .search-field {
+        display: flex;
+        justify-content: center;
+    }
+}
