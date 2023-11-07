@@ -3,15 +3,12 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import Slideshow from "./slideShow/slideShow.js";
 import LookupPostal from "./lookupPostal/lookupPostal.js";
-import SignIn from "./signIn/SignIn.js";
-
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
 <>
-<SignIn/>
-{/* <Slideshow /> */}
-{/* <LookupPostal /> */}
+<Slideshow />
+<LookupPostal />
 </>
 );
 
