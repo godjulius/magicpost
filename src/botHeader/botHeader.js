@@ -6,23 +6,6 @@ function BotHeader() {
   const [activeSidebar, setActiveSidebar] = useState(null);
   const [activeSidebarMenu, setactiveSidebarMenu] = useState([]);
 
-  const handleActiveSidebar = () => {
-    setActiveSidebar(!activeSidebar)
-  }
-
-  const handleMouseEnter = (menuIndex) => {
-    setActiveMenu(menuIndex);
-  };
-
-  const handleMouseLeave = () => {
-    setActiveMenu(null);
-  };
-
-  const isMenuActive = (menuIndex) => {
-    return activeMenu === menuIndex;
-  };
-
-
   const toggleSidebarMenu = (SidebarmenuIndex) => {
     const updatedSidebarMenu = [...activeSidebarMenu];
     if (updatedSidebarMenu.includes(SidebarmenuIndex)) {
@@ -37,11 +20,26 @@ function BotHeader() {
 
   const isSidebarMenuOpen = (SidebarmenuIndex) => activeSidebarMenu.includes(SidebarmenuIndex);
 
+  const handleMouseEnter = (menuIndex) => {
+    setActiveMenu(menuIndex);
+  };
+
+  const handleMouseLeave = () => {
+    setActiveMenu(null);
+  };
+
+  const isMenuActive = (menuIndex) => {
+    return activeMenu === menuIndex;
+  };
+
+  const handleActiveSidebar = () => {
+    setActiveSidebar(!activeSidebar)
+  }
 
   return (
     <div className="bottom-header">
       <div id='sidebar-header' 
-        className={`sidebar-header ${activeSidebar === true? 'show' : ''}`}
+        className={`sidebar-header ${activeSidebar === true? 'show' : 'hide'}`}
       >
         <div id='content-sidebar' className='content-sidebar'>
           <ul className='sidebar-menu'>
@@ -55,14 +53,10 @@ function BotHeader() {
               </a>
               {isSidebarMenuOpen(0) &&
                 <div className='sidebar-sub-menu'>
-                  <div className='sidebar-sub-menu-content'>
-                    <a href="#">Chuyển phát hỏa tốc</a>
-                    <a href="#">Chuyển phát nhanh</a>
-                    <a href="#">Chuyển phát tiết kiệm</a>
-                    <a href="#">Dịch vụ đặc biệt</a>
-                    <a href="#">Dịch vụ trọn gói</a>
-                    <a href="#">Dịch vụ GTGT</a>
-                  </div>
+                  <a href="#">Chuyển phát hỏa tốc</a>
+                  <a href="#">Chuyển phát nhanh</a>
+                  <a href="#">Chuyển phát tiết kiệm</a>
+                  <a href="#">Dịch vụ đặc biệt</a>
                 </div>
               }
             </li>
@@ -75,11 +69,9 @@ function BotHeader() {
               </a>
               {isSidebarMenuOpen(1) &&
                 <div className='sidebar-sub-menu'>
-                  <div className='sidebar-sub-menu-content'>
-                    <a href="#">Tra cứu bưu gửi</a>
-                    <a href="#">Ước tính cước vận chuyển</a>
-                    <a href="#">Thông tin đơn hàng</a>
-                  </div>
+                  <a href="#">Tra cứu bưu gửi</a>
+                  <a href="#">Ước tính cước vận chuyển</a>
+                  <a href="#">Thông tin đơn hàng</a>
                 </div>
               }
             </li>
@@ -92,13 +84,9 @@ function BotHeader() {
               </a>
               {isSidebarMenuOpen(2) &&
                 <div className='sidebar-sub-menu'>
-                  <div className='sidebar-sub-menu-content'>
-                    <a href="#">Tin nội bộ</a>
-                    <a href="#">Tin dịch vụ mới</a>
-                    <a href="#">Tin ngành</a>
-                    <a href="#">Tin quốc tế</a>
-                    <a href="#">Thông tin hữu ích</a>
-                  </div>
+                  <a href="#">Tin nội bộ</a>
+                  <a href="#">Tin dịch vụ mới</a>
+                  <a href="#">Tin ngành</a>
                 </div>
               }
             </li>
@@ -129,17 +117,11 @@ function BotHeader() {
                 </a>
                 {isMenuActive(0) && (
                   <div className="sub-menu">
-                    <div className="sub-menu-content">
-                      <div className="sub-menu-item">
-                        <div className="sub-menu-item-list">
-                          <a href="#">Chuyển phát hỏa tốc</a>
-                          <a href="#">Chuyển phát nhanh</a>
-                          <a href="#">Chuyển phát tiết kiệm</a>
-                          <a href="#">Dịch vụ đặc biệt</a>
-                          <a href="#">Dịch vụ trọn gói</a>
-                          <a href="#">Dịch vụ GTGT</a>
-                        </div>
-                      </div>
+                    <div className="sub-menu-item">
+                      <a href="#">Chuyển phát hỏa tốc</a>
+                      <a href="#">Chuyển phát nhanh</a>
+                      <a href="#">Chuyển phát tiết kiệm</a>
+                      <a href="#">Dịch vụ đặc biệt</a>
                     </div>
                   </div>
                 )}
@@ -156,14 +138,10 @@ function BotHeader() {
                 </a>
                 {isMenuActive(1) && (
                   <div className="sub-menu">
-                    <div className="sub-menu-content">
-                      <div className="sub-menu-item">
-                        <div className="sub-menu-item-list">
-                          <a href="#">Tra cứu bưu gửi</a>
-                          <a href="#">Ước tính cước vận chuyển</a>
-                          <a href="#">Thông tin đơn hàng</a>
-                        </div>
-                      </div>
+                    <div className="sub-menu-item">
+                      <a href="#">Tra cứu bưu gửi</a>
+                      <a href="#">Ước tính cước vận chuyển</a>
+                      <a href="#">Thông tin đơn hàng</a>
                     </div>
                   </div>
                 )}
@@ -180,16 +158,10 @@ function BotHeader() {
                 </a>
                 {isMenuActive(2) && (
                   <div className="sub-menu">
-                    <div className="sub-menu-content">
-                      <div className="sub-menu-item">
-                        <div className="sub-menu-item-list">
-                          <a href="#">Tin nội bộ</a>
-                          <a href="#">Tin dịch vụ mới</a>
-                          <a href="#">Tin ngành</a>
-                          <a href="#">Tin quốc tế</a>
-                          <a href="#">Thông tin hữu ích</a>
-                        </div>
-                      </div>
+                    <div className="sub-menu-item">
+                      <a href="#">Tin nội bộ</a>
+                      <a href="#">Tin dịch vụ mới</a>
+                      <a href="#">Tin ngành</a>
                     </div>
                   </div>
                 )}

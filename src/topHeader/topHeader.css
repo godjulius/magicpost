@@ -19,8 +19,8 @@
     max-width: 1200px;
 }
 
-@media (max-width: 770px) {
-    .login {
+@media (max-width: 785px) {
+    .top-right-header .login {
         margin-left: auto;
     }
 }
@@ -90,7 +90,7 @@
     transform: rotate(-135deg); /* Xoay mũi tên khi trạng thái là up */
 }
 
-.login {
+.top-right-header .login {
     background: #f7941e;
     padding: 0 12px;
     color: #fff;
@@ -98,15 +98,15 @@
     margin-left: 30px;
 }
 
-.login>a {
+.top-right-header .login>a {
     color: #fff;
     text-decoration: none !important;
 }
 
-.login>a:hover {
-    color: rgb(75, 168, 255);
+.top-right-header .login>a:hover {
+    color: rgb(27, 77, 118);
 }
 
-.wrapper-top-header, .wrapper-top-header, .wrapper-top-header .login>a:active {
+.wrapper-top-header, .wrapper-top-header .top-right-header .login>a:active {
     color: #fff;
 }
