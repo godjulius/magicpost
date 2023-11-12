@@ -1,19 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import Slideshow from "./slideShow/slideShow.js";
-import LookupPostal from "./lookupPostal/lookupPostal.js";
-import TopHeader from "./topHeader/topHeader.js";
-import BotHeader from "./botHeader/botHeader.js";
-import SignIn from "./signIn/SignIn.js";
+import "./tailwind_custom.css";
+
+import Layout from "./LandingPage/Layout/Layout.js";
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
 <>
-<TopHeader />
-<BotHeader />
-<Slideshow />
-<LookupPostal />
+    <Layout />
 </>
 );
 
