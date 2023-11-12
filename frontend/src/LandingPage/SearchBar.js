@@ -2,7 +2,7 @@ export default function SearchBar() {
   return (
     <div className="mx-auto max-w-7xl sm:px-6 lg:px-8" id="searchbar">
       <div className="relative isolate overflow-hidden bg-white px-6 py-20 text-center sm:px-16 sm:shadow-sm dark:bg-transparent">
-        <p className="mx-auto max-w-2xl text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-200 sm:text-4xl">
+        <p className="mx-auto max-w-2xl text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-500 sm:text-4xl">
           Tra cứu thông tin đơn hàng tại đây
         </p>
         <form action="/search">
@@ -19,7 +19,7 @@ export default function SearchBar() {
             />
             <button
               type="submit"
-              className="w-full md:w-auto px-6 py-3 bg-orange-500 border-black text-white fill-white active:scale-95 duration-100 border will-change-transform overflow-hidden relative rounded-2xl transition-all"
+              className="w-full md:w-auto px-6 py-3 bg-orange_cus-500 border-black-500 text-white fill-white active:scale-95 duration-100 border will-change-transform overflow-hidden relative rounded-2xl transition-all"
             >
               <div className="flex items-center transition-all opacity-1">
                 <img src="./asset/search-white.png" className="w-4"></img>

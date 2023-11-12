@@ -14,36 +14,37 @@ module.exports = {
       "orange-md": "0px 20px 40px -15px rgba(245,56,56,0.81) ",
       none: "none",
     },
-    colors: {
-      transparent: "transparent",
-      black: {
-        500: "#4F5665",
-        600: "#0B132A",
-      },
-      orange: {
-        100: "#FFECEC",
-        500: "#F53855",
-      },
-      green: {
-        500: "#2FAB73",
-      },
-      white: {
-        300: "#F8F8F8",
-        500: "#fff",
-      },
-      gray: {
-        100: "#EEEFF2",
-        400: "#AFB5C0",
-        500: "#DDDDDD",
+
+    extend: {
+      colors: {
+        transparent: "transparent",
+        black_cus: {
+          500: "#4F5665",
+          600: "#0B132A",
+        },
+        orange_cus: {
+          100: "#FFECEC",
+          500: "#F53855",
+        },
+        green_cus: {
+          500: "#2FAB73",
+        },
+        white_cus: {
+          300: "#F8F8F8",
+          500: "#FFFFFF",
+        },
+        gray_cus: {
+          100: "#EEEFF2",
+          400: "#AFB5C0",
+          500: "#DDDDDD",
+        },
       },
     },
-    extend: {},
   },
   variants: {
     extend: {
-      boxShadow: ["active", "hover"],
+      // boxShadow: ["active", "hover"],
     },
   },
   plugins: [],
-}
-
+};

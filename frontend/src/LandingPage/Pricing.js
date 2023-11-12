@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 // import Image from "next/image";
-import Testimoni from "./Testimoni";
-import ButtonPrimary from "./misc/ButtonPrimary";
+// import Testimoni from "./Testimoni";
+// import ButtonPrimary from "./misc/ButtonPrimary";
 import ButtonOutline from "./misc/ButtonOutline.";
 // import Maps from "../HugeGlobal.svg";
 import { motion } from "framer-motion";
@@ -13,7 +13,7 @@ const Pricing = () => {
 
   return (
     <div
-      className="bg-gradient-to-b from-white-300 to-white-500 w-full py-14"
+      className="bg-gradient-to-b from-white_cus-300 to-white_cus-500 w-full py-14"
       id="dichvu"
     >
       <div className="max-w-screen-xl  px-6 sm:px-8 lg:px-16 mx-auto flex flex-col w-full text-center justify-center">
@@ -21,7 +21,7 @@ const Pricing = () => {
           <ScrollAnimationWrapper>
             <motion.h3
               variants={scrollAnimation}
-              className="text-2xl sm:text-3xl lg:text-4xl font-medium text-black-600 leading-relaxed"
+              className="text-2xl sm:text-3xl lg:text-4xl font-medium text-black_cus-600 leading-relaxed"
             >
               Các dịch vụ của chúng tôi
             </motion.h3>
@@ -37,7 +37,7 @@ const Pricing = () => {
             <ScrollAnimationWrapper className="flex justify-center">
               <motion.div
                 variants={scrollAnimation}
-                className="flex flex-col justify-center items-center border-2 border-gray-500 rounded-xl py-4 px-6 lg:px-12 xl:px-20"
+                className="flex flex-col justify-center items-center border-2 border-gray_cus-500 rounded-xl py-4 px-6 lg:px-12 xl:px-20"
                 whileHover={{
                   scale: 1.1,
                   transition: {
@@ -59,10 +59,10 @@ const Pricing = () => {
                     alt="Free Plan"
                   ></img>
                 </div>
-                <p className="text-lg text-black-600 font-medium capitalize my-2 sm:my-7">
+                <p className="text-lg text-black_cus-600 font-medium capitalize my-2 sm:my-7">
                   Gói A
                 </p>
-                <ul className="flex flex-col list-inside pl-6 xl:pl-0 items-start justify-start text-left text-black-500 flex-grow">
+                <ul className="flex flex-col list-inside pl-6 xl:pl-0 items-start justify-start text-left text-black_cus-500 flex-grow">
                   <li className="relative check custom-list my-2">
                     Gioi thieu bla bla bla bla
                   </li>
@@ -77,7 +77,7 @@ const Pricing = () => {
                   </li>
                 </ul>
                 <div className="flex flex-col w-full justify-center mb-8 flex-none mt-12">
-                  <p className="text-2xl text-black-600 text-center mb-4 ">
+                  <p className="text-2xl text-black_cus-600 text-center mb-4 ">
                     Free
                   </p>
                   <ButtonOutline>Select</ButtonOutline>
@@ -87,7 +87,7 @@ const Pricing = () => {
             <ScrollAnimationWrapper className="flex justify-center">
               <motion.div
                 variants={scrollAnimation}
-                className="flex flex-col justify-center items-center border-2 border-gray-500 rounded-xl py-4 px-6 lg:px-12 xl:px-20"
+                className="flex flex-col justify-center items-center border-2 border-gray_cus-500 rounded-xl py-4 px-6 lg:px-12 xl:px-20"
                 whileHover={{
                   scale: 1.1,
                   transition: {
@@ -109,10 +109,10 @@ const Pricing = () => {
                     alt="Standard Plan"
                   ></img>
                 </div>
-                <p className="text-lg text-black-600 font-medium capitalize my-2 sm:my-7">
+                <p className="text-lg text-black_cus-600 font-medium capitalize my-2 sm:my-7">
                   Gói B{" "}
                 </p>
-                <ul className="flex flex-col list-inside pl-6 xl:pl-0 items-start justify-start text-left text-black-500 flex-grow">
+                <ul className="flex flex-col list-inside pl-6 xl:pl-0 items-start justify-start text-left text-black_cus-500 flex-grow">
                   <li className="relative check custom-list my-2">
                     Gioi thieu bla bla bla bla
                   </li>
@@ -130,8 +130,8 @@ const Pricing = () => {
                   </li>
                 </ul>
                 <div className="flex flex-col w-full justify-center mb-8 flex-none mt-12">
-                  <p className="text-2xl text-black-600 text-center mb-4 ">
-                    $10 <span className="text-black-500">/ mo</span>
+                  <p className="text-2xl text-black_cus-600 text-center mb-4 ">
+                    $10 <span className="text-black_cus-500">/ mo</span>
                   </p>
                   <ButtonOutline>Select</ButtonOutline>
                 </div>
@@ -140,7 +140,7 @@ const Pricing = () => {
             <ScrollAnimationWrapper className="flex justify-center">
               <motion.div
                 variants={scrollAnimation}
-                className="flex flex-col justify-center items-center border-2 border-gray-500 rounded-xl py-4 px-6 lg:px-12 xl:px-20"
+                className="flex flex-col justify-center items-center border-2 border-gray_cus-500 rounded-xl py-4 px-6 lg:px-12 xl:px-20"
                 whileHover={{
                   scale: 1.1,
                   transition: {
@@ -162,10 +162,10 @@ const Pricing = () => {
                     alt="Premium Plan"
                   ></img>
                 </div>
-                <p className="text-lg text-black-600 font-medium capitalize my-2 sm:my-7">
+                <p className="text-lg text-black_cus-600 font-medium capitalize my-2 sm:my-7">
                   Gói C{" "}
                 </p>
-                <ul className="flex flex-col list-inside pl-6 xl:pl-0 items-start justify-start text-left text-black-500 flex-grow">
+                <ul className="flex flex-col list-inside pl-6 xl:pl-0 items-start justify-start text-left text-black_cus-500 flex-grow">
                   <li className="relative check custom-list my-2">
                     Gioi thieu bla bla bla bla
                   </li>
@@ -186,8 +186,8 @@ const Pricing = () => {
                   </li>
                 </ul>
                 <div className="flex flex-col w-full justify-center mb-8 flex-none mt-12">
-                  <p className="text-2xl text-black-600 text-center mb-4 ">
-                    $10 <span className="text-black-500">/ mo</span>
+                  <p className="text-2xl text-black_cus-600 text-center mb-4 ">
+                    $10 <span className="text-black_cus-500">/ mo</span>
                   </p>
 
                   <ButtonOutline>Select</ButtonOutline>
@@ -200,7 +200,7 @@ const Pricing = () => {
           <ScrollAnimationWrapper>
             <motion.h3
               variants={scrollAnimation}
-              className="text-2xl sm:text-3xl lg:text-4xl font-medium text-black-600 leading-relaxed w-9/12 sm:w-6/12 lg:w-4/12 mx-auto"
+              className="text-2xl sm:text-3xl lg:text-4xl font-medium text-black_cus-600 leading-relaxed w-9/12 sm:w-6/12 lg:w-4/12 mx-auto"
             >
               Huge Global Network of Fast VPN{" "}
             </motion.h3>
@@ -259,7 +259,7 @@ const Pricing = () => {
           <ScrollAnimationWrapper>
             <motion.h3
               variants={scrollAnimation}
-              className="text-2xl sm:text-3xl lg:text-4xl font-medium text-black-600 leading-normal w-9/12 sm: lg:w-4/12 mx-auto"
+              className="text-2xl sm:text-3xl lg:text-4xl font-medium text-black_cus-600 leading-normal w-9/12 sm: lg:w-4/12 mx-auto"
             >
               Trusted by Thousands of Happy Customer{" "}
             </motion.h3>
@@ -280,7 +280,7 @@ const Pricing = () => {
             <motion.div variants={scrollAnimation} custom={{ duration: 3 }}>
               <div className="absolute rounded-xl  py-8 sm:py-14 px-6 sm:px-12 lg:px-16 w-full flex flex-col sm:flex-row justify-between items-center z-10 bg-white-500">
                 <div className="flex flex-col text-left w-10/12 sm:w-7/12 lg:w-5/12 mb-6 sm:mb-0">
-                  <h5 className="text-black-600 text-xl sm:text-2xl lg:text-3xl leading-relaxed font-medium">
+                  <h5 className="text-black_cus-600 text-xl sm:text-2xl lg:text-3xl leading-relaxed font-medium">
                     Subscribe Now for <br /> Get Special Features!
                   </h5>
                   <p>Let's subscribe with us and find the fun.</p>
