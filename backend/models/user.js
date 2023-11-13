@@ -1,14 +1,10 @@
 const User = function (sequelize, Sequelize) {
     return sequelize.define("user", {
         user_id: {
-            type: Sequelize.MEDIUMINT.UNSIGNED,
+            type: Sequelize.BIGINT.UNSIGNED,
             allowNull: false,
             primaryKey: true,
-        },
-        username: {
-            type: Sequelize.STRING,
-            allowNull: false,
-            unique: "username"
+            autoIncrement: true,
         },
         password: {
             type: Sequelize.STRING,
@@ -19,8 +15,16 @@ const User = function (sequelize, Sequelize) {
             allowNull: false,
             unique: "email",
         },
+        first_name: {
+            type: Sequelize.BIGINT.UNSIGNED,
+            allowNull: false,
+        },
+        second_name: {
+            type: Sequelize.BIGINT.UNSIGNED,
+            allowNull: false,
+        },
         role_id: {
-            type: Sequelize.MEDIUMINT.UNSIGNED,
+            type: Sequelize.BIGINT.UNSIGNED,
             allowNull: false,
             references: {
                 model: "role",
@@ -40,28 +44,27 @@ const User = function (sequelize, Sequelize) {
                         name: "user_id",
                     }
                 ]
-            }, {
-                name: "username",
+            },
+            {
+                name: "users_role_id_foreign",
                 unique: true,
                 using: "BTREE",
                 fields: [
-                    {name: "username",},
-                ],
-            }, {
-                name: "role_id",
-                unique: false,
-                using: "BTREE",
-                fields: [
-                    {name: "role_id",},
-                ],
-            }, {
-                name: "branch_id",
-                unique: false,
-                using: "BTREE",
-                fields: [
-                    {name: "branch_id",},
-                ],
+                    {
+                        name: "role_id",
+                    }
+                ]
             },
+            {
+                name: "users_branch_id_foreign",
+                unique: true,
+                using: "BTREE",
+                fields: [
+                    {
+                        name: "branch_id",
+                    }
+                ]
+            }
         ]
     });
 };
