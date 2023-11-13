@@ -5,7 +5,7 @@ const PaymentWarehouse = function (sequelize, Sequelize) {
             allowNull: false,
             primaryKey: true,
             references: {
-                model: "payment",
+                model: "payments",
                 key: "payment_id",
             },
         },
@@ -13,7 +13,7 @@ const PaymentWarehouse = function (sequelize, Sequelize) {
             type: Sequelize.BIGINT.UNSIGNED,
             allowNull: false,
             references: {
-                model: "branch",
+                model: "branches",
                 key: "branch_id",
             },
         },

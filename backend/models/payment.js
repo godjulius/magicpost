@@ -9,7 +9,7 @@ const Payment = function (sequelize, Sequelize) {
             type: Sequelize.BIGINT.UNSIGNED,
             allowNull: false,
             references: {
-                model: "user",
+                model: "users",
                 key: "user_id",
             },
         },
@@ -17,7 +17,7 @@ const Payment = function (sequelize, Sequelize) {
             type: Sequelize.BIGINT.UNSIGNED,
             allowNull: false,
             references: {
-                model: "branch",
+                model: "branches",
                 key: "branch_id",
             },
         },
@@ -25,7 +25,7 @@ const Payment = function (sequelize, Sequelize) {
             type: Sequelize.BIGINT.UNSIGNED,
             allowNull: false,
             references: {
-                model: "branch",
+                model: "branches",
                 key: "branch_id",
             },
         },

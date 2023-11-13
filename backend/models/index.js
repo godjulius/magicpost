@@ -102,7 +102,7 @@ db.models.User.hasOne(db.models.Branch, {
 db.models.User.belongsTo(db.models.Branch, {
     foreignKey: "branch_id",
 });
-db.models.Branch.hasMany(db.model.User, {
+db.models.Branch.hasMany(db.models.User, {
     foreignKey: "branch_id",
 });
 

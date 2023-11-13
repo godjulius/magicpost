@@ -16,20 +16,24 @@ const User = function (sequelize, Sequelize) {
             unique: "email",
         },
         first_name: {
-            type: Sequelize.BIGINT.UNSIGNED,
+            type: Sequelize.STRING,
             allowNull: false,
         },
         second_name: {
-            type: Sequelize.BIGINT.UNSIGNED,
+            type: Sequelize.STRING,
             allowNull: false,
         },
         role_id: {
             type: Sequelize.BIGINT.UNSIGNED,
             allowNull: false,
             references: {
-                model: "role",
+                model: "roles",
                 key: "role_id",
             }
+        },
+        dob: {
+            type: Sequelize.DATE,
+            allowNull: false,
         }
     }, {
         sequelize,

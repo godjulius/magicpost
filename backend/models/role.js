@@ -13,6 +13,7 @@ const Role = function (sequelize, Sequelize) {
     }, {
         sequelize,
         tableName: "roles",
+        timestamps:false,
         indexes: [
             {
                 name: "PRIMARY",

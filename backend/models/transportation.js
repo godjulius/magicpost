@@ -10,7 +10,7 @@ const Transportation = function (sequelize, Sequelize) {
             type: Sequelize.BIGINT.UNSIGNED,
             allowNull: false,
             references: {
-                model: "branch",
+                model: "branches",
                 key: "branch_id",
             },
         },
@@ -18,7 +18,7 @@ const Transportation = function (sequelize, Sequelize) {
             type: Sequelize.BIGINT.UNSIGNED,
             allowNull: false,
             references: {
-                model: "branch",
+                model: "branches",
                 key: "branch_id",
             },
         },
@@ -34,9 +34,13 @@ const Transportation = function (sequelize, Sequelize) {
             type: Sequelize.BOOLEAN,
             allowNull: false,
         },
-        payments: {
-            type: Sequelize.JSON,
+        payment_id: {
+            type: Sequelize.STRING,
             allowNull: false,
+            references: {
+                model: "payments",
+                key: "payment_id",
+            },
         },
     }, {
         sequelize,
@@ -62,6 +66,13 @@ const Transportation = function (sequelize, Sequelize) {
                 unique: false,
                 fields: [
                     {name: "sender_id",},
+                ],
+            }, {
+                name: "transportations_payment_id_foreign",
+                using: "BTREE",
+                unique: false,
+                fields: [
+                    {name: "payment_id",},
                 ],
             },
         ],
