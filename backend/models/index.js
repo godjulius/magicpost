@@ -27,104 +27,45 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 db.models = {};
 
-db.models.User = require("./user")(sequelize, Sequelize);
-db.models.Transportation = require("./transportation")(sequelize, Sequelize);
 db.models.Role = require("./role")(sequelize, Sequelize);
-db.models.PaymentWarehouse = require("./payment_warehouse")(sequelize, Sequelize);
-db.models.Payment = require("./payment")(sequelize, Sequelize);
+db.models.Parcel = require("./parcel")(sequelize, Sequelize);
+db.models.Order = require("./order")(sequelize, Sequelize);
+db.models.Employee = require("./employee")(sequelize, Sequelize);
+db.models.Delivery = require("./delivery")(sequelize, Sequelize);
+db.models.Customer = require("./customer")(sequelize, Sequelize);
 db.models.Branch = require("./branch")(sequelize, Sequelize);
 
-db.models.Role.hasMany(db.models.User, {
-    foreignKey: "role_id",
-});
-db.models.User.belongsTo(db.models.Role, {
-    foreignKey: "role_id",
-});
+db.models.Employee.belongsTo(db.models.Role, {foreignKey: "role_id"});
+db.models.Role.hasMany(db.models.Employee, {foreignKey: "role_id"});
 
-db.models.User.hasMany(db.models.Payment, {
-    foreignKey: "employee_id",
-});
-db.models.Payment.belongsTo(db.models.User, {
-    foreignKey: "employee_id",
-});
+db.models.Order.belongsTo(db.models.Customer, {foreignKey: "customer_id"});
+db.models.Employee.hasMany(db.models.Order, {foreignKey: "customer_id"});
 
-db.models.Payment.belongsToMany(db.models.Branch, {
-    through: db.models.PaymentWarehouse,
-    foreignKey: "payment_id",
-    otherKey: "branch_id",
-})
-db.models.Branch.belongsToMany(db.models.Payment, {
-    through: db.models.PaymentWarehouse,
-    foreignKey: "branch_id",
-    otherKey: "payment_id",
-});
-db.models.Payment.belongsTo(db.models.PaymentWarehouse, {
-    foreignKey: "payment_id",
-});
-db.models.PaymentWarehouse.hasMany(db.models.Payment, {
-    foreignKey: "payment_id",
-});
-db.models.Branch.belongsTo(db.models.PaymentWarehouse, {
-    foreignKey: "branch_id",
-});
-db.models.PaymentWarehouse.hasMany(db.models.Branch, {
-    foreignKey: "branch_id",
-});
+db.models.Order.belongsTo(db.models.Employee, {foreignKey: "employee_id"});
+db.models.Employee.hasMany(db.models.Order, {foreignKey: "employee_id"});
 
-db.models.Payment.belongsTo(db.models.Branch, {
-    foreignKey: "source_branch_id",
-});
-db.models.Branch.hasMany(db.models.Payment, {
-    foreignKey: "source_branch_id",
-})
+db.models.Branch.belongsTo(db.models.Employee, {foreignKey: "manager_id"});
+db.models.Employee.hasOne(db.models.Branch, {foreignKey: "manager_id"});
 
-db.models.Payment.belongsTo(db.models.Branch, {
-    foreignKey: "des_branch_id",
-});
-db.models.Branch.hasMany(db.models.Payment, {
-    foreignKey: "des_branch_id",
-});
+db.models.Employee.belongsTo(db.models.Branch, {foreignKey: "branch_id"});
+db.models.Branch.hasMany(db.models.Employee, {foreignKey: "branch_id"});
 
-db.models.Branch.belongsTo(db.models.Branch, {
-    foreignKey: "warehouse_id",
-});
-db.models.Branch.hasMany(db.models.Branch, {
-    foreignKey: "warehouse_id",
-});
+db.models.Branch.belongsTo(db.models.Branch, {foreignKey: "hub_id"});
+db.models.Branch.hasMany(db.models.Branch, {foreignKey: "hub_id"});
 
-db.models.Branch.belongsTo(db.models.User, {
-    foreignKey: "manager_id",
-});
-db.models.User.hasOne(db.models.Branch, {
-    foreignKey: "manager_id",
-});
+db.models.Order.belongsTo(db.models.Delivery, {foreignKey: "delivery_id"});
+db.models.Delivery.hasOne(db.models.Order, {foreignKey: "delivery_id"});
 
-db.models.User.belongsTo(db.models.Branch, {
-    foreignKey: "branch_id",
-});
-db.models.Branch.hasMany(db.models.User, {
-    foreignKey: "branch_id",
-});
+db.models.Delivery.belongsTo(db.models.Branch, {foreignKey: "sender_id"});
+db.models.Branch.hasMany(db.models.Delivery, {foreignKey: "sender_id"});
 
-db.models.Transportation.belongsTo(db.models.Branch, {
-    foreignKey: "sender_id",
-});
-db.models.Branch.hasOne(db.models.Transportation, {
-    foreignKey: "sender_id",
-});
+db.models.Delivery.belongsTo(db.models.Branch, {foreignKey: "receiver_id"});
+db.models.Branch.hasMany(db.models.Delivery, {foreignKey: "receiver_id"});
 
-db.models.Transportation.belongsTo(db.models.Branch, {
-    foreignKey: "receiver_id",
-});
-db.models.Branch.hasOne(db.models.Transportation, {
-    foreignKey: "receiver_id",
-});
+db.models.Order.belongsTo(db.models.Parcel, {foreignKey: "parcel_id"});
+db.models.Parcel.hasOne(db.models.Order, {foreignKey: "parcel_id"});
 
-db.models.Transportation.belongsTo(db.models.Payment, {
-    foreignKey: "payment_id",
-});
-db.models.Payment.hasOne(db.models.Transportation, {
-    foreignKey: "payment_id",
-})
+db.models.Parcel.belongsTo(db.models.Branch, {foreignKey: "branch_id"});
+db.models.Branch.hasMany(db.models.Parcel, {foreignKey: "branch_id"});
 
 module.exports = db;
