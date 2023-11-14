@@ -5,6 +5,7 @@ import "./tailwind_custom.css";
 
 import Layout from "./LandingPage/Layout/Layout.js";
 
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
 <>
