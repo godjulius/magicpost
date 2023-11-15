@@ -6,6 +6,7 @@ import "./tailwind_custom.css";
 import Layout from "./LandingPage/Layout/Layout.js";
 import {BrowserRouter} from "react-router-dom";
 
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
 <BrowserRouter>
