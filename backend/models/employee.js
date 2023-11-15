@@ -20,14 +20,14 @@ const Employee = function (sequelize, Sequelize) {
         },
         branch_id: {
             type: Sequelize.BIGINT.UNSIGNED,
-            allowNull: false,
+            allowNull: true,
             references: {
                 model: "branch",
                 key: "branch_id",
             },
         },
         phone: {
-            type: Sequelize.BIGINT.UNSIGNED,
+            type: Sequelize.STRING,
             allowNull: false,
         },
         password: {
@@ -45,11 +45,15 @@ const Employee = function (sequelize, Sequelize) {
         dob: {
             type: Sequelize.DATEONLY,
             allowNull: false,
+        },
+        address: {
+            type: Sequelize.STRING,
+            allowNull: false,
         }
     }, {
         sequelize,
         tableName: "employee",
-        timestamps:false,
+        timestamps: false,
         indexes: [
             {
                 name: "PRIMARY",

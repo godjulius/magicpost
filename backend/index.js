@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
-const routesInit=require("./routes/IndexRoute");
+const routesInit = require("./routes/index_route");
+const session = require("express-session");
 
 const app = express();
 const db = require("./models");
@@ -16,6 +17,15 @@ app.use(cors(corsOptions));
 
 // parse requests of content-type - application/json
 app.use(express.json());
+
+app.use(
+    session({
+        name: "sid",
+        resave: false,
+        saveUninitialized: false,
+        secret: "oursecret",
+    })
+)
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({extended: true}));
