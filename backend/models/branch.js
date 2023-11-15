@@ -24,7 +24,7 @@ const Branch = function (sequelize, Sequelize) {
         },
         branch_name: {
             type: Sequelize.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         location: {
             type: Sequelize.STRING,

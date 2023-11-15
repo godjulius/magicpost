@@ -4,13 +4,14 @@ import "./index.css";
 import "./tailwind_custom.css";
 
 import Layout from "./LandingPage/Layout/Layout.js";
+import {BrowserRouter} from "react-router-dom";
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-<>
+<BrowserRouter>
     <Layout />
-</>
+</BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function
