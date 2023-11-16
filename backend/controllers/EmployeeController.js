@@ -1,4 +1,4 @@
-const {models: {Employee}} = require("../models");
+const {models: {Employee, Branch}} = require("../models");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
 const {Op} = require("sequelize");
@@ -116,7 +116,8 @@ class EmployeeController {
     async logIn(req, res, next) {
         const employee = await Employee.findOne({
             where: {
-                email: req.body.email,
+                // email: req.body.email,
+                email: "duy@gmail.com"
             },
         });
         try {
@@ -139,10 +140,10 @@ class EmployeeController {
             req.session.employeeId = employee.employee_id;
             req.session.roleId = employee.role_id;
             req.branchId = employee.branch_id;
-
+            console.log(req.session);
             return res.status(200).json(
-                employee,
                 {
+                    employee: employee,
                     cookie: req.headers.cookie,
                 }
             );
@@ -150,6 +151,9 @@ class EmployeeController {
             next(err);
         }
     }
+
+    //GET /employee/manager
+
 }
 
 module.exports = new EmployeeController();
