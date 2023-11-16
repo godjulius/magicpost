@@ -5,12 +5,13 @@ import "./tailwind_custom.css";
 
 import Layout from "./LandingPage/Layout/Layout.js";
 import {BrowserRouter} from "react-router-dom";
-
+import CreateAccount from "./CreateAccount/createAccount.js";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
 <BrowserRouter>
-    <Layout />
+    {/* <Layout /> */}
+    <CreateAccount />
 </BrowserRouter>
 );
 
