@@ -10,7 +10,7 @@ const Navbar = ({ onTabChange }) => {
   };
 
   return (
-    <aside className="relative bg-sidebar h-screen w-64 hidden sm:block shadow-xl bg-blue-500">
+    <aside className="relative bg-sidebar h-screen w-64 hidden sm:block shadow-xl">
       <div className="p-6">
         <a href="#" className="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
       </div>

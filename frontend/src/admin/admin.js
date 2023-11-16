@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import Navbar from './Navbar';
 import AccountManagement from './AccountManagement';
 import Dashboard from './Dashboard';
-
+import "./admin.css"
+import DesktopHeader from './DesktopHeader.js';
+import MobileHeader from './MobileHeader.js';
 const Admin = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
 
@@ -13,7 +15,9 @@ const Admin = () => {
   return (
     <div className="bg-gray-100 font-family-karla flex">
       <Navbar onTabChange={handleTabChange} />
-      <div className="relative w-full flex flex-col h-screen overflow-y-auto">
+      <div className="relative w-full flex flex-col h-screen overflow-y-hidden">
+        <DesktopHeader />
+        <MobileHeader />
         {activeTab === 'dashboard' && (
           <div>
             <Dashboard />
