@@ -17,16 +17,16 @@ const Navbar = ({ onTabChange }) => {
       <nav className="text-white text-base font-semibold pt-3">
         <button
           onClick={() => handleTabClick('dashboard')}
-          className={`flex items-center ${currentTab === 'dashboard' ? 'active-nav-link' : 'nav-item'} text-white py-4 pl-6 nav-item w-full ${currentTab === 'dashboard' ? 'bg-blue-700' : 'hover:bg-blue-700'}`}
+          className={`flex items-center ${currentTab === 'dashboard' ? 'active-nav-link' : 'nav-item'} text-white py-4 pl-4 nav-item w-full ${currentTab === 'dashboard' ? 'bg-blue-700' : 'hover:bg-blue-700'}`}
         >
-          <i className="fas fa-tachometer-alt mr-3"></i>
+          <i className="fas fa-tachometer-alt mr-2"></i>
           Dashboard
         </button>
         <button
           onClick={() => handleTabClick('accountManagement')}
-          className={`flex items-center ${currentTab === 'accountManagement' ? 'active-nav-item' : 'nav-item'} text-white py-4 pl-6 nav-item w-full ${currentTab === 'accountManagement' ? 'bg-blue-700' : 'hover:bg-blue-700'}`}
+          className={`flex items-center ${currentTab === 'accountManagement' ? 'active-nav-item' : 'nav-item'} text-white py-4 pl-4 nav-item w-full ${currentTab === 'accountManagement' ? 'bg-blue-700' : 'hover:bg-blue-700'}`}
         >
-          <i className="fas fa-table mr-3"></i>
+          <i className="fas fa-table mr-2"></i>
           Account Management
         </button>
       </nav>
