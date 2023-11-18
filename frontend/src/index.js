@@ -4,15 +4,15 @@ import "./index.css";
 import "./tailwind_custom.css";
 
 import Layout from "./LandingPage/Layout/Layout.js";
-import {BrowserRouter} from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import CreateAccount from "./CreateAccount/createAccount.js";
 import Admin from "./admin/admin.js";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-<BrowserRouter>
+  <BrowserRouter>
     {/* <Layout /> */}
     <Admin />
-</BrowserRouter>
+  </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function
@@ -20,4 +20,3 @@ root.render(
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 // reportWebVitals();
 // import reportWebVitals from './reportWebVitals';
-

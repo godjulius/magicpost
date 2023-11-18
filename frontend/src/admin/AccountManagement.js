@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const AccountManagement = () => {
   const [itemsPerPage, setItemsPerPage] = useState(5);
@@ -104,11 +105,11 @@ const AccountManagement = () => {
 
   return (
     <div className="w-full h-screen overflow-x-hidden border-t flex flex-col">
-      <main class="w-full flex-grow p-6">
+      <main className="w-full flex-grow p-6">
         <div>
           <h1 className="text-3xl font-semibold mb-4">User Table</h1>
           <button className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 mb-4 rounded-full">
-            Create New Account
+            <Link to="/CreateAccount/CreateAccount">Create New Account</Link>
           </button>
         </div>
         <div className="my-2 flex sm:flex-row flex-col">
