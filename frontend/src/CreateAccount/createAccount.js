@@ -30,6 +30,8 @@ function CreateAccount() {
           formData
         );
         console.log("Registration successful:", response.data);
+        alert("Registration successful");
+        window.location.href = "/admin/AccountManagement";
       }
     } catch (error) {
       console.error("Registration failed:", error.response.data);
@@ -101,6 +103,24 @@ function CreateAccount() {
                   className="bg-gray-100 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                   placeholder="name@company.com"
                   value={formData.email}
+                  onChange={handleChange}
+                  required=""
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="phone"
+                  className="block mb-2 text-sm font-medium text-gray-900"
+                >
+                  Phone
+                </label>
+                <input
+                  type="text"
+                  name="phone"
+                  id="phone"
+                  className="bg-gray-100 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                  placeholder="Phone Number"
+                  value={formData.phone}
                   onChange={handleChange}
                   required=""
                 />
@@ -218,7 +238,7 @@ function CreateAccount() {
                 type="submit"
                 className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
               >
-                <Link to="/admin/AccountManagement">Create an account</Link>
+                Create an account
               </button>
             </form>
           </div>

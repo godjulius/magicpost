@@ -24,7 +24,7 @@ const Admin = () => {
         <Routes >
           <Route path="/admin/Dashboard" element={<Dashboard/>}/>
           <Route path="/admin/AccountManagement" element={<AccountManagement/>}/>
-          <Route path="/CreateAccount/CreateAccount" element={<CreateAccount />} />
+          <Route path="/admin/CreateAccount" element={<CreateAccount />} />
         </Routes>
         <Outlet />
       </div>

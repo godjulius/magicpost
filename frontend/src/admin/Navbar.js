@@ -6,7 +6,6 @@ const Navbar = ({ onTabChange }) => {
   const [currentTab, setCurrentTab] = useState('dashboard');
 
   const handleTabClick = (tab) => {
-    console.log("lmao")
     setCurrentTab(tab);
     onTabChange(tab);
   };

@@ -109,7 +109,7 @@ const AccountManagement = () => {
         <div>
           <h1 className="text-3xl font-semibold mb-4">User Table</h1>
           <button className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 mb-4 rounded-full">
-            <Link to="/CreateAccount/CreateAccount">Create New Account</Link>
+            <Link to="/admin/CreateAccount">Create New Account</Link>
           </button>
         </div>
         <div className="my-2 flex sm:flex-row flex-col">
