@@ -4,6 +4,9 @@
     font-family: karla;
 }
 
+.font-custom-sans-serif {
+    font-family: sans-serif;
+}
 .bg-sidebar {
     background: #3d68ff;
 }

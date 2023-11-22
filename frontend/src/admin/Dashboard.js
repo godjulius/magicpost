@@ -10,8 +10,6 @@ const Dashboard = () => {
       <div className="container mx-auto px-4 h-96 bg-amber-300">123123</div>
       <div className="container mx-auto px-4 h-96 bg-amber-300">123123</div>
       <div className="container mx-auto px-4 h-96 bg-amber-300">123123</div>
-      <div className="container mx-auto px-4 h-96 bg-amber-300">123123</div>
-      <div className="container mx-auto px-4 h-96 bg-amber-300">123123</div>
       </main>
       
     </div>
