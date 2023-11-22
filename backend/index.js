@@ -22,8 +22,11 @@ app.use(
     session({
         name: "sid",
         resave: false,
-        saveUninitialized: false,
-        secret: "oursecret",
+        saveUninitialized: true,
+        secret: "never-go-wrong",
+        cookie:{
+            secure:false
+        }
     })
 )
 

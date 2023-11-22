@@ -6,3 +6,5 @@ class DeliveryController {
         const deliveries=await Delivery.findAll()
     }
 }
+
+module.exports = new DeliveryController();
