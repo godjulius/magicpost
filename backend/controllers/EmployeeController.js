@@ -1,7 +1,8 @@
-const {models: {Employee, Branch}} = require("../models");
+const {models: {Employee, Branch, Customer, Order}} = require("../models");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
 const {Op} = require("sequelize");
+const sequelize = require("sequelize");
 const bcryptRound = 10;
 
 class EmployeeController {
@@ -152,7 +153,42 @@ class EmployeeController {
         }
     }
 
-    //GET /employee/manager
+    //GET /employee/:employeeId/customer
+    async getCustomerOfEmployee(req, res, next) {
+        const employeeId = req.params.employeeId;
+        const employee = await Employee.findOne({
+            where: {
+                employee_id: employeeId,
+            }
+        });
+        if (!employee) {
+            return res.status(404).json({
+                msg: `Employee with id ${employeeId} doesn't exists`,
+            });
+        }
+        const customers = await Customer.findAll({
+            include: [
+                {
+                    model: Order,
+                    required: true,
+                    where: {
+                        employee_id: employeeId,
+                    },
+                    attributes: [],
+                    include: [
+                        {
+                            model: Employee,
+                            required: true,
+                            attributes: [sequelize.fn('concat', sequelize.col('first_name'), ' ',
+                                sequelize.col('last_name')), 'employeeFullName'],
+                        }
+                    ],
+                },
+            ],
+        });
+
+        return res.status(200).json(customers);
+    }
 
 }
 
