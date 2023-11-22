@@ -23,7 +23,7 @@ const Customer = function (sequelize, Sequelize) {
             allowNull: true,
         },
         phone: {
-            type: Sequelize.BIGINT.UNSIGNED,
+            type: Sequelize.STRING,
             allowNull: false,
         },
     }, {
