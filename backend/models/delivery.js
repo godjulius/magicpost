@@ -8,7 +8,7 @@ const Delivery = function (sequelize, Sequelize) {
         },
         sender_id: {
             type: Sequelize.BIGINT.UNSIGNED,
-            allowNull: false,
+            allowNull: true,
             references: {
                 model: "branch",
                 key: "branch_id",
@@ -16,7 +16,7 @@ const Delivery = function (sequelize, Sequelize) {
         },
         receiver_id: {
             type: Sequelize.BIGINT.UNSIGNED,
-            allowNull: false,
+            allowNull: true,
             references: {
                 model: "branch",
                 key: "branch_id",
@@ -31,7 +31,7 @@ const Delivery = function (sequelize, Sequelize) {
             allowNull: true,
         },
         status: {
-            type: Sequelize.BOOLEAN,
+            type: Sequelize.TINYINT(1),
             allowNull: false, // 0: pending, 1: delivering, 2: delivered
         },
     }, {

@@ -1,8 +1,7 @@
-const {flatten} = require("express/lib/utils");
 const Parcel = function (sequelize, Sequelize) {
     return sequelize.define("parcel", {
         parcel_id: {
-            type: Sequelize.STRING,
+            type: Sequelize.BIGINT.UNSIGNED,
             allowNull: false,
             primaryKey: true,
             autoIncrement: true,

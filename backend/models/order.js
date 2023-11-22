@@ -1,9 +1,8 @@
 const Order = function (sequelize, Sequelize) {
     return sequelize.define("order", {
         order_id: {
-            type: Sequelize.BIGINT.UNSIGNED,
+            type: Sequelize.STRING,
             allowNull: false,
-            autoIncrement: true,
             primaryKey: true,
         },
         customer_id: {
