@@ -24,7 +24,7 @@ const Delivery = function (sequelize, Sequelize) {
         },
         send_date: {
             type: Sequelize.DATE,
-            allowNull: false,
+            allowNull: true,
         },
         receive_date: {
             type: Sequelize.DATE,
