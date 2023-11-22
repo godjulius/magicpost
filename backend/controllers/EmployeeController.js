@@ -9,12 +9,12 @@ class EmployeeController {
 
     //GET /employee
     async getAllEmployee(req, res, next) {
-        if (req.session.role_id === 0) {
+        if (req.session.roleId === 0) {
             return res.status(200).json(
                 await Employee.findAll()
             );
         }
-        if (req.session.role_id === 1) {
+        if (req.session.roleId === 1) {
             return res.status(200).json(
                 await Employee.findAll({
                     where: {
@@ -71,7 +71,7 @@ class EmployeeController {
         const dob = new Date(year, month - 1, day);
         const branchId = 1;
         const address = "Vietnam";
-        const phone = "03678";
+        const phone = "03679298";
         const roleId = 1;
         console.log(req.body);
 

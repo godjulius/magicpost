@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fe14543a-dcbb-4f20-b80e-22afea8270ba" name="Changes" comment="create server" />
+    <list default="true" id="fe14543a-dcbb-4f20-b80e-22afea8270ba" name="Changes" comment="Fix schema">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/DeliveryController.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/DeliveryController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/EmployeeController.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/EmployeeController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/CreateAccount/createAccount.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/CreateAccount/createAccount.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/LandingPage/Layout/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/LandingPage/Layout/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/signIn/SignIn.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/signIn/SignIn.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -19,6 +28,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -54,10 +68,11 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "duy1",
+    "ignore.virus.scanning.warn.message": "true",
     "javascript.nodejs.core.library.configured.version": "19.9.0",
     "javascript.nodejs.core.library.typings.version": "20.9.0",
-    "last_opened_file_path": "E:/Code/Project/magicpost/frontend",
+    "last_opened_file_path": "E:/Code/Project/magicpost",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -70,6 +85,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Code\Project\magicpost" />
       <recent name="E:\Code\Project\magicpost\frontend" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -90,6 +106,22 @@
       <workItem from="1699717252562" duration="2537000" />
       <workItem from="1699720718586" duration="3275000" />
       <workItem from="1699724041025" duration="345000" />
+      <workItem from="1699888800961" duration="3163000" />
+      <workItem from="1699920680267" duration="3831000" />
+      <workItem from="1699947007455" duration="7375000" />
+      <workItem from="1699963955426" duration="7717000" />
+      <workItem from="1700014372603" duration="9293000" />
+      <workItem from="1700058348389" duration="4180000" />
+      <workItem from="1700104975353" duration="1814000" />
+      <workItem from="1700114910752" duration="2437000" />
+      <workItem from="1700123368461" duration="4035000" />
+      <workItem from="1700130383017" duration="2158000" />
+      <workItem from="1700240854406" duration="775000" />
+      <workItem from="1700526316368" duration="3903000" />
+      <workItem from="1700620414223" duration="922000" />
+      <workItem from="1700634672140" duration="1714000" />
+      <workItem from="1700636504805" duration="3487000" />
+      <workItem from="1700667259783" duration="947000" />
     </task>
     <task id="LOCAL-00001" summary="create server">
       <option name="closed" value="true" />
@@ -115,7 +147,135 @@
       <option name="project" value="LOCAL" />
       <updated>1699723979057</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="re-create database">
+      <option name="closed" value="true" />
+      <created>1699973927127</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1699973927127</updated>
+    </task>
+    <task id="LOCAL-00005" summary="re-create database">
+      <option name="closed" value="true" />
+      <created>1699974121606</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1699974121606</updated>
+    </task>
+    <task id="LOCAL-00006" summary="install bcrypt">
+      <option name="closed" value="true" />
+      <created>1699980338615</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1699980338615</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Create EmployeeController">
+      <option name="closed" value="true" />
+      <created>1699980381416</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1699980381416</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Create EmployeeController">
+      <option name="closed" value="true" />
+      <created>1700016812780</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1700016812780</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Create controller">
+      <option name="closed" value="true" />
+      <created>1700061979644</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1700061979644</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Update BranchController.js, EmployeeController.js, routes">
+      <option name="closed" value="true" />
+      <created>1700130472843</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1700130472843</updated>
+    </task>
+    <task id="LOCAL-00011" summary="update models customer.js, order.js, delivery.js">
+      <option name="closed" value="true" />
+      <created>1700620494112</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1700620494112</updated>
+    </task>
+    <task id="LOCAL-00012" summary="update model parcel.js">
+      <option name="closed" value="true" />
+      <created>1700620527985</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1700620527985</updated>
+    </task>
+    <task id="LOCAL-00013" summary="update routes index_route.js, order_route.js">
+      <option name="closed" value="true" />
+      <created>1700620556568</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1700620556568</updated>
+    </task>
+    <task id="LOCAL-00014" summary="update controllers EmployeeController.js, OrderController.js">
+      <option name="closed" value="true" />
+      <created>1700620594652</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1700620594652</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Update Customer">
+      <option name="closed" value="true" />
+      <created>1700637963964</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1700637963964</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Update Employee">
+      <option name="closed" value="true" />
+      <created>1700637980007</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1700637980007</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Update Delivery">
+      <option name="closed" value="true" />
+      <created>1700638019213</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1700638019213</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Update index_route.js">
+      <option name="closed" value="true" />
+      <created>1700638151695</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1700638151695</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Fix schema">
+      <option name="closed" value="true" />
+      <created>1700667598125</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1700667598125</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -134,6 +294,20 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="create server" />
-    <option name="LAST_COMMIT_MESSAGE" value="create server" />
+    <MESSAGE value="re-create database" />
+    <MESSAGE value="install bcrypt" />
+    <MESSAGE value="Create EmployeeController" />
+    <MESSAGE value="Create controller" />
+    <MESSAGE value="Update BranchController.js, EmployeeController.js, routes" />
+    <MESSAGE value="update models customer.js, order.js, delivery.js" />
+    <MESSAGE value="update model parcel.js" />
+    <MESSAGE value="update routes index_route.js, order_route.js" />
+    <MESSAGE value="update controllers EmployeeController.js, OrderController.js" />
+    <MESSAGE value="Update Customer" />
+    <MESSAGE value="Update Employee" />
+    <MESSAGE value="Update Delivery" />
+    <MESSAGE value="Update index_route.js" />
+    <MESSAGE value="Fix schema" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix schema" />
   </component>
 </project>
