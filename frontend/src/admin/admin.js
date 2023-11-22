@@ -7,6 +7,8 @@ import CreateAccount from "../CreateAccount/createAccount.js";
 import "./admin.css";
 import DesktopHeader from "./DesktopHeader.js";
 import MobileHeader from "./MobileHeader.js";
+import PaymentForm from "./paymentForm.js";
+
 const Admin = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
 
@@ -25,6 +27,7 @@ const Admin = () => {
           <Route path="/admin/Dashboard" element={<Dashboard/>}/>
           <Route path="/admin/AccountManagement" element={<AccountManagement/>}/>
           <Route path="/admin/CreateAccount" element={<CreateAccount />} />
+          <Route path="/admin/PaymentForm" element={<PaymentForm />}/>
         </Routes>
         <Outlet />
       </div>
