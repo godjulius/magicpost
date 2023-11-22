@@ -7,9 +7,7 @@ function CreateAccount() {
     password: "",
     firstName: "",
     lastName: "",
-    day: "",
-    month: "",
-    year: "",
+    birthDate: "", // Giữ giá trị ngày tháng năm dưới dạng chuỗi YYYY-MM-DD
   });
 
   const [provinces, setProvinces] = useState([]);
@@ -36,8 +34,23 @@ function CreateAccount() {
     });
   };
 
+  const parseBirthDate = () => {
+    // Chia chuỗi ngày tháng năm thành mảng
+    const dateArray = formData.birthDate.split("-");
+    
+    // Cập nhật giá trị day, month, year trong formData
+    setFormData({
+      ...formData,
+      day: dateArray[2],
+      month: dateArray[1],
+      year: dateArray[0],
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    parseBirthDate();
 
     try {
       {
