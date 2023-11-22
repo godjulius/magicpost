@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 function CreateAccount() {
@@ -12,6 +11,23 @@ function CreateAccount() {
     month: "",
     year: "",
   });
+
+  const [provinces, setProvinces] = useState([]);
+
+  useEffect(() => {
+    const fetchProvinces = async () => {
+      try {
+        const response = await axios.get(
+          "https://provinces.open-api.vn/api/?depth=1"
+        );
+        setProvinces(response.data);
+      } catch (error) {
+        console.error("Error fetching provinces:", error);
+      }
+    };
+
+    fetchProvinces();
+  }, []);
 
   const handleChange = (e) => {
     setFormData({
@@ -162,76 +178,46 @@ function CreateAccount() {
 
               <div className="mb-4">
                 <label
+                  htmlFor="province"
+                  className="block mb-2 text-sm font-medium text-gray-900"
+                >
+                  Province
+                </label>
+                <select
+                  id="province"
+                  name="province"
+                  className="bg-gray-100 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                  value={formData.province}
+                  onChange={handleChange}
+                  required=""
+                >
+                  <option value="" disabled selected>
+                    Select Province
+                  </option>
+                  {provinces.map((province) => (
+                    <option key={province.code} value={province.name}>
+                      {province.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="mb-4">
+                <label
                   htmlFor="birthdate"
                   className="block mb-2 text-sm font-medium text-gray-900"
                 >
                   Birth Date
                 </label>
-                <div className="md:flex space-x-2">
-                  <div className="flex-1">
-                    <select
-                      id="day"
-                      name="day"
-                      className="bg-gray-100 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                      value={formData.day}
-                      onChange={handleChange}
-                      required=""
-                    >
-                      <option value="" disabled selected>
-                        Day
-                      </option>
-                      {Array.from({ length: 31 }, (_, i) => i + 1).map(
-                        (day) => (
-                          <option key={day} value={day}>
-                            {day}
-                          </option>
-                        )
-                      )}
-                    </select>
-                  </div>
-                  <div className="flex-1">
-                    <select
-                      id="month"
-                      name="month"
-                      className="bg-gray-100 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                      value={formData.month}
-                      onChange={handleChange}
-                      required=""
-                    >
-                      <option value="" disabled selected>
-                        Month
-                      </option>
-                      {Array.from({ length: 12 }, (_, i) => i + 1).map(
-                        (month) => (
-                          <option key={month} value={month}>
-                            {month}
-                          </option>
-                        )
-                      )}
-                    </select>
-                  </div>
-                  <div className="flex-1">
-                    <select
-                      id="year"
-                      name="year"
-                      className="bg-gray-100 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                      value={formData.year}
-                      onChange={handleChange}
-                      required=""
-                    >
-                      <option value="" disabled selected>
-                        Year
-                      </option>
-                      {Array.from({ length: 123 }, (_, i) => 1900 + i).map(
-                        (year) => (
-                          <option key={year} value={year}>
-                            {year}
-                          </option>
-                        )
-                      )}
-                    </select>
-                  </div>
-                </div>
+                <input
+                  type="date"
+                  id="birthdate"
+                  name="birthDate"
+                  className="bg-gray-100 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                  value={formData.birthDate}
+                  onChange={handleChange}
+                  required=""
+                />
               </div>
 
               <button
