@@ -17,7 +17,7 @@ const PaymentForm = () => {
       tinh: "",
       quanhuyen: "",
     },
-    consignment: {
+    parcel: {
       type: "",
       weight: 0,
       postage: 0,
@@ -108,16 +108,32 @@ const PaymentForm = () => {
     // console.log(temp);
     setPayment(temp);
   };
+  const handleSenderTelChange = (event) => {
+    const temp = {
+      ...payment,
+      sender: {
+        ...payment.sender,
+        tel: event.target.value,
+      }
+    }
+    // console.log(event.target.value);
+    setPayment(temp);
+  }
+  const handleReceiverTelChange = (event) => {
+    const temp = {
+      ...payment,
+      receiver: {
+        ...payment.receiver,
+        tel: event.target.value,
+      }
+    }
+    // console.log(event.target.value);
+    setPayment(temp);
+  }
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(payment);
     // Call api gửi dữ liệu lên server
-  };
-
-  const [selectedCity, setSelectedCity] = useState("");
-  const handleCityChange = (event) => {
-    setSelectedCity(event.target.value);
-    console.log(selectedCity, event.target.value);
   };
 
   return (
@@ -166,6 +182,7 @@ const PaymentForm = () => {
                   required
                   placeholder="Số điện thoại người gửi"
                   aria-label="senderPhoneNumber"
+                  onChange={handleSenderTelChange}
                 />
               </div>
               {isLoadingCitiesList || (
@@ -266,6 +283,7 @@ const PaymentForm = () => {
                   required
                   placeholder="Số điện thoại người gửi"
                   aria-label="receiverPhoneNumber"
+                  onChange={handleReceiverTelChange}
                 />
               </div>
               {isLoadingCitiesList || (
@@ -354,17 +372,17 @@ const PaymentForm = () => {
               <div className="mt-2">
                 <label
                   className="block text-sm text-gray-600"
-                  htmlFor="consignmentWeight"
+                  htmlFor="parcelWeight"
                 >
                   Khối lượng(g):
                 </label>
                 <input
                   className="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded"
-                  id="consignmentWeight"
-                  name="consignmentWeight"
+                  id="parcelWeight"
+                  name="parcelWeight"
                   type="number"
                   placeholder="Khối lượng hàng gửi(mặc định tài liệu khối lượng là 0g)"
-                  aria-label="consignmentWeight"
+                  aria-label="parcelWeight"
                 />
               </div>
               <div className="mt-2">
