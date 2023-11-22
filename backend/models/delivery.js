@@ -6,6 +6,22 @@ const Delivery = function (sequelize, Sequelize) {
             autoIncrement: true,
             primaryKey: true,
         },
+        src_branch_id: {
+            type: Sequelize.BIGINT.UNSIGNED,
+            allowNull: false,
+            references: {
+                model: "branch",
+                key: "branch_id",
+            },
+        },
+        des_branch_id: {
+            type: Sequelize.BIGINT.UNSIGNED,
+            allowNull: false,
+            references: {
+                model: "branch",
+                key: "branch_id",
+            }
+        },
         sender_id: {
             type: Sequelize.BIGINT.UNSIGNED,
             allowNull: true,
@@ -32,7 +48,7 @@ const Delivery = function (sequelize, Sequelize) {
         },
         status: {
             type: Sequelize.TINYINT(1),
-            allowNull: false, // 0: pending, 1: delivering, 2: delivered
+            allowNull: false, // 0: pending, 1: delivering, 2: delivered, 3: return
         },
     }, {
         sequelize,
@@ -60,7 +76,21 @@ const Delivery = function (sequelize, Sequelize) {
                 fields: [
                     {name: "sender_id",},
                 ],
-            }
+            }, {
+                name: "delivery_src_branch_id_foreign",
+                using: "BTREE",
+                unique: false,
+                fields: [
+                    {name: "src_branch_id",},
+                ],
+            }, {
+                name: "delivery_des_branch_id_foreign",
+                using: "BTREE",
+                unique: false,
+                fields: [
+                    {name: "des_branch_id",},
+                ],
+            },
         ]
     })
 }
