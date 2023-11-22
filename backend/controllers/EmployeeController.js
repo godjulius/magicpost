@@ -66,7 +66,7 @@ class EmployeeController {
         const first_name = req.body.firstName;
         const last_name = req.body.lastName;
         const day = req.body.day;
-        const month = req.body.day;
+        const month = req.body.month;
         const year = req.body.year;
         const dob = new Date(year, month - 1, day);
         const branchId = 1;
