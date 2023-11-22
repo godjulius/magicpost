@@ -139,7 +139,7 @@ class EmployeeController {
             req.session.isLogin = true;
             req.session.employeeId = employee.employee_id;
             req.session.roleId = employee.role_id;
-            req.branchId = employee.branch_id;
+            req.session.branchId = employee.branch_id;
             console.log(req.session);
             return res.status(200).json(
                 {
