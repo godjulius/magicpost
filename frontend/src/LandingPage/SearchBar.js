@@ -41,16 +41,16 @@ export default function SearchBar() {
               required
               onChange={handleChange}
             />
+              <Link to="admin">              
             <button
               type="submit"
               className="w-full md:w-auto px-6 py-3 bg-orange_cus-500 border-black-500 text-white fill-white active:scale-95 duration-100 border will-change-transform overflow-hidden relative rounded-2xl transition-all"
             >
-              <Link to="admin">              
               <div className="flex items-center transition-all opacity-1">
                 <img src="./asset/search-white.png" className="w-4"></img>
               </div>
-              </Link>
             </button>
+              </Link>
           </label>
         </form>
       </div>

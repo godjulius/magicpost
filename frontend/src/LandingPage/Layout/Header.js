@@ -101,11 +101,11 @@ const Header = () => {
             {/* <a href="/" className="text-black-600 mx-2 sm:mx-4 capitalize tracking-wide hover:text-orange_cus-500 transition-all">
                   Sign In
               </a> */}
-            <ButtonOutline>
               <Link to="/SignIn">
+            <ButtonOutline>
                 Sign In
-              </Link>
             </ButtonOutline>
+              </Link>
           </div>
         </nav>
       </header>
