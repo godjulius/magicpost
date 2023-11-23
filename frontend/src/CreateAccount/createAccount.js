@@ -12,7 +12,7 @@ function CreateAccount() {
     month: "",
     year: "",
     phone: "",
-    province: "",
+    address: "",
   });
 
   useEffect(() => {
@@ -36,21 +36,21 @@ function CreateAccount() {
     updateDays();
   }, [formData.month, formData.year]);
 
-  const [provinces, setProvinces] = useState([]);
+  const [address, setAddress] = useState([]);
 
   useEffect(() => {
-    const fetchProvinces = async () => {
+    const fetchAddress = async () => {
       try {
         const response = await axios.get(
           "https://provinces.open-api.vn/api/?depth=1"
         );
-        setProvinces(response.data);
+        setAddress(response.data);
       } catch (error) {
-        console.error("Error fetching provinces:", error);
+        console.error("Error fetching address:", error);
       }
     };
 
-    fetchProvinces();
+    fetchAddress();
   }, []);
 
   const handleChange = (e) => {
@@ -64,7 +64,6 @@ function CreateAccount() {
     e.preventDefault();
 
     try {
-      {
         const response = await axios.post(
           "http://localhost:3000/employee/create",
           formData
@@ -72,14 +71,13 @@ function CreateAccount() {
         console.log("Registration successful:", response.data);
         alert("Registration successful");
         window.location.href = "/admin/AccountManagement";
-      }
     } catch (error) {
       console.error("Registration failed:", error.response.data);
     }
   };
 
   return (
-    <section className="bg-gray-100 w-full h-screen overflow-x-hidden mt-8 mb-8">
+    <section className="bg-gray-100 w-full h-screen overflow-x-hidden mt-8 mb-8 font-custom-sans-serif">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
         <div className="w-full bg-white rounded-lg shadow border md:mt-0 sm:max-w-md xl:p-0">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -105,7 +103,7 @@ function CreateAccount() {
                     id="firstName"
                     className="bg-gray-100 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                     placeholder="First Name"
-                    value={formData.firstName}
+                    // value={formData.firstName}
                     onChange={handleChange}
                     required=""
                   />
@@ -123,7 +121,7 @@ function CreateAccount() {
                     id="lastName"
                     className="bg-gray-100 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                     placeholder="Last Name"
-                    value={formData.lastName}
+                    // value={formData.lastName}
                     onChange={handleChange}
                     required=""
                   />
@@ -142,7 +140,7 @@ function CreateAccount() {
                   id="email"
                   className="bg-gray-100 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                   placeholder="name@company.com"
-                  value={formData.email}
+                  // value={formData.email}
                   onChange={handleChange}
                   required=""
                 />
@@ -160,7 +158,7 @@ function CreateAccount() {
                   id="phone"
                   className="bg-gray-100 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                   placeholder="Phone Number"
-                  value={formData.phone}
+                  // value={formData.phone}
                   onChange={handleChange}
                   required=""
                 />
@@ -178,7 +176,7 @@ function CreateAccount() {
                   id="password"
                   placeholder="••••••••"
                   className="bg-gray-100 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                  value={formData.password}
+                  // value={formData.password}
                   onChange={handleChange}
                   required=""
                 />
@@ -202,26 +200,26 @@ function CreateAccount() {
 
               <div className="mb-4">
                 <label
-                  htmlFor="province"
+                  htmlFor="address"
                   className="block mb-2 text-sm font-medium text-gray-900"
                 >
-                  Province
+                  Address
                 </label>
                 <select
-                  id="province"
-                  name="province"
+                  id="address"
+                  name="address"
                   className="bg-gray-100 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                  value={formData.province}
+                  // value={formData.address}
                   onChange={handleChange}
                   required=""
-                  defaultValue=""
+                  defaultValue="default"
                 >
-                  <option value="" disabled>
-                    Select Province
+                  <option value="default" disabled hidden>
+                    Select Address
                   </option>
-                  {provinces.map((province) => (
-                    <option key={province.code} value={province.name}>
-                      {province.name}
+                  {address.map((address) => (
+                    <option key={address.code} value={address.name}>
+                      {address.name}
                     </option>
                   ))}
                 </select>
@@ -241,10 +239,10 @@ function CreateAccount() {
                       id="year"
                       name="year"
                       className="bg-gray-100 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                      value={formData.year}
+                      // value={formData.year}
                       onChange={handleChange}
                       required=""
-                      defaultValue=""
+                      defaultValue="Year"
                     >
                       <option value="" disabled>
                         Year
@@ -263,10 +261,10 @@ function CreateAccount() {
                       id="month"
                       name="month"
                       className="bg-gray-100 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                      value={formData.month}
+                      // value={formData.month}
                       onChange={handleChange}
                       required=""
-                      defaultValue=""
+                      defaultValue="Month"
                     >
                       <option value="" disabled>
                         Month
@@ -285,10 +283,10 @@ function CreateAccount() {
                       id="day"
                       name="day"
                       className="bg-gray-100 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                      value={formData.day}
+                      // value={formData.day}
                       onChange={handleChange}
                       required=""
-                      defaultValue=""
+                      defaultValue="Day"
                     >
                       <option value="" disabled>
                         Day
