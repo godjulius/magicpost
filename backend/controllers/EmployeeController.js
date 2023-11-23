@@ -66,12 +66,12 @@ class EmployeeController {
         const first_name = req.body.firstName;
         const last_name = req.body.lastName;
         const day = req.body.day;
-        const month = req.body.day;
+        const month = req.body.month;
         const year = req.body.year;
         const dob = new Date(year, month - 1, day);
         const branchId = 1;
-        const address = "Vietnam";
-        const phone = "03679298";
+        const address = req.body.address;
+        const phone = req.body.phone;
         const roleId = 1;
         console.log(req.body);
 
