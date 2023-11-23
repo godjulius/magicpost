@@ -22,6 +22,10 @@ const Parcel = function (sequelize, Sequelize) {
             type: Sequelize.INTEGER,
             allowNull: false,
         },
+        type: {
+            type: Sequelize.TINYINT(1),
+            allowNull: false,
+        },
         details: {
             type: Sequelize.STRING,
             allowNull: false,
