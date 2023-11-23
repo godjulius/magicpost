@@ -2,13 +2,39 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 function CreateAccount() {
+  const [daysInMonth, setDaysInMonth] = useState(31);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     firstName: "",
     lastName: "",
-    birthDate: "", // Giữ giá trị ngày tháng năm dưới dạng chuỗi YYYY-MM-DD
+    day: "",
+    month: "",
+    year: "",
+    phone: "",
+    province: "",
   });
+
+  useEffect(() => {
+    // Update days when the month or year changes
+    const updateDays = () => {
+      const selectedMonth = parseInt(formData.month, 10);
+      const selectedYear = parseInt(formData.year, 10);
+
+      let daysInMonth = 31;
+
+      if (selectedMonth === 2) {
+        // Check for leap year
+        daysInMonth = (selectedYear % 4 === 0 && selectedYear % 100 !== 0) || selectedYear % 400 === 0 ? 29 : 28;
+      } else if ([4, 6, 9, 11].includes(selectedMonth)) {
+        daysInMonth = 30;
+      }
+
+      setDaysInMonth(daysInMonth);
+    };
+
+    updateDays();
+  }, [formData.month, formData.year]);
 
   const [provinces, setProvinces] = useState([]);
 
@@ -34,23 +60,8 @@ function CreateAccount() {
     });
   };
 
-  const parseBirthDate = () => {
-    // Chia chuỗi ngày tháng năm thành mảng
-    const dateArray = formData.birthDate.split("-");
-    
-    // Cập nhật giá trị day, month, year trong formData
-    setFormData({
-      ...formData,
-      day: dateArray[2],
-      month: dateArray[1],
-      year: dateArray[0],
-    });
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    parseBirthDate();
 
     try {
       {
@@ -203,8 +214,9 @@ function CreateAccount() {
                   value={formData.province}
                   onChange={handleChange}
                   required=""
+                  defaultValue=""
                 >
-                  <option value="" disabled selected>
+                  <option value="" disabled>
                     Select Province
                   </option>
                   {provinces.map((province) => (
@@ -222,15 +234,75 @@ function CreateAccount() {
                 >
                   Birth Date
                 </label>
-                <input
-                  type="date"
-                  id="birthdate"
-                  name="birthDate"
-                  className="bg-gray-100 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                  value={formData.birthDate}
-                  onChange={handleChange}
-                  required=""
-                />
+                <div className="md:flex space-x-2">
+                  
+                  <div className="flex-1">
+                    <select
+                      id="year"
+                      name="year"
+                      className="bg-gray-100 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                      value={formData.year}
+                      onChange={handleChange}
+                      required=""
+                      defaultValue=""
+                    >
+                      <option value="" disabled>
+                        Year
+                      </option>
+                      {Array.from({ length: 73 }, (_, i) => 1950 + i).map(
+                        (year) => (
+                          <option key={year} value={year}>
+                            {year}
+                          </option>
+                        )
+                      )}
+                    </select>
+                  </div>
+                  <div className="flex-1">
+                    <select
+                      id="month"
+                      name="month"
+                      className="bg-gray-100 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                      value={formData.month}
+                      onChange={handleChange}
+                      required=""
+                      defaultValue=""
+                    >
+                      <option value="" disabled>
+                        Month
+                      </option>
+                      {Array.from({ length: 12 }, (_, i) => i + 1).map(
+                        (month) => (
+                          <option key={month} value={month}>
+                            {month}
+                          </option>
+                        )
+                      )}
+                    </select>
+                  </div>
+                  <div className="flex-1">
+                    <select
+                      id="day"
+                      name="day"
+                      className="bg-gray-100 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                      value={formData.day}
+                      onChange={handleChange}
+                      required=""
+                      defaultValue=""
+                    >
+                      <option value="" disabled>
+                        Day
+                      </option>
+                      {Array.from({ length: daysInMonth }, (_, i) => i + 1).map(
+                        (day) => (
+                          <option key={day} value={day}>
+                            {day}
+                          </option>
+                        )
+                      )}
+                    </select>
+                  </div>
+                </div>
               </div>
 
               <button
@@ -248,3 +320,4 @@ function CreateAccount() {
 }
 
 export default CreateAccount;
+

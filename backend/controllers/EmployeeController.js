@@ -70,8 +70,8 @@ class EmployeeController {
         const year = req.body.year;
         const dob = new Date(year, month - 1, day);
         const branchId = 1;
-        const address = "Vietnam";
-        const phone = "03679298";
+        const address = req.body.province;
+        const phone = req.body.phone;
         const roleId = 1;
         console.log(req.body);
 
