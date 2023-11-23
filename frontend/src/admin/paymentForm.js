@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 const submitURL = "";
-
+const apiProvincesURL = "https://provinces.open-api.vn/api/?depth=2";
 const PaymentForm = () => {
   const [payment, setPayment] = useState({
     sender: {
@@ -34,7 +34,7 @@ const PaymentForm = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://provinces.open-api.vn/api/?depth=2"
+          apiProvincesURL
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -163,17 +163,37 @@ const PaymentForm = () => {
     };
     setPayment(temp);
   };
+  const handleTypeChange = (event) => {
+    const temp = {
+      ...payment,
+      parcel: {
+        ...payment.parcel,
+        type: event.target.value.toLowerCase(),
+      }
+    }
+    setPayment(temp);
+  }
+  const handleWeightChange = (event) => {
+    const temp = {
+      ...payment,
+      parcel: {
+        ...payment.parcel,
+        weight: event.target.value,
+      }
+    }
+    setPayment(temp);
+  }
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(payment);
     // Call api gửi dữ liệu lên server
 
-    try {
-      const response = await axios.post(submitURL, payment);
-      console.log("Submit success", response.data);
-    } catch (err) {
-      console.error("Submit fail", err.response.data);
-    }
+    // try {
+    //   const response = await axios.post(submitURL, payment);
+    //   console.log("Submit success", response.data);
+    // } catch (err) {
+    //   console.error("Submit fail", err.response.data);
+    // }
   };
 
   return (
@@ -403,6 +423,7 @@ const PaymentForm = () => {
                   name="loaiHang"
                   className="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded h-10"
                   defaultValue="default"
+                  onChange={handleTypeChange}
                 >
                   <option value="default" disabled hidden>
                     Loại hàng gửi
@@ -426,6 +447,7 @@ const PaymentForm = () => {
                   type="number"
                   placeholder="Khối lượng hàng gửi(mặc định tài liệu khối lượng là 0g)"
                   aria-label="parcelWeight"
+                  onChange={handleWeightChange}
                 />
               </div>
               <div className="mt-2">
