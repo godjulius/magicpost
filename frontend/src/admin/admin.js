@@ -24,11 +24,13 @@ const Admin = () => {
         <MobileHeader />
         
         <Routes >
-          <Route path="/admin/Dashboard" element={<Dashboard/>}/>
-          <Route path="/admin/AccountManagement" element={<AccountManagement/>}/>
-          <Route path="/admin/CreateAccount" element={<CreateAccount />} />
-          <Route path="/admin/PaymentForm" element={<PaymentForm />}/>
+          {/* comment đống dưới này thì bỏ comment cái <Outlet /> là được */}
+          {/* <Route path="Dashboard" element={<Dashboard/>}/>
+          <Route path="AccountManagement" element={<AccountManagement/>}/>
+          <Route path="CreateAccount" element={<CreateAccount />} />
+          <Route path="PaymentForm" element={<PaymentForm />}/> */}
         </Routes>
+
         <Outlet />
       </div>
     </div>
