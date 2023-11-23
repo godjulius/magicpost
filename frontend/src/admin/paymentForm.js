@@ -1,5 +1,7 @@
-import React from "react";
 import { useState, useEffect } from "react";
+import axios from "axios";
+
+const submitURL = "";
 
 const PaymentForm = () => {
   const [payment, setPayment] = useState({
@@ -85,6 +87,17 @@ const PaymentForm = () => {
     // console.log(temp);
     setPayment(temp);
   };
+  const handleReceiverNameChange = (event) => {
+    const temp = {
+      ...payment,
+      receiver: {
+        ...payment.receiver,
+        name: event.target.value,
+      },
+    };
+    // console.log(temp);
+    setPayment(temp);
+  };
   const handleSenderTinhChange = (event) => {
     const temp = {
       ...payment,
@@ -114,26 +127,53 @@ const PaymentForm = () => {
       sender: {
         ...payment.sender,
         tel: event.target.value,
-      }
-    }
+      },
+    };
     // console.log(event.target.value);
     setPayment(temp);
-  }
+  };
   const handleReceiverTelChange = (event) => {
     const temp = {
       ...payment,
       receiver: {
         ...payment.receiver,
         tel: event.target.value,
-      }
-    }
+      },
+    };
     // console.log(event.target.value);
     setPayment(temp);
-  }
-  const handleSubmit = (event) => {
+  };
+  const handleSenderDetailAddressChange = (event) => {
+    const temp = {
+      ...payment,
+      sender: {
+        ...payment.sender,
+        detailAddress: event.target.value,
+      },
+    };
+    setPayment(temp);
+  };
+  const handleReceiverDetailAddressChange = (event) => {
+    const temp = {
+      ...payment,
+      receiver: {
+        ...payment.receiver,
+        detailAddress: event.target.value,
+      },
+    };
+    setPayment(temp);
+  };
+  const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(payment);
     // Call api gửi dữ liệu lên server
+
+    try {
+      const response = await axios.post(submitURL, payment);
+      console.log("Submit success", response.data);
+    } catch (err) {
+      console.error("Submit fail", err.response.data);
+    }
   };
 
   return (
@@ -240,6 +280,7 @@ const PaymentForm = () => {
                   required=""
                   placeholder="Địa chỉ chi tiết (số nhà, tên đường, phường/xã)"
                   aria-label="senderDetailAddress"
+                  onChange={handleSenderDetailAddressChange}
                 />
               </div>
             </div>
@@ -265,6 +306,7 @@ const PaymentForm = () => {
                   required=""
                   placeholder="Tên người gửi"
                   aria-label="receiverName"
+                  onChange={handleReceiverNameChange}
                 />
               </div>
               <div className="mt-2">
@@ -338,6 +380,7 @@ const PaymentForm = () => {
                   required=""
                   placeholder="Địa chỉ chi tiết (số nhà, tên đường, phường/xã)"
                   aria-label="receiverDetailAddress"
+                  onChange={handleReceiverDetailAddressChange}
                 />
               </div>
             </div>
