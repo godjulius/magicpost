@@ -11,18 +11,12 @@ class OrderController {
                 {
                     model: Customer,
                     required: true,
-                    attributes: [
-                        [sequelize.fn('concat', sequelize.col('first_name'), ' ',
-                            sequelize.col('last_name')), 'customerFullName'],
-                    ],
                 }, {
                     model: Delivery,
                     required: true,
                 }, {
                     model: Employee,
                     required: true,
-                    attributes: [sequelize.fn('concat', sequelize.col('first_name'), ' ',
-                        sequelize.col('last_name')), 'employeeFullName'],
                 }, {
                     model: Parcel,
                     required: true,
@@ -32,41 +26,51 @@ class OrderController {
         return res.status(200).json(orders);
     }
 
-    //GET order/:orderId
-    async getOrderById(req, res, next) {
-        const orders=req.body.ch
-        const order = await Order.findOne({
-            where: {
-                order_id: req.params.orderId,
-            },
-            include: [
-                {
-                    model: Customer,
-                    required: true,
-                    attributes: [
-                        [sequelize.fn('concat', sequelize.col('first_name'), ' ',
-                            sequelize.col('last_name')), 'customerFullName'],
-                    ],
-                }, {
-                    model: Delivery,
-                    required: true,
-                }, {
-                    model: Employee,
-                    required: true,
-                    attributes: [sequelize.fn('concat', sequelize.col('first_name'), ' ',
-                        sequelize.col('last_name')), 'employeeFullName'],
-                }, {
-                    model: Parcel,
-                    required: true,
+    //GET order/tracking
+    async getOrderByIds(req, res, next) {
+        const searchValue = req.body.searchValue;
+        const orderIds = searchValue.split(",");
+        console.log(orderIds);
+        let result = [];
+        for (let orderId of orderIds) {
+            const order = await Order.findOne({
+                where: {
+                    order_id: orderId,
                 },
-            ],
-        });
-        if (!order) {
-            res.status(200).json({
-                msg: `Can't find the order with id ${req.params.orderId}`,
-            })
+                include: [
+                    {
+                        model: Customer,
+                        required: true,
+                        attributes: [
+                            [sequelize.fn("concat", sequelize.col("Customer.first_name"), " ", sequelize.col("Customer.last_name")), "fullName"],
+                        ],
+                    }, {
+                        model: Delivery,
+                        required: true,
+                    }, {
+                        model: Employee,
+                        required: true,
+                        attributes: [
+                            [sequelize.fn("concat", sequelize.col("Employee.first_name"), " ", sequelize.col("Employee.last_name")), "fullName"],
+                        ],
+                    }, {
+                        model: Parcel,
+                        required: true,
+                    },
+                ],
+            });
+            if (!order) {
+                result.push({
+                    msg: `Can't find the order with id ${orderId}`,
+                });
+            } else {
+                result.push({
+                    order: order,
+                    msg: `Tracking successfully!`,
+                });
+            }
         }
-        return res.status(200).json(order);
+        return res.status(200).json(result);
     }
 
     //POST /order/create
