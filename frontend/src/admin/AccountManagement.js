@@ -1,85 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 
 const AccountManagement = () => {
   const [itemsPerPage, setItemsPerPage] = useState(5);
 
-  const [users, setUsers] = useState([
-    {
-      id: 1,
-      username: "John Doe",
-      role: "Admin",
-      createdAt: "2023-01-01",
-      email: "john@example.com",
-      status: "Active",
-    },
-    {
-      id: 2,
-      username: "Jane Doe",
-      role: "User",
-      createdAt: "2023-02-01",
-      email: "jane@example.com",
-      status: "Inactive",
-    },
-    {
-      id: 3,
-      username: "Bob Smith",
-      role: "User",
-      createdAt: "2023-03-01",
-      email: "bob@example.com",
-      status: "Active",
-    },
-    {
-      id: 4,
-      username: "Alice Johnson",
-      role: "Admin",
-      createdAt: "2023-04-01",
-      email: "alice@example.com",
-      status: "Inactive",
-    },
-    {
-      id: 5,
-      username: "Eve Williams",
-      role: "User",
-      createdAt: "2023-05-01",
-      email: "eve@example.com",
-      status: "Active",
-    },
-    {
-      id: 6,
-      username: "New User 1",
-      role: "User",
-      createdAt: "2023-06-01",
-      email: "newuser1@example.com",
-      status: "Active",
-    },
-    {
-      id: 7,
-      username: "New User 2",
-      role: "Admin",
-      createdAt: "2023-07-01",
-      email: "newuser2@example.com",
-      status: "Inactive",
-    },
-    {
-      id: 8,
-      username: "New User 3",
-      role: "User",
-      createdAt: "2023-08-01",
-      email: "newuser3@example.com",
-      status: "Active",
-    },
-  ]);
+  const [employees, setEmployees] = useState([]);
+  const [isLoadingEmployeesList, setIsLoadingEmployeesList] = useState(true);
+
+  useEffect(() => {
+    const fetchEmployees = async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:3000/employee");
+        setEmployees(response.data);
+      } catch (error) {
+        console.error("Error fetching employees:", error);
+      } finally {
+        setIsLoadingEmployeesList(false);
+      }
+    };
+
+    fetchEmployees();
+  }, []);
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  const totalItems = users.length;
+  const totalItems = employees.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-  const deleteUser = (userId) => {
-    const updatedUsers = users.filter((user) => user.id !== userId);
-    setUsers(updatedUsers);
-  };
+  // const deleteEmployee = (employeeId) => {
+  //   const updatedEmployyes = employees.filter(
+  //     (employee) => employee.id !== employeeId
+  //   );
+  //   setEmployees(updatedEmployyes);
+  // };
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
@@ -101,7 +55,7 @@ const AccountManagement = () => {
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentUsers = users.slice(startIndex, endIndex);
+  const currentEmployees = employees.slice(startIndex, endIndex);
 
   return (
     <div className="w-full h-screen overflow-x-hidden border-t flex flex-col">
@@ -167,10 +121,13 @@ const AccountManagement = () => {
           </div>
         </div>
         <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4">
-          <div className="inline-block min-w-full shadow rounded-lg">
-            <table className="min-w-full leading-normal">
+          <div className="bg-white overflow-auto">
+            <table className="min-w-full bg-white leading-normal">
               <thead>
                 <tr>
+                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    Id
+                  </th>
                   <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     User
                   </th>
@@ -178,104 +135,91 @@ const AccountManagement = () => {
                     Rol
                   </th>
                   <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                    Created at
+                    Date of Birth
                   </th>
                   <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Email
                   </th>
                   <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                    Status
+                    Address
                   </th>
-                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  {/* <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Delete
-                  </th>
+                  </th> */}
                 </tr>
               </thead>
-              <tbody>
-                {currentUsers.map((user) => (
-                  <tr
-                    key={user.id}
-                    className={
-                      user.status === "Active" ? "bg-green-100" : "bg-red-100"
-                    }
-                  >
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <p className="text-gray-900 whitespace-no-wrap">
-                        {user.username}
-                      </p>
-                    </td>
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <p className="text-gray-900 whitespace-no-wrap">
-                        {user.role}
-                      </p>
-                    </td>
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <p className="text-gray-900 whitespace-no-wrap">
-                        {user.createdAt}
-                      </p>
-                    </td>
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <p className="text-gray-900 whitespace-no-wrap">
-                        {user.email}
-                      </p>
-                    </td>
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <span
-                        className={`relative inline-block px-3 py-1 font-semibold ${
-                          user.status === "Active"
-                            ? "text-green-900"
-                            : "text-red-900"
-                        } leading-tight`}
-                      >
-                        <span
-                          aria-hidden=""
-                          className={`absolute inset-0 ${
-                            user.status === "Active"
-                              ? "bg-green-200"
-                              : "bg-red-200"
-                          } opacity-50 rounded-full`}
-                        />
-                        <span className="relative">{user.status}</span>
-                      </span>
-                    </td>
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <button
-                        onClick={() => deleteUser(user.id)}
-                        className="text-red-600 hover:text-red-900"
-                      >
-                        DELETE
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
+              {isLoadingEmployeesList || (
+                <tbody>
+                  {currentEmployees.map((employee) => (
+                    <tr key={employee.id}>
+                      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p className="text-gray-900 whitespace-no-wrap">
+                          {employee.employee_id}
+                        </p>
+                      </td>
+                      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p className="text-gray-900 whitespace-no-wrap">
+                          {employee.first_name + " " + employee.last_name}
+                        </p>
+                      </td>
+                      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p className="text-gray-900 whitespace-no-wrap">
+                          {employee.role_id}
+                        </p>
+                      </td>
+                      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p className="text-gray-900 whitespace-no-wrap">
+                          {employee.dob}
+                        </p>
+                      </td>
+                      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p className="text-gray-900 whitespace-no-wrap">
+                          {employee.email}
+                        </p>
+                      </td>
+                      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p className="text-gray-900 whitespace-no-wrap">
+                          {employee.address}
+                        </p>
+                      </td>
+                      {/* <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <button
+                          onClick={() => deleteEmployee(employee.id)}
+                          className="text-red-600 hover:text-red-900"
+                        >
+                          DELETE
+                        </button>
+                      </td> */}
+                    </tr>
+                  ))}
+                </tbody>
+              )}
             </table>
-
-            <div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
-              <span className="text-xs xs:text-sm text-gray-900">
-                Showing {totalItems > 0 ? startIndex + 1 : 0} to{" "}
-                {Math.min(endIndex, totalItems)} of {totalItems} Accounts
-              </span>
-              <div className="inline-flex mt-2 xs:mt-0 pb-6">
-                <button
-                  onClick={handlePrevPage}
-                  className={`text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l ${
-                    currentPage === 1 ? "cursor-not-allowed" : ""
-                  }`}
-                  disabled={currentPage === 1}
-                >
-                  Prev
-                </button>
-                <button
-                  onClick={handleNextPage}
-                  className={`text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r ${
-                    currentPage === totalPages ? "cursor-not-allowed" : ""
-                  }`}
-                  disabled={currentPage === totalPages}
-                >
-                  Next
-                </button>
-              </div>
+          </div>
+          <div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
+            <span className="text-xs xs:text-sm text-gray-900">
+              Showing {totalItems > 0 ? startIndex + 1 : 0} to{" "}
+              {Math.min(endIndex, totalItems)} of {totalItems} Accounts
+            </span>
+            <div className="inline-flex mt-2 xs:mt-0 pb-6">
+              <button
+                onClick={handlePrevPage}
+                className={`text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l ${
+                  currentPage === 1 ? "cursor-not-allowed" : ""
+                }`}
+                disabled={currentPage === 1}
+              >
+                Prev
+              </button>
+              <button
+                onClick={handleNextPage}
+                className={`text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r ${
+                  currentPage === totalPages ? "cursor-not-allowed" : ""
+                }`}
+                disabled={currentPage === totalPages}
+              >
+                Next
+              </button>
             </div>
           </div>
         </div>
