@@ -11,6 +11,7 @@ function CreateAccount() {
     day: "",
     month: "",
     year: "",
+    role_id: "",
     phone: "",
     address: "",
   });
@@ -25,7 +26,11 @@ function CreateAccount() {
 
       if (selectedMonth === 2) {
         // Check for leap year
-        daysInMonth = (selectedYear % 4 === 0 && selectedYear % 100 !== 0) || selectedYear % 400 === 0 ? 29 : 28;
+        daysInMonth =
+          (selectedYear % 4 === 0 && selectedYear % 100 !== 0) ||
+          selectedYear % 400 === 0
+            ? 29
+            : 28;
       } else if ([4, 6, 9, 11].includes(selectedMonth)) {
         daysInMonth = 30;
       }
@@ -36,21 +41,36 @@ function CreateAccount() {
     updateDays();
   }, [formData.month, formData.year]);
 
-  const [address, setAddress] = useState([]);
+  const [addresses, setAddresses] = useState([]);
 
   useEffect(() => {
-    const fetchAddress = async () => {
+    const fetchAddresses = async () => {
       try {
         const response = await axios.get(
           "https://provinces.open-api.vn/api/?depth=1"
         );
-        setAddress(response.data);
+        setAddresses(response.data);
       } catch (error) {
-        console.error("Error fetching address:", error);
+        console.error("Error fetching addresses:", error);
       }
     };
 
-    fetchAddress();
+    fetchAddresses();
+  }, []);
+
+  const [roles, setRoles] = useState([]);
+
+  useEffect(() => {
+    const fetchRoles = async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:3000/role");
+        setRoles(response.data);
+      } catch (error) {
+        console.error("Error fetching roles:", error);
+      }
+    };
+
+    fetchRoles();
   }, []);
 
   const handleChange = (e) => {
@@ -64,13 +84,13 @@ function CreateAccount() {
     e.preventDefault();
 
     try {
-        const response = await axios.post(
-          "http://localhost:3000/employee/create",
-          formData
-        );
-        console.log("Registration successful:", response.data);
-        alert("Registration successful");
-        window.location.href = "/admin/AccountManagement";
+      const response = await axios.post(
+        "http://localhost:3000/employee/create",
+        formData
+      );
+      console.log("Registration successful:", response.data);
+      alert("Registration successful");
+      window.location.href = "/admin/AccountManagement";
     } catch (error) {
       console.error("Registration failed:", error.response.data);
     }
@@ -145,6 +165,7 @@ function CreateAccount() {
                   required=""
                 />
               </div>
+
               <div>
                 <label
                   htmlFor="phone"
@@ -163,6 +184,7 @@ function CreateAccount() {
                   required=""
                 />
               </div>
+
               <div>
                 <label
                   htmlFor="password"
@@ -200,6 +222,36 @@ function CreateAccount() {
 
               <div className="mb-4">
                 <label
+                  htmlFor="role"
+                  className="block mb-2 text-sm font-medium text-gray-900"
+                >
+                  Role
+                </label>
+                <select
+                  id="role"
+                  name="role_id"
+                  className="bg-gray-100 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                  // value={formData.role}
+                  onChange={handleChange}
+                  required=""
+                  defaultValue="default"
+                >
+                  <option value="default" disabled hidden>
+                    Select role
+                  </option>
+                  {roles.map(
+                    (role) =>
+                      role.role_id > 2 && (
+                        <option key={role.role_id} value={role.role_id}>
+                          {role.role_name}
+                        </option>
+                      )
+                  )}
+                </select>
+              </div>
+
+              <div className="mb-4">
+                <label
                   htmlFor="address"
                   className="block mb-2 text-sm font-medium text-gray-900"
                 >
@@ -217,7 +269,7 @@ function CreateAccount() {
                   <option value="default" disabled hidden>
                     Select Address
                   </option>
-                  {address.map((address) => (
+                  {addresses.map((address) => (
                     <option key={address.code} value={address.name}>
                       {address.name}
                     </option>
@@ -233,7 +285,6 @@ function CreateAccount() {
                   Birth Date
                 </label>
                 <div className="md:flex space-x-2">
-                  
                   <div className="flex-1">
                     <select
                       id="year"
@@ -242,9 +293,9 @@ function CreateAccount() {
                       // value={formData.year}
                       onChange={handleChange}
                       required=""
-                      defaultValue="Year"
+                      defaultValue="default"
                     >
-                      <option value="" disabled>
+                      <option value="default" disabled hidden>
                         Year
                       </option>
                       {Array.from({ length: 73 }, (_, i) => 1950 + i).map(
@@ -264,9 +315,9 @@ function CreateAccount() {
                       // value={formData.month}
                       onChange={handleChange}
                       required=""
-                      defaultValue="Month"
+                      defaultValue="default"
                     >
-                      <option value="" disabled>
+                      <option value="default" disabled hidden>
                         Month
                       </option>
                       {Array.from({ length: 12 }, (_, i) => i + 1).map(
@@ -286,9 +337,9 @@ function CreateAccount() {
                       // value={formData.day}
                       onChange={handleChange}
                       required=""
-                      defaultValue="Day"
+                      defaultValue="default"
                     >
-                      <option value="" disabled>
+                      <option value="default" disabled hidden>
                         Day
                       </option>
                       {Array.from({ length: daysInMonth }, (_, i) => i + 1).map(
@@ -318,4 +369,3 @@ function CreateAccount() {
 }
 
 export default CreateAccount;
-

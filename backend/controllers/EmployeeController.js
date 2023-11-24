@@ -72,7 +72,7 @@ class EmployeeController {
         const branchId = 1;
         const address = req.body.address;
         const phone = req.body.phone;
-        const roleId = 1;
+        const roleId = req.body.role_id;
         console.log(req.body);
 
         if (await Employee.findOne({
