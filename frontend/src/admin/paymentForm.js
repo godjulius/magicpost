@@ -6,26 +6,26 @@ const apiProvincesURL = "https://provinces.open-api.vn/api/?depth=2";
 const PaymentForm = () => {
   const [payment, setPayment] = useState({
     sender: {
-      name: "",
-      tel: "",
-      detailAddress: "",
-      tinh: "",
-      quanhuyen: "",
+      name: "", // tach thanh first name + last name
+      phone: "",
+      detailAddress: "", 
+      province: "",
+      district: "",
     },
     receiver: {
-      name: "",
-      tel: "",
+      name: "", // tach thanh first name + last name
+      phone: "",
       detailAddress: "",
-      tinh: "",
-      quanhuyen: "",
+      province: "",
+      district: "",
     },
     parcel: {
-      type: "",
+      type: "", // 0 la thu con 1 la buu kien
       weight: 0,
-      postage: 0,
+      price: 0,
     },
   });
-  // Fetch API tinh thanh pho
+  // Fetch API province thanh pho
   const [codeTinh, setCodeTinh] = useState(0);
   const [codeTinhReceiver, setCodeTinhReceiver] = useState(0);
   const [cities, setCities] = useState(null);
@@ -58,7 +58,7 @@ const PaymentForm = () => {
       ...payment,
       receiver: {
         ...payment.receiver,
-        tinh: cities[event.target.value].name,
+        province: cities[event.target.value].name,
       },
     };
     setCodeTinhReceiver(event.target.value);
@@ -70,7 +70,7 @@ const PaymentForm = () => {
       ...payment,
       receiver: {
         ...payment.receiver,
-        quanhuyen: event.target.value,
+        district: event.target.value,
       },
     };
     // console.log(temp);
@@ -103,7 +103,7 @@ const PaymentForm = () => {
       ...payment,
       sender: {
         ...payment.sender,
-        tinh: cities[event.target.value].name,
+        province: cities[event.target.value].name,
       },
     };
     setCodeTinh(event.target.value);
@@ -115,7 +115,7 @@ const PaymentForm = () => {
       ...payment,
       sender: {
         ...payment.sender,
-        quanhuyen: event.target.value,
+        district: event.target.value,
       },
     };
     // console.log(temp);
@@ -126,7 +126,7 @@ const PaymentForm = () => {
       ...payment,
       sender: {
         ...payment.sender,
-        tel: event.target.value,
+        phone: event.target.value,
       },
     };
     // console.log(event.target.value);
@@ -137,7 +137,7 @@ const PaymentForm = () => {
       ...payment,
       receiver: {
         ...payment.receiver,
-        tel: event.target.value,
+        phone: event.target.value,
       },
     };
     // console.log(event.target.value);
@@ -237,7 +237,7 @@ const PaymentForm = () => {
                   className="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded"
                   id="senderPhoneNumber"
                   name="senderPhoneNumber"
-                  type="tel"
+                  type="phone"
                   pattern="[0-0]{1}[0-9]{9}"
                   required
                   placeholder="Số điện thoại người gửi"
@@ -340,7 +340,7 @@ const PaymentForm = () => {
                   className="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded"
                   id="receiverPhoneNumber"
                   name="receiverPhoneNumber"
-                  type="tel"
+                  type="phone"
                   pattern="[0-0]{1}[0-9]{9}"
                   required
                   placeholder="Số điện thoại người gửi"
@@ -453,17 +453,17 @@ const PaymentForm = () => {
               <div className="mt-2">
                 <label
                   className="block text-sm text-gray-600"
-                  htmlFor="postage"
+                  htmlFor="price"
                 >
                   Cước phí (VND):
                 </label>
                 <input
                   className="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded"
-                  id="postage"
-                  name="postage"
+                  id="price"
+                  name="price"
                   type="number"
                   placeholder="...VND"
-                  aria-label="postage"
+                  aria-label="price"
                 />
               </div>
             </div>
