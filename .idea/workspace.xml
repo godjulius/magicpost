@@ -4,15 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fe14543a-dcbb-4f20-b80e-22afea8270ba" name="Changes" comment="Fix schema">
+    <list default="true" id="fe14543a-dcbb-4f20-b80e-22afea8270ba" name="Changes" comment="Update schema sql">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/DeliveryController.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/DeliveryController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/EmployeeController.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/EmployeeController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/CreateAccount/createAccount.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/CreateAccount/createAccount.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/LandingPage/Layout/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/LandingPage/Layout/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/OrderController.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/OrderController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/models/order.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/order.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/index_route.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/index_route.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/signIn/SignIn.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/signIn/SignIn.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/magicpost_schema.sql" beforeDir="false" afterPath="$PROJECT_DIR$/magicpost_schema.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,26 +61,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "duy1",
-    "ignore.virus.scanning.warn.message": "true",
-    "javascript.nodejs.core.library.configured.version": "19.9.0",
-    "javascript.nodejs.core.library.typings.version": "20.9.0",
-    "last_opened_file_path": "E:/Code/Project/magicpost",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "settings.nodejs",
-    "ts.external.directory.path": "C:\\Users\\Fpt\\AppData\\Local\\Programs\\WebStorm\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;duy1&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;19.9.0&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;20.9.0&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/Code/Project/magicpost&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\Fpt\\AppData\\Local\\Programs\\WebStorm\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\Code\Project\magicpost" />
@@ -121,7 +119,14 @@
       <workItem from="1700620414223" duration="922000" />
       <workItem from="1700634672140" duration="1714000" />
       <workItem from="1700636504805" duration="3487000" />
-      <workItem from="1700667259783" duration="947000" />
+      <workItem from="1700667259783" duration="6101000" />
+      <workItem from="1700708619863" duration="499000" />
+      <workItem from="1700709137362" duration="71000" />
+      <workItem from="1700709226762" duration="41000" />
+      <workItem from="1700709283863" duration="1323000" />
+      <workItem from="1700727027324" duration="3569000" />
+      <workItem from="1700754316912" duration="614000" />
+      <workItem from="1700816309411" duration="1651000" />
     </task>
     <task id="LOCAL-00001" summary="create server">
       <option name="closed" value="true" />
@@ -275,7 +280,47 @@
       <option name="project" value="LOCAL" />
       <updated>1700667598125</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Fix schema">
+      <option name="closed" value="true" />
+      <created>1700668498757</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1700668498757</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Update schema image">
+      <option name="closed" value="true" />
+      <created>1700669887071</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1700669887071</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Use dependency print-js">
+      <option name="closed" value="true" />
+      <created>1700672877735</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1700672877735</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Fix models, add type into parcel.js, add des and src branch id into delivery.js, add references into index.js">
+      <option name="closed" value="true" />
+      <created>1700672966020</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1700672966020</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Update schema sql">
+      <option name="closed" value="true" />
+      <created>1700673079328</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1700673079328</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -308,6 +353,10 @@
     <MESSAGE value="Update Delivery" />
     <MESSAGE value="Update index_route.js" />
     <MESSAGE value="Fix schema" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix schema" />
+    <MESSAGE value="Update schema image" />
+    <MESSAGE value="Use dependency print-js" />
+    <MESSAGE value="Fix models, add type into parcel.js, add des and src branch id into delivery.js, add references into index.js" />
+    <MESSAGE value="Update schema sql" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update schema sql" />
   </component>
 </project>

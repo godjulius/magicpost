@@ -11,18 +11,12 @@ class OrderController {
                 {
                     model: Customer,
                     required: true,
-                    attributes: [
-                        [sequelize.fn('concat', sequelize.col('first_name'), ' ',
-                            sequelize.col('last_name')), 'customerFullName'],
-                    ],
                 }, {
                     model: Delivery,
                     required: true,
                 }, {
                     model: Employee,
                     required: true,
-                    attributes: [sequelize.fn('concat', sequelize.col('first_name'), ' ',
-                        sequelize.col('last_name')), 'employeeFullName'],
                 }, {
                     model: Parcel,
                     required: true,
@@ -32,40 +26,51 @@ class OrderController {
         return res.status(200).json(orders);
     }
 
-    //GET order/:orderId
-    async getOrderById(req, res, next) {
-        const order = await Order.findOne({
-            where: {
-                order_id: req.params.orderId,
-            },
-            include: [
-                {
-                    model: Customer,
-                    required: true,
-                    attributes: [
-                        [sequelize.fn('concat', sequelize.col('first_name'), ' ',
-                            sequelize.col('last_name')), 'customerFullName'],
-                    ],
-                }, {
-                    model: Delivery,
-                    required: true,
-                }, {
-                    model: Employee,
-                    required: true,
-                    attributes: [sequelize.fn('concat', sequelize.col('first_name'), ' ',
-                        sequelize.col('last_name')), 'employeeFullName'],
-                }, {
-                    model: Parcel,
-                    required: true,
+    //GET order/tracking
+    async getOrderByIds(req, res, next) {
+        const searchValue = req.body.searchValue;
+        const orderIds = searchValue.split(",");
+        console.log(orderIds);
+        let result = [];
+        for (let orderId of orderIds) {
+            const order = await Order.findOne({
+                where: {
+                    order_id: orderId,
                 },
-            ],
-        });
-        if (!order) {
-            res.status(200).json({
-                msg: `Can't find the order with id ${req.params.orderId}`,
-            })
+                include: [
+                    {
+                        model: Customer,
+                        required: true,
+                        attributes: [
+                            [sequelize.fn("concat", sequelize.col("Customer.first_name"), " ", sequelize.col("Customer.last_name")), "fullName"],
+                        ],
+                    }, {
+                        model: Delivery,
+                        required: true,
+                    }, {
+                        model: Employee,
+                        required: true,
+                        attributes: [
+                            [sequelize.fn("concat", sequelize.col("Employee.first_name"), " ", sequelize.col("Employee.last_name")), "fullName"],
+                        ],
+                    }, {
+                        model: Parcel,
+                        required: true,
+                    },
+                ],
+            });
+            if (!order) {
+                result.push({
+                    msg: `Can't find the order with id ${orderId}`,
+                });
+            } else {
+                result.push({
+                    order: order,
+                    msg: `Tracking successfully!`,
+                });
+            }
         }
-        return res.status(200).json(order);
+        return res.status(200).json(result);
     }
 
     //POST /order/create
@@ -90,53 +95,61 @@ class OrderController {
         });
 
         //create parcel
-        const branchId = req.session.branchId;
-        const weight = req.body.weight;
+        // const branchId = req.session.branchId;
+        const branchId = 8;
+        const weight = req.body.weight; //kilogram
         const price = req.body.price;
+        const type = req.body.type;
         const details = req.body.details;
         const parcel = await Parcel.create({
             branch_id: branchId,
             weight: weight,
             price: price,
+            type: type,
             details: details,
         });
 
 
         //create delivery
-        const today = await db.sequelize.query("SELECT DATE(NOW()) as today", {type: db.sequelize.QueryTypes.SELECT});
+        const srcBranchId = req.body.srcBranchId;
+        const desBranchId = req.body.desBranchId;
+        const today = new Date();
         const delivery = await Delivery.create({
+            src_branch_id: srcBranchId,
+            des_branch_id: desBranchId,
             receiver_id: branchId,
-            receive_date: today[0].today,
+            receive_date: today,
             status: 0,
         });
 
         //create order
-        const employeeId = req.session.employeeId;
+        // const employeeId = req.session.employeeId;
+        const employeeId = 33;
+        const orderId = generateRandomString();
         const order = await Order.create({
-            order_id: this.generateRandomString(),
+            order_id: orderId,
             customer_id: customer.customer_id,
             delivery_id: delivery.delivery_id,
             parcel_id: parcel.parcel_id,
             employee_id: employeeId,
-            order_date: today[0].today,
+            order_date: today,
         });
         return res.status(200).json({
             msg: "Create order success!",
             order: order,
         });
     }
-
-    generateRandomString() {
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        const length = 10;
-        let randomString = '';
-        for (let i = 0; i < length; ++i) {
-            randomString += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-        return randomString;
-    }
-
-
 }
+
+function generateRandomString() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const length = 10;
+    let randomString = '';
+    for (let i = 0; i < length; ++i) {
+        randomString += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return randomString;
+}
+
 
 module.exports = new OrderController();

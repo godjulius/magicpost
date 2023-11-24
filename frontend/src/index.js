@@ -3,12 +3,15 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import "./tailwind_custom.css";
 
+import Layout from "./LandingPage/Layout/Layout.js";
 import { BrowserRouter } from "react-router-dom";
-import App from "./App.js";
+import CreateAccount from "./CreateAccount/createAccount.js";
+import Admin from "./admin/admin.js";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
-    <App />
+    {/* <Layout /> */}
+    <CreateAccount />
   </BrowserRouter>
 );
 

@@ -22,7 +22,7 @@ const Order = function (sequelize, Sequelize) {
             },
         },
         parcel_id: {
-            type: Sequelize.STRING,
+            type: Sequelize.BIGINT.UNSIGNED,
             allowNull: false,
             references: {
                 model: "parcel",
