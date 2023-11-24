@@ -13,7 +13,7 @@ const Navbar = ({ onTabChange }) => {
   return (
     <aside className="relative bg-sidebar h-screen w-64 hidden sm:block shadow-xl">
       <div className="p-6">
-        <Link to="/admin/Dashboard" className="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</Link>
+        <Link to="/" className="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</Link>
       </div>
       <nav className="text-white text-base font-semibold pt-3">
         <Link
