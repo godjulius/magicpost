@@ -20,13 +20,13 @@ const DesktopHeader = () => {
               className="h-full w-full fixed inset-0 cursor-default"
             ></button>
             <div className="absolute w-32 bg-white rounded-lg shadow-lg py-2 mt-16">
-              <a href="#" className="block px-4 py-2 account-link hover:text-white">
+              <a href="#" className="block px-4 py-2 account-link hover:bg-gray-300">
                 Account
               </a>
-              <a href="#" className="block px-4 py-2 account-link hover:text-white">
+              <a href="#" className="block px-4 py-2 account-link hover:bg-gray-300">
                 Support
               </a>
-              <a href="#" className="block px-4 py-2 account-link hover:text-white">
+              <a href="#" className="block px-4 py-2 account-link hover:bg-gray-300">
                 Sign Out
               </a>
             </div>

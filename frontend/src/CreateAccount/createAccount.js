@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function CreateAccount() {
   const [daysInMonth, setDaysInMonth] = useState(31);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -91,7 +92,8 @@ function CreateAccount() {
       );
       console.log("Registration successful:", response.data);
       alert("Registration successful");
-      window.location.href = "/admin/AccountManagement";
+      // window.location.href = "/admin/AccountManagement";
+      navigate('../AccountManagement')
     } catch (error) {
       console.error("Registration failed:", error.response.data);
     }
