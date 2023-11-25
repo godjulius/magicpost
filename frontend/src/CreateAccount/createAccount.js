@@ -306,8 +306,8 @@ function CreateAccount() {
                 >
                   Birth Date
                 </label>
-                <div className="md:flex space-x-2">
-                  <div className="flex-1">
+                <div className="md:flex">
+                  <div className="flex-1 md:mr-4 md:mb-0 mb-3">
                     <select
                       id="year"
                       name="year"
@@ -329,7 +329,7 @@ function CreateAccount() {
                       )}
                     </select>
                   </div>
-                  <div className="flex-1">
+                  <div className="flex-1 md:mr-4 md:mb-0 mb-3">
                     <select
                       id="month"
                       name="month"
