@@ -5,16 +5,16 @@ const MobileHeader = () => {
 
   return (
     <header className={`w-full bg-gray-100 py-5 px-6 sm:hidden`}>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between h-8">
         <Link
           to="/"
           className="text-gray-500 text-3xl font-semibold uppercase hover:text-gray-700"
         >
-          <img src="./asset/Logo.png" alt="LOGO" className="h-8"></img>
+          <img src="./asset/Logo.png" alt="LOGO" className="h-12 py-0 px-0"></img>
         </Link>
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="text-white text-3xl focus:outline-none"
+          className="text-gray-600 text-3xl focus:outline-none"
         >
           <i
             style={{ display: !isOpen ? "block" : "none" }}
@@ -31,21 +31,21 @@ const MobileHeader = () => {
       <nav className={`flex flex-col pt-4 ${isOpen ? "flex" : "hidden"}`}>
         <Link
           to="/admin/Dashboard"
-          className="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item"
+          className="flex items-center text-gray-600 opacity-75 hover:opacity-100 py-2 pl-4 nav-item"
         >
           <i className="fas fa-tachometer-alt mr-3"></i>
           Dashboard
         </Link>
         <Link
           to="/admin/AccountManagement"
-          className="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item"
+          className="flex items-center text-gray-600 opacity-75 hover:opacity-100 py-2 pl-4 nav-item"
         >
           <i className="fas fa-table mr-3"></i>
           Tables
         </Link>
         <Link
           to="/admin/PaymentForm"
-          className="flex items-center text-white py-2 pl-4 nav-item"
+          className="flex items-center text-gray-600 py-2 pl-4 nav-item"
         >
           <i className="fas fa-align-left mr-3"></i>
           Blank Page
