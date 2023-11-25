@@ -34,6 +34,8 @@ db.models.Employee = require("./employee")(sequelize, Sequelize);
 db.models.Delivery = require("./delivery")(sequelize, Sequelize);
 db.models.Customer = require("./customer")(sequelize, Sequelize);
 db.models.Branch = require("./branch")(sequelize, Sequelize);
+db.models.Status = require("./status")(sequelize, Sequelize);
+db.models.ParcelType = require("./parcelType")(sequelize, Sequelize);
 
 db.models.Employee.belongsTo(db.models.Role, {foreignKey: "role_id"});
 db.models.Role.hasMany(db.models.Employee, {foreignKey: "role_id"});
@@ -56,12 +58,6 @@ db.models.Branch.hasMany(db.models.Branch, {foreignKey: "hub_id"});
 db.models.Order.belongsTo(db.models.Delivery, {foreignKey: "delivery_id"});
 db.models.Delivery.hasOne(db.models.Order, {foreignKey: "delivery_id"});
 
-db.models.Delivery.belongsTo(db.models.Branch, {foreignKey: "src_branch_id"});
-db.models.Branch.hasMany(db.models.Delivery, {foreignKey: "src_branch_id"});
-
-db.models.Delivery.belongsTo(db.models.Branch, {foreignKey: "des_branch_id"});
-db.models.Branch.hasMany(db.models.Delivery, {foreignKey: "des_branch_id"});
-
 db.models.Delivery.belongsTo(db.models.Branch, {foreignKey: "sender_id"});
 db.models.Branch.hasMany(db.models.Delivery, {foreignKey: "sender_id"});
 
@@ -73,5 +69,11 @@ db.models.Parcel.hasOne(db.models.Order, {foreignKey: "parcel_id"});
 
 db.models.Parcel.belongsTo(db.models.Branch, {foreignKey: "branch_id"});
 db.models.Branch.hasMany(db.models.Parcel, {foreignKey: "branch_id"});
+
+db.models.Delivery.belongsTo(db.models.Status, {foreignKey: "status_id"});
+db.models.Status.hasMany(db.models.Delivery, {foreignKey: "status_id"});
+
+db.models.Parcel.belongsTo(db.models.ParcelType, {foreignKey: "type_id"});
+db.models.ParcelType.hasMany(db.models.Parcel, {foreignKey: "type_id"});
 
 module.exports = db;
