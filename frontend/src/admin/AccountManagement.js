@@ -58,7 +58,7 @@ const AccountManagement = () => {
   const currentEmployees = employees.slice(startIndex, endIndex);
 
   return (
-    <div className="w-full h-screen overflow-x-hidden border-t flex flex-col">
+    <div className="w-full h-screen overflow-x-hidden border-t flex flex-col font-custom-sans-serif">
       <main className="w-full flex-grow p-6">
         <div>
           <h1 className="text-3xl font-semibold mb-4">User Table</h1>
