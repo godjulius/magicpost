@@ -4,13 +4,13 @@ const MobileHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className={`w-full bg-sidebar py-5 px-6 sm:hidden`}>
+    <header className={`w-full bg-gray-100 py-5 px-6 sm:hidden`}>
       <div className="flex items-center justify-between">
         <Link
-          to="/admin/Dashboard"
-          className="text-white text-3xl font-semibold uppercase hover:text-gray-300"
+          to="/"
+          className="text-gray-500 text-3xl font-semibold uppercase hover:text-gray-700"
         >
-          Admin
+          <img src="./asset/Logo.png" alt="LOGO" className="h-8"></img>
         </Link>
         <button
           onClick={() => setIsOpen(!isOpen)}
