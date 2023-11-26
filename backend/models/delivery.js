@@ -32,8 +32,8 @@ const Delivery = function (sequelize, Sequelize) {
         },
         status_id: {
             type: Sequelize.TINYINT(1),
-            allowNull: false, // 0: pending, 1: delivering, 2: delivered, 3: return
-            defaultValue: 0,
+            allowNull: false, // 1: pending, 2: delivering, 3: delivered, 4: return
+            defaultValue: 1,
         },
     }, {
         sequelize,
