@@ -15,6 +15,33 @@ class BranchController {
         return res.status(200).json(branches);
     }
 
+    //POST /branch/create
+    async createBranch(req, res, next) {
+        const {managerId, branchName, province, district, detailAddress, isHub} = req.body;
+        const newBranch = async () => {
+            if (isHub === 1) {
+                return await Branch.create({
+                    manager_id: managerId,
+                    branch_name: branchName,
+                    location: `${detailAddress}, ${district}, ${province}`,
+                    is_hub: isHub,
+                    hub_id: req.body.hubId,
+                });
+            } else {
+                const branch = await Branch.create({
+                    manager_id: managerId,
+                    branch_name: branchName,
+                    location: `${detailAddress}, ${district}, ${province}`,
+                    is_hub: isHub,
+                });
+            }
+        }
+        return res.status(200).json({
+            msg: "Create branch successfully",
+            branch: newBranch(),
+        })
+    }
+
     //GET /branch/:branchId
     async getBranchById(req, res, next) {
         const branchId = req.params.branchId;

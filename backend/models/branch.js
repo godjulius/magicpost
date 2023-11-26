@@ -16,7 +16,7 @@ const Branch = function (sequelize, Sequelize) {
         },
         hub_id: { // Các điểm giao dịch có cùng điểm tập kết sẽ có hub_id giống nhau, phân biệt bằng is_hub
             type: Sequelize.BIGINT.UNSIGNED,
-            allowNull: false,
+            allowNull: true,
             references: {
                 model: "branch",
                 key: "branch_id",

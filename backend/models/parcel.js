@@ -22,7 +22,7 @@ const Parcel = function (sequelize, Sequelize) {
             type: Sequelize.INTEGER,
             allowNull: false,
         },
-        type: {
+        type_id: {
             type: Sequelize.TINYINT(1),
             allowNull: false,
         },
