@@ -23,6 +23,21 @@ const AccountManagement = () => {
     fetchEmployees();
   }, []);
 
+  const [roles, setRoles] = useState([]);
+
+  useEffect(() => {
+    const fetchRoles = async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:3000/role");
+        setRoles(response.data);
+      } catch (error) {
+        console.error("Error fetching roles:", error);
+      }
+    };
+
+    fetchRoles();
+  }, []);
+
   const [currentPage, setCurrentPage] = useState(1);
 
   const totalItems = employees.length;
@@ -164,7 +179,12 @@ const AccountManagement = () => {
                       </td>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p className="text-gray-900 whitespace-no-wrap">
-                          {employee.role_id}
+                          {
+                            roles.map((role) => (
+                              role.role_id === employee.role_id ? role.role_name : ""
+                            ))
+                          // employee.role_id
+                          }
                         </p>
                       </td>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
