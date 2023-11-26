@@ -117,8 +117,8 @@ class EmployeeController {
     async logIn(req, res, next) {
         const employee = await Employee.findOne({
             where: {
-                // email: req.body.email,
-                email: "duy@gmail.com"
+                email: req.body.email,
+                // email: "duy@gmail.com"
             },
         });
         try {

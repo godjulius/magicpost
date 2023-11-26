@@ -1,14 +1,17 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import axios from "axios";
 
-const apiSignInUrl = "";
+const apiSignInUrl = "http://127.0.0.1:3000/login"; 
 
 export default function SignIn() {
   const [account, setAccount] = useState({
     email: "",
     password: "",
   });
+
+  const navigate = useNavigate();
+
 
   const handleChange = (event) => {
     const temp = {
@@ -18,19 +21,34 @@ export default function SignIn() {
     setAccount(temp);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(account);
 
-    // Call api gửi dữ liệu lên server
+    if (!account.email || !account.password) {
+      console.error("Email and password are required.");
+      return;
+    }
 
-    // try {
-    //   const response = await axios.post(apiSignInUrl, payment);
-    //   console.log("Submit success", response.data);
-    // } catch (err) {
-    //   console.error("Submit fail", err.response.data);
-    // }
+    try {
+      // Kiểm tra tài khoản tồn tại trên API
+      const response = await axios.post(apiSignInUrl, account);
+
+      console.log(response.data.role_id) // Xem tài khoản là role nào
+      
+      // Nếu tài khoản tồn tại, kiểm tra role
+      if (response.data.role_id === 1) {
+        // Chuyển hướng đến trang admin
+        navigate("/admin");
+      } else {
+        console.error("Unauthorized access: Not an admin");
+      }
+    } catch (err) {
+      console.error("Submit fail", err.response.data);
+      // Hiển thị thông báo tài khoản không tồn tại hoặc xử lý tương ứng
+    }
   };
+
+  
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
