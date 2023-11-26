@@ -17,6 +17,9 @@ class OrderController {
                 }, {
                     model: Employee,
                     required: true,
+                    attributes: {
+                        exclude: ["password", "address", "dob"],
+                    },
                 }, {
                     model: Parcel,
                     required: true,
@@ -75,17 +78,30 @@ class OrderController {
 
     //POST /order/create
     async createOrder(req, res, next) {
-
+        const {
+            firstName,
+            lastName,
+            province,
+            district,
+            detailAddress,
+            receiverName,
+            receiverProvince,
+            receiverDistrict,
+            phone,
+            typeId,
+            weight,
+            price,
+            details,
+            receiverPhone,
+            receiverDetailAddress
+        } = req.body;
         //create customer
-        const firstName = req.body.firstName;
-        const lastName = req.body.lastName;
-        const address = req.body.address;
         const email = () => {
             if (req.body.email) {
                 return req.body.email;
             }
         }
-        const phone = req.body.phone;
+        const address = `${detailAddress}, ${district}, ${province}`;
         const customer = await Customer.create({
             first_name: firstName,
             last_name: lastName,
@@ -96,35 +112,30 @@ class OrderController {
 
         //create parcel
         // const branchId = req.session.branchId;
-        const branchId = 8;
-        const weight = req.body.weight; //kilogram
-        const price = req.body.price;
-        const type = req.body.type;
-        const details = req.body.details;
+        const branchId = 4;
         const parcel = await Parcel.create({
             branch_id: branchId,
             weight: weight,
             price: price,
-            type: type,
+            type_id: typeId,
             details: details,
         });
 
 
         //create delivery
-        const srcBranchId = req.body.srcBranchId;
-        const desBranchId = req.body.desBranchId;
+        const receiverAddress = `${receiverDetailAddress}, ${receiverDistrict}, ${receiverProvince}`;
         const today = new Date();
         const delivery = await Delivery.create({
-            src_branch_id: srcBranchId,
-            des_branch_id: desBranchId,
             receiver_id: branchId,
             receive_date: today,
-            status: 0,
+            receiver_name: receiverName,
+            receiver_phone: receiverPhone,
+            receiver_address: receiverDetailAddress,
         });
 
         //create order
         // const employeeId = req.session.employeeId;
-        const employeeId = 33;
+        const employeeId = 2;
         const orderId = generateRandomString();
         const order = await Order.create({
             order_id: orderId,
