@@ -1,4 +1,4 @@
-const {models: {Employee, Branch, Customer, Order}} = require("../models");
+const {models: {Employee, Branch, Customer, Order, Role}} = require("../models");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
 const {Op} = require("sequelize");
@@ -49,18 +49,6 @@ class EmployeeController {
 
     //POST /employee/create
     async createAccount(req, res, next) {
-        // const email = req.body.email;
-        // const password = req.body.password;
-        // const first_name = req.body.firstname;
-        // const last_name = req.body.lastname;
-        // const day = req.body.day;
-        // const month = req.body.month;
-        // const year = req.body.year;
-        // const dob = new Date(year, month - 1, day);
-        // const branchId = req.body.branch_id;
-        // const address = req.body.address;
-        // const phone = req.body.phone;
-        // const roleId = req.body.role_id;
         const email = req.body.email;
         const password = req.body.password;
         const first_name = req.body.firstName;
@@ -69,10 +57,10 @@ class EmployeeController {
         const month = req.body.month;
         const year = req.body.year;
         const dob = new Date(year, month - 1, day);
-        const branchId = 1;
+        // const branchId = 1;
         const address = req.body.address;
         const phone = req.body.phone;
-        const roleId = req.body.role_id;
+        const roleId = req.body.roleId;
         console.log(req.body);
 
         if (await Employee.findOne({
@@ -96,7 +84,7 @@ class EmployeeController {
             if (!hashedPw) {
                 throw new Error("Hashed password error");
             }
-            await Employee.create({
+            const employee = await Employee.create({
                 email: email,
                 role_id: roleId,
                 phone: phone,
@@ -105,10 +93,15 @@ class EmployeeController {
                 last_name: last_name,
                 dob: dob,
                 address: address,
-            }).then(() => {
-                return res.status(200).json({
-                    msg: "Create account successfully!",
-                })
+            })
+            return res.status(200).json({
+                msg: "Create account successfully!",
+                employee: {
+                    employee_id: employee.employee_id,
+                    role_id: employee.role_id,
+                    phone: employee.phone,
+                    fullName: `${employee.first_name} ${employee.last_name}`,
+                }
             })
         }
     }
@@ -189,6 +182,24 @@ class EmployeeController {
 
         return res.status(200).json(customers);
     }
+
+    //GET /employee/hubManager
+    async getAllHubManager(req, res, next) {
+        const hubManagers = await Employee.findAll({
+            include: [
+                {
+                    model: Role,
+                    required: true,
+                    where: {
+                        role_name: "Trưởng điểm tập kết",
+                    },
+                },
+            ],
+        });
+        return res.status(200).json(hubManagers);
+    }
+
+    //
 
 }
 
