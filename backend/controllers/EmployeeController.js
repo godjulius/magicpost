@@ -9,7 +9,7 @@ class EmployeeController {
 
     //GET /employee
     async getAllEmployee(req, res, next) {
-        if (req.session.roleId === 0) {
+        if (true) {
             return res.status(200).json(
                 await Employee.findAll()
             );

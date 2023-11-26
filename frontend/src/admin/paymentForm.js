@@ -4,26 +4,21 @@ import axios from "axios";
 const submitURL = "";
 const apiProvincesURL = "https://provinces.open-api.vn/api/?depth=2";
 const PaymentForm = () => {
-  const [payment, setPayment] = useState({
-    sender: {
-      name: "", // tach thanh first name + last name
-      phone: "",
-      detailAddress: "", 
-      province: "",
-      district: "",
-    },
-    receiver: {
-      name: "", // tach thanh first name + last name
-      phone: "",
-      detailAddress: "",
-      province: "",
-      district: "",
-    },
-    parcel: {
-      type: "", // 0 la thu con 1 la buu kien
-      weight: 0,
-      price: 0,
-    },
+
+  const [order, setOrder] = useState({
+    name: "", // tach thanh firstName + lastName
+    phone: "",
+    detailAddress: "",
+    province: "",
+    district: "",
+    receiverName: "",
+    receiverPhone: "",
+    receiverDetailAddress: "",
+    receiverProvince: "",
+    receiverDistrict: "",
+    type: "", // 0 la thu con 1 la buu kien
+    weight: 0,
+    price: 0,
   });
   // Fetch API province thanh pho
   const [codeTinh, setCodeTinh] = useState(0);
@@ -33,9 +28,7 @@ const PaymentForm = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          apiProvincesURL
-        );
+        const response = await fetch(apiProvincesURL);
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -53,143 +46,36 @@ const PaymentForm = () => {
   }, []); // Dependency array is empty, so this effect runs once after the initial render
 
   // Cac Event handlers
-  const handleReceiverTinhChange = (event) => {
-    const temp = {
-      ...payment,
-      receiver: {
-        ...payment.receiver,
-        province: cities[event.target.value].name,
-      },
-    };
-    setCodeTinhReceiver(event.target.value);
-    // console.log(temp);
-    setPayment(temp);
-  };
-  const handleReceiverQuanHuyenChange = (event) => {
-    const temp = {
-      ...payment,
-      receiver: {
-        ...payment.receiver,
-        district: event.target.value,
-      },
-    };
-    // console.log(temp);
-    setPayment(temp);
-  };
-  const handleSenderNameChange = (event) => {
-    const temp = {
-      ...payment,
-      sender: {
-        ...payment.sender,
-        name: event.target.value,
-      },
-    };
-    // console.log(temp);
-    setPayment(temp);
-  };
-  const handleReceiverNameChange = (event) => {
-    const temp = {
-      ...payment,
-      receiver: {
-        ...payment.receiver,
-        name: event.target.value,
-      },
-    };
-    // console.log(temp);
-    setPayment(temp);
-  };
   const handleSenderTinhChange = (event) => {
     const temp = {
-      ...payment,
-      sender: {
-        ...payment.sender,
-        province: cities[event.target.value].name,
-      },
-    };
+      ...order,
+      province: cities[event.target.value].name
+    }
     setCodeTinh(event.target.value);
-    // console.log(temp);
-    setPayment(temp);
+    setOrder(temp);
   };
-  const handleSenderQuanHuyenChange = (event) => {
+  const handleReceiverTinhChange = (event) => {
     const temp = {
-      ...payment,
-      sender: {
-        ...payment.sender,
-        district: event.target.value,
-      },
-    };
-    // console.log(temp);
-    setPayment(temp);
-  };
-  const handleSenderTelChange = (event) => {
-    const temp = {
-      ...payment,
-      sender: {
-        ...payment.sender,
-        phone: event.target.value,
-      },
-    };
-    // console.log(event.target.value);
-    setPayment(temp);
-  };
-  const handleReceiverTelChange = (event) => {
-    const temp = {
-      ...payment,
-      receiver: {
-        ...payment.receiver,
-        phone: event.target.value,
-      },
-    };
-    // console.log(event.target.value);
-    setPayment(temp);
-  };
-  const handleSenderDetailAddressChange = (event) => {
-    const temp = {
-      ...payment,
-      sender: {
-        ...payment.sender,
-        detailAddress: event.target.value,
-      },
-    };
-    setPayment(temp);
-  };
-  const handleReceiverDetailAddressChange = (event) => {
-    const temp = {
-      ...payment,
-      receiver: {
-        ...payment.receiver,
-        detailAddress: event.target.value,
-      },
-    };
-    setPayment(temp);
-  };
-  const handleTypeChange = (event) => {
-    const temp = {
-      ...payment,
-      parcel: {
-        ...payment.parcel,
-        type: event.target.value.toLowerCase(),
-      }
+      ...order,
+      receiverProvince: cities[event.target.value].name
     }
-    setPayment(temp);
-  }
-  const handleWeightChange = (event) => {
+    setCodeTinhReceiver(event.target.value);
+    setOrder(temp);
+  };
+  const handleChange = (event) => {
     const temp = {
-      ...payment,
-      parcel: {
-        ...payment.parcel,
-        weight: event.target.value,
-      }
-    }
-    setPayment(temp);
+      ...order,
+      [event.target.name]: event.target.value
+    };
+    setOrder(temp);
   }
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(payment);
+    console.log(order);
     // Call api gửi dữ liệu lên server
-
+    
     // try {
-    //   const response = await axios.post(submitURL, payment);
+    //   const response = await axios.post(submitURL, paymentt);
     //   console.log("Submit success", response.data);
     // } catch (err) {
     //   console.error("Submit fail", err.response.data);
@@ -217,13 +103,12 @@ const PaymentForm = () => {
                 <input
                   className="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded"
                   id="senderName"
-                  name="senderName"
+                  name="name"
                   type="text"
                   required=""
                   placeholder="Tên người gửi"
-                  aria-label="senderName"
-                  value={payment.sender.name}
-                  onChange={handleSenderNameChange}
+                  aria-label="senderName"                
+                  onChange={handleChange}
                 />
               </div>
               <div className="mt-2">
@@ -236,13 +121,13 @@ const PaymentForm = () => {
                 <input
                   className="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded"
                   id="senderPhoneNumber"
-                  name="senderPhoneNumber"
+                  name="phone"
                   type="phone"
                   pattern="[0-0]{1}[0-9]{9}"
                   required
                   placeholder="Số điện thoại người gửi"
                   aria-label="senderPhoneNumber"
-                  onChange={handleSenderTelChange}
+                  onChange={handleChange}
                 />
               </div>
               {isLoadingCitiesList || (
@@ -255,7 +140,7 @@ const PaymentForm = () => {
                   </label>
                   <select
                     id="senderTinh"
-                    name="senderTinh"
+                    name="province"
                     onChange={handleSenderTinhChange}
                     className="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded h-10"
                     defaultValue="default"
@@ -275,10 +160,10 @@ const PaymentForm = () => {
                 <div className="mt-2">
                   <select
                     id="senderHuyen"
-                    name="senderHuyen"
+                    name="district"
                     className="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded h-10"
                     defaultValue="default"
-                    onChange={handleSenderQuanHuyenChange}
+                    onChange={handleChange}
                   >
                     <option value="default" disabled hidden>
                       Chọn Quận/Huyện
@@ -295,12 +180,12 @@ const PaymentForm = () => {
                 <input
                   className="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded"
                   id="senderDetailAddress"
-                  name="senderDetailAddress"
+                  name="detailAddress"
                   type="text"
                   required=""
                   placeholder="Địa chỉ chi tiết (số nhà, tên đường, phường/xã)"
                   aria-label="senderDetailAddress"
-                  onChange={handleSenderDetailAddressChange}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -326,7 +211,7 @@ const PaymentForm = () => {
                   required=""
                   placeholder="Tên người gửi"
                   aria-label="receiverName"
-                  onChange={handleReceiverNameChange}
+                  onChange={handleChange}
                 />
               </div>
               <div className="mt-2">
@@ -339,13 +224,13 @@ const PaymentForm = () => {
                 <input
                   className="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded"
                   id="receiverPhoneNumber"
-                  name="receiverPhoneNumber"
+                  name="receiverPhone"
                   type="phone"
                   pattern="[0-0]{1}[0-9]{9}"
                   required
                   placeholder="Số điện thoại người gửi"
                   aria-label="receiverPhoneNumber"
-                  onChange={handleReceiverTelChange}
+                  onChange={handleChange}
                 />
               </div>
               {isLoadingCitiesList || (
@@ -353,7 +238,7 @@ const PaymentForm = () => {
                   <label className="block text-sm text-gray-600">Địa chỉ</label>
                   <select
                     id="receiverTinh"
-                    name="receiverTinh"
+                    name="receiverProvince"
                     onChange={handleReceiverTinhChange}
                     className="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded h-10"
                     defaultValue="default"
@@ -373,10 +258,10 @@ const PaymentForm = () => {
                 <div className="mt-2">
                   <select
                     id="receiverHuyen"
-                    name="receiverHuyen"
+                    name="receiverDistrict"
                     className="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded h-10"
                     defaultValue="default"
-                    onChange={handleReceiverQuanHuyenChange}
+                    onChange={handleChange}
                   >
                     <option value="default" disabled hidden>
                       Chọn Quận/Huyện
@@ -400,7 +285,7 @@ const PaymentForm = () => {
                   required=""
                   placeholder="Địa chỉ chi tiết (số nhà, tên đường, phường/xã)"
                   aria-label="receiverDetailAddress"
-                  onChange={handleReceiverDetailAddressChange}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -420,16 +305,16 @@ const PaymentForm = () => {
                 </label>
                 <select
                   id="loaiHang"
-                  name="loaiHang"
+                  name="type"
                   className="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded h-10"
                   defaultValue="default"
-                  onChange={handleTypeChange}
+                  onChange={handleChange}
                 >
                   <option value="default" disabled hidden>
                     Loại hàng gửi
                   </option>
-                  <option value="tai lieu">Tài liệu</option>
-                  <option value="Hàng hóa">Hàng hóa</option>
+                  <option value="1">Tài liệu</option>
+                  <option value="2">Hàng hóa</option>
                 </select>
               </div>
 
@@ -443,18 +328,15 @@ const PaymentForm = () => {
                 <input
                   className="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded"
                   id="parcelWeight"
-                  name="parcelWeight"
+                  name="weight"
                   type="number"
                   placeholder="Khối lượng hàng gửi(mặc định tài liệu khối lượng là 0g)"
                   aria-label="parcelWeight"
-                  onChange={handleWeightChange}
+                  onChange={handleChange}
                 />
               </div>
               <div className="mt-2">
-                <label
-                  className="block text-sm text-gray-600"
-                  htmlFor="price"
-                >
+                <label className="block text-sm text-gray-600" htmlFor="price">
                   Cước phí (VND):
                 </label>
                 <input
