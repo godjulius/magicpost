@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import axios from "axios";
 
-const apiSignInUrl = "http://127.0.0.1:3000/login"; 
+const apiSignInUrl = "http://127.0.0.1:3000/login";
 
 export default function SignIn() {
   const [account, setAccount] = useState({
@@ -10,8 +10,8 @@ export default function SignIn() {
     password: "",
   });
 
+  const [loginError, setLoginError] = useState(null); // Thêm state để theo dõi lỗi đăng nhập
   const navigate = useNavigate();
-
 
   const handleChange = (event) => {
     const temp = {
@@ -19,6 +19,7 @@ export default function SignIn() {
       [event.target.name]: event.target.value,
     };
     setAccount(temp);
+    setLoginError(null);
   };
 
   const handleSubmit = async (event) => {
@@ -33,22 +34,27 @@ export default function SignIn() {
       // Kiểm tra tài khoản tồn tại trên API
       const response = await axios.post(apiSignInUrl, account);
 
-      console.log(response.data.role_id) // Xem tài khoản là role nào
-      
+      console.log(response.data.employee.role_id); // Xem tài khoản là role nào
+
       // Nếu tài khoản tồn tại, kiểm tra role
-      if (response.data.role_id === 1) {
+      if (response.data.employee.role_id === 1) {
         // Chuyển hướng đến trang admin
         navigate("/admin");
       } else {
         console.error("Unauthorized access: Not an admin");
       }
+
+      // Reset trạng thái và thông báo lỗi khi đăng nhập thành công
+      setLoginError(null);
     } catch (err) {
-      console.error("Submit fail", err.response.data);
+      // console.error("Submit fail", err.response.data);
+
+      setLoginError("Tài khoản hoặc mật khẩu chưa chính xác.");
+
       // Hiển thị thông báo tài khoản không tồn tại hoặc xử lý tương ứng
     }
   };
 
-  
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -114,6 +120,10 @@ export default function SignIn() {
                   onChange={handleChange}
                 />
               </div>
+            </div>
+
+            <div className="mt-2 text-center">
+              {loginError && <p className="text-red-600">{loginError}</p>}
             </div>
 
             <div>
