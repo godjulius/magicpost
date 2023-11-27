@@ -1,4 +1,4 @@
-const {models: {Delivery, Order, Branch}} = require("../models");
+const {models: {Delivery, Order, Branch,Parcel}} = require("../models");
 
 class DeliveryController {
     //GET /delivery
