@@ -99,6 +99,7 @@ class EmployeeController {
                 employee: {
                     employee_id: employee.employee_id,
                     role_id: employee.role_id,
+                    email: employee.email,
                     phone: employee.phone,
                     fullName: `${employee.first_name} ${employee.last_name}`,
                 }

@@ -25,17 +25,12 @@ export default function SignIn() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!account.email || !account.password) {
-      console.error("Email and password are required.");
-      return;
-    }
-
     try {
       // Kiểm tra tài khoản tồn tại trên API
       const response = await axios.post(apiSignInUrl, account);
 
       console.log(response.data.employee.role_id); // Xem tài khoản là role nào
-
+      
       // Nếu tài khoản tồn tại, kiểm tra role
       if (response.data.employee.role_id === 1) {
         // Chuyển hướng đến trang admin
