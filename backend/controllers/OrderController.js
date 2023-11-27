@@ -130,7 +130,7 @@ class OrderController {
             receive_date: today,
             receiver_name: receiverName,
             receiver_phone: receiverPhone,
-            receiver_address: receiverDetailAddress,
+            receiver_address: receiverAddress,
         });
 
         //create order

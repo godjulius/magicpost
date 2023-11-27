@@ -32,11 +32,13 @@ class EmployeeController {
 
     //GET /employee/:id
     async getEmployeeById(req, res, next) {
+        console.log(req.params);
         const employeeId = req.params.id;
-        const employee = Employee.findOne({
+        const employee = await Employee.findOne({
             where: {
                 employee_id: employeeId,
-            }
+            },
+            attributes: {exclude: ["password",],},
         });
         if (!employee) {
             return res.status(401).json({
