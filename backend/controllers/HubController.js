@@ -1,4 +1,5 @@
 const {models: {Branch}} = require("../models");
+const Joi = require("joi");
 
 class HubController {
     //GET /hub
@@ -13,6 +14,15 @@ class HubController {
 
     //GET /hub/:hubId
     async getHubById(req, res, next) {
+        const schema = Joi.object({
+            id: Joi.number().min(1).required(),
+        });
+        const result = schema.validate({
+            id: req.params.hubId,
+        });
+        if (result.error) {
+            return res.status(400).send("Bad request");
+        }
         const hubId = req.params.hubId;
         const hub = await Branch.findOne({
             where: {
@@ -33,6 +43,15 @@ class HubController {
 
     //GET /hub/:hubId/branch
     async getBranchOfHub(req, res, next) {
+        const schema = Joi.object({
+            id: Joi.number().min(1).required(),
+        });
+        const result = schema.validate({
+            id: req.params.hubId,
+        });
+        if (result.error) {
+            return res.status(400).send("Bad request");
+        }
         const hubId = req.params.hubId;
         const hub = await Branch.findOne({
             where: {

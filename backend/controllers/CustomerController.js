@@ -1,15 +1,33 @@
 const {models: {Customer, Order}} = require("../models");
+const Joi = require("joi");
 
 class CustomerController {
     //GET /customer
     async getAllCustomers(req, res, next) {
-        const employeeId=req.session.employeeId;
-        if(!employeeId){
-            return res.status(403).json({
-                msg:"You must login first!",
-            });
-        }
+
         const customers = await Customer.findAll({
+            include: Order
+        });
+        console.log("test");
+        return res.status(200).json(customers);
+    }
+
+    //GET /customer/:customerId
+    async getCustomerById(req, res, next) {
+        const schema = Joi.object({
+            id: Joi.number().min(1).required(),
+        });
+        const result = schema.validate({
+            id: req.params.customerId,
+        });
+        if (result.error) {
+            return res.status(400).send("Invalid ID");
+        }
+        const customerId = req.params.customerId;
+        const customer = await Customer.findOne({
+            where: {
+                customer_id: customerId,
+            },
             include: [
                 {
                     model: Order,
@@ -17,12 +35,12 @@ class CustomerController {
                 }
             ],
         });
-        return res.status(200).json(customers);
-    }
-
-    //GET /customer/:customerId
-    async getCustomerById(req, res, next) {
-
+        if (!customer) {
+            return res.status(404).json({
+                msg: "Customer not found",
+            });
+        }
+        return res.status(200).json(customer);
     }
 }
 
