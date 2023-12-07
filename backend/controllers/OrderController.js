@@ -2,6 +2,7 @@ const {models: {Order, Customer, Delivery, Employee, Parcel}} = require("../mode
 const db = require("../models");
 const {or} = require("sequelize");
 const sequelize = require("sequelize");
+const Joi = require("joi");
 
 class OrderController {
     //GET /order
@@ -31,6 +32,13 @@ class OrderController {
 
     //GET order/tracking
     async getOrderByIds(req, res, next) {
+        const schema = Joi.object({
+            search: Joi.string().pattern(/^[A-Z,]+$/).required(),
+        });
+        const validate = schema.validate(req.body.searchValue);
+        if (validate.error) {
+            return res.status(400).send("Bad request");
+        }
         const searchValue = req.body.searchValue;
         const orderIds = searchValue.split(",");
         console.log(orderIds);
@@ -78,6 +86,50 @@ class OrderController {
 
     //POST /order/create
     async createOrder(req, res, next) {
+        const schema = Joi.object({
+            firstName: Joi.string().pattern(
+                new RegExp("^[a-zA-ZàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳỵỷỹđĐ ]+$")
+            ).required(),
+            lastName: Joi.string().pattern(
+                new RegExp("^[a-zA-ZàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳỵỷỹđĐ ]+$")
+            ).required(),
+            province: Joi.string().pattern(
+                new RegExp("^[a-zA-ZàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳỵỷỹđĐ./ ]+$")
+            ).required(),
+            district: Joi.string().pattern(
+                new RegExp("^[a-zA-ZàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳỵỷỹđĐ./ ]+$")
+            ).required(),
+            detailAddress: Joi.string().pattern(
+                new RegExp("^[a-zA-Z0-9àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳỵỷỹđĐ,./ ]+$")
+            ).required(),
+            receiverName: Joi.string().pattern(
+                new RegExp("^[a-zA-ZàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳỵỷỹđĐ ]+$")
+            ).required(),
+            receiverProvince: Joi.string().pattern(
+                new RegExp("^[a-zA-ZàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳỵỷỹđĐ./ ]+$")
+            ).required(),
+            receiverDistrict: Joi.string().pattern(
+                new RegExp("^[a-zA-ZàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳỵỷỹđĐ./ ]+$")
+            ).required(),
+            receiverPhone: Joi.string().pattern(
+                new RegExp("^\\+?[0-9]{1,15}$")
+            ).required(),
+            receiverDetailAddress: Joi.string().pattern(
+                new RegExp("^[a-zA-Z0-9àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳỵỷỹđĐ,./ ]+$")
+            ).required(),
+            email: Joi.string().email(),
+            phone: Joi.string().pattern(
+                new RegExp("^\\+?[0-9]{1,15}$")
+            ).required(),
+            weight: Joi.number().min(0),
+            price: Joi.number().integer().min(1),
+            typeId: Joi.number().integer().min(1).max(2),
+            details: Joi.string().required(),
+        });
+        const validate = schema.validate(req.body);
+        if (validate.error) {
+            return res.status(400).send("Bad request");
+        }
         const {
             firstName,
             lastName,
