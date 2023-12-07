@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const DesktopHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,7 +28,9 @@ const DesktopHeader = () => {
                 Support
               </a>
               <a href="#" className="block px-4 py-2 account-link hover:bg-gray-300">
-                Sign Out
+                <Link to="/">
+                  Sign Out
+                </Link>
               </a>
             </div>
           </>
