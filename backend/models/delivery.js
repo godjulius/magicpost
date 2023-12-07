@@ -35,6 +35,18 @@ const Delivery = function (sequelize, Sequelize) {
             allowNull: false, // 1: pending, 2: delivering, 3: delivered, 4: return
             defaultValue: 1,
         },
+        receiver_name:{
+            type:Sequelize.STRING,
+            allowNull:false,
+        },
+        receiver_phone:{
+            type:Sequelize.STRING,
+            allowNull:false,
+        },
+        receiver_address:{
+            type:Sequelize.STRING,
+            allowNull:false,
+        }
     }, {
         sequelize,
         tableName: "delivery",
