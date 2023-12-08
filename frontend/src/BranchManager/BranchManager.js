@@ -1,21 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Link, Outlet } from "react-router-dom";
-import Navbar from "./Navbar";
-import AccountManagement from "./AccountManagement";
-import Dashboard from "./Dashboard";
-import CreateAccount from "../CreateAccount/createAccount.js";
-import "./admin.css";
-import DesktopHeader from "./DesktopHeader.js";
-import MobileHeader from "./MobileHeader.js";
-import PaymentForm from "./paymentForm.js";
+import Navbar from "./BranchNavbar.js";
 
-const Admin = () => {
+import "../admin/admin.css"
+import DesktopHeader from "../admin/DesktopHeader.js";
+import MobileHeader from "../admin/MobileHeader.js";
+
+const BranchManager = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
-  
+
   useEffect(() => {
     // Lấy thông tin từ localStorage
     const userRole = localStorage.getItem("userRole");
@@ -23,11 +20,11 @@ const Admin = () => {
 
     // Sử dụng thông tin ở đây, ví dụ:
     console.log("UserRole:", userRole);
-    console.log("BranchId:", branchId);
+    console.log("BranchId:", typeof(branchId));
 
     // Ghi chú: Kiểm tra xem giá trị có tồn tại hay không trước khi sử dụng để tránh lỗi
   }, []); // useEffect sẽ chạy sau khi component được render
-
+  
   return (
     <div className="bg-gray-100 font-family-karla flex">
       <Navbar onTabChange={handleTabChange} />
@@ -49,4 +46,4 @@ const Admin = () => {
   );
 };
 
-export default Admin;
+export default BranchManager;

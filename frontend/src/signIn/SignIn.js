@@ -30,13 +30,39 @@ export default function SignIn() {
       const response = await axios.post(apiSignInUrl, account);
 
       console.log(response.data.employee.role_id); // Xem tài khoản là role nào
+
+      // Lưu thông tin người dùng vào localStorage hoặc sessionStorage
+      localStorage.setItem("userRole", response.data.employee.role_id);
+      localStorage.setItem("branchId", response.data.employee.branch_id);
       
       // Nếu tài khoản tồn tại, kiểm tra role
-      if (response.data.employee.role_id === 1) {
-        // Chuyển hướng đến trang admin
-        navigate("/admin");
-      } else {
-        console.error("Unauthorized access: Not an admin");
+      switch (response.data.employee.role_id) {
+        case 1:
+          // Chuyển hướng đến trang admin
+          navigate("/admin");
+          break;
+        case 3:
+          // Xử lý cho role_id = 3
+          navigate("/HubManager");
+          // ...
+          break;
+        case 4:
+          // Xử lý cho role_id = 4
+          navigate("/HubEmployee");
+          // ...
+          break;
+        case 5:
+          // Xử lý cho role_id = 5
+          navigate("/BranchManager");
+          // ...
+          break;
+        case 6:
+          // Xử lý cho role_id = 6
+          navigate("/BranchEmployee");
+          // ...
+          break;
+        default:
+          console.error("Unauthorized access: Invalid role");
       }
 
       // Reset trạng thái và thông báo lỗi khi đăng nhập thành công
