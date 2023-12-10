@@ -1,8 +1,8 @@
-// BranchNav.jsx
+// Navbar.jsx
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const BranchNav = ({ onTabChange }) => {
+const HubNavbar = ({ onTabChange }) => {
   const [currentTab, setCurrentTab] = useState('');
 
   const handleTabClick = (tab) => {
@@ -19,9 +19,9 @@ const BranchNav = ({ onTabChange }) => {
       </div>
       <nav className="text-gray-600 text-base font-semibold pt-3">
         <Link
-          to="/BranchManager/BranchEmployeeManagement"
-          onClick={() => handleTabClick('employeeManagement')}
-          className={`flex items-center ${currentTab === 'employeeManagement' ? 'active-nav-item' : 'nav-item'} text-gray-600 py-4 pl-4 nav-item w-full ${currentTab === 'employeeManagement' ? 'bg-gray-300' : 'hover:bg-gray-300'}`}
+          to="/HubManager/HubEmployeeManagement"
+          onClick={() => handleTabClick('hubEmployeeManagement')}
+          className={`flex items-center ${currentTab === 'hubEmployeeManagement' ? 'active-nav-item' : 'nav-item'} text-gray-600 py-4 pl-4 nav-item w-full ${currentTab === 'hubEmployeeManagement' ? 'bg-gray-300' : 'hover:bg-gray-300'}`}
         >
           <i className="fas fa-table mr-2"></i>
           Employee Management
@@ -31,4 +31,4 @@ const BranchNav = ({ onTabChange }) => {
   );
 };
 
-export default BranchNav;
+export default HubNavbar;

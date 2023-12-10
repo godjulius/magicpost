@@ -2,16 +2,25 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-const AccountManagement = () => {
+const BranchEmployeeManagement = () => {
   const [itemsPerPage, setItemsPerPage] = useState(5);
-
   const [employees, setEmployees] = useState([]);
+  const [branchId, setBranchId] = useState();
   const [isLoadingEmployeesList, setIsLoadingEmployeesList] = useState(true);
+  
+  useEffect(() => {
+    // Lấy thông tin từ localStorage
+    const temp = localStorage.getItem("branchId");
+    setBranchId(temp)
 
+  }, []); // useEffect sẽ chạy sau khi component được render
+
+  
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
         const response = await axios.get("http://127.0.0.1:3000/employee");
+        // console.log(response.data);
         setEmployees(response.data);
       } catch (error) {
         console.error("Error fetching employees:", error);
@@ -41,18 +50,13 @@ const AccountManagement = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const updatedEmployees = employees.filter(
-    (employee) => (employee.role_id === 3 || employee.role_id === 5)
+    (employee) => (employee.role_id === 6 && employee.branch_id === parseInt(branchId))
   );
+
+  // console.log("updatedEmployees: ", updatedEmployees);
 
   const totalItems = updatedEmployees.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
-
-  // const deleteEmployee = (employeeId) => {
-  //   const updatedEmployyes = employees.filter(
-  //     (employee) => employee.id !== employeeId
-  //   );
-  //   setEmployees(updatedEmployyes);
-  // };
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
@@ -82,7 +86,7 @@ const AccountManagement = () => {
         <div>
           <h1 className="text-3xl font-semibold mb-4">User Table</h1>
           <button className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 mb-4 rounded-full">
-            <Link to="/admin/CreateAccount">Create New Account</Link>
+            <Link to="/BranchManager/BranchCreateAccount">Create New Account</Link>
           </button>
         </div>
         <div className="my-2 flex sm:flex-row flex-col">
@@ -184,10 +188,12 @@ const AccountManagement = () => {
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p className="text-gray-900 whitespace-no-wrap">
                           {
-                            roles.map((role) => (
-                              role.role_id === employee.role_id ? role.role_name : ""
-                            ))
-                          // employee.role_id
+                            roles.map((role) =>
+                              role.role_id === employee.role_id
+                                ? role.role_name
+                                : ""
+                            )
+                            // employee.role_id
                           }
                         </p>
                       </td>
@@ -252,4 +258,4 @@ const AccountManagement = () => {
   );
 };
 
-export default AccountManagement;
+export default BranchEmployeeManagement;

@@ -122,6 +122,21 @@ function CreateAccount() {
     fetchRoles();
   }, []);
 
+  const [branchs, setBranchs] = useState([]);
+
+  useEffect(() => {
+    const fetchBranchs = async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:3000/branch");
+        setBranchs(response.data);
+      } catch (error) {
+        console.error("Error fetching branchs:", error);
+      }
+    };
+
+    fetchBranchs();
+  }, []);
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -393,6 +408,36 @@ function CreateAccount() {
                       role.role_id > 2 && (
                         <option key={role.role_id} value={role.role_id}>
                           {role.role_name}
+                        </option>
+                      )
+                  )}
+                </select>
+              </div>
+
+              <div className="mb-4">
+                <label
+                  htmlFor="branch"
+                  className="block mb-2 text-sm font-medium text-gray-900"
+                >
+                  Branch
+                </label>
+                <select
+                  id="branch"
+                  name="branchId"
+                  className="bg-gray-100 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                  // value={formData.branch}
+                  onChange={handleChange}
+                  required=""
+                  defaultValue="default"
+                >
+                  <option value="default" disabled hidden>
+                    Select branch
+                  </option>
+                  {branchs.map(
+                    (branch) =>
+                      (
+                        <option key={branch.branch_id} value={branch.branch_id}>
+                          {branch.branch_name}
                         </option>
                       )
                   )}

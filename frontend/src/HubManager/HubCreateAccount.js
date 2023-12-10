@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
-function BranchCreateAccount() {
+function HubCreateAccount() {
   const [daysInMonth, setDaysInMonth] = useState(31);
   const navigate = useNavigate();
   const [createAccountError, setCreateAccountError] = useState(null); // Thêm state để theo dõi lỗi đăng nhập
@@ -200,7 +200,7 @@ function BranchCreateAccount() {
 
         if (response.data.msg === "Create account successfully!") {
           alert("Registration successful");
-          navigate("../BranchEmployeeManagement");
+          navigate("../HubEmployeeManagement");
         }
       } else {
         if (passwordInputRef.current) {
@@ -225,7 +225,7 @@ function BranchCreateAccount() {
                 type="button"
                 className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
               >
-                <Link to="/BranchManager/BranchEmployeeManagement">
+                <Link to="/HubManager/HubEmployeeManagement">
                   <svg
                     className="w-5 h-5"
                     fill="currentColor"
@@ -413,7 +413,7 @@ function BranchCreateAccount() {
                   </option>
                   {roles.map(
                     (role) =>
-                      role.role_id === 6 && (
+                      role.role_id === 4 && (
                         <option key={role.role_id} value={role.role_id}>
                           {role.role_name}
                         </option>
@@ -570,4 +570,4 @@ function BranchCreateAccount() {
   );
 }
 
-export default BranchCreateAccount;
+export default HubCreateAccount;

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Link, Outlet } from "react-router-dom";
-import BranchNavbar from "./BranchNavbar.js"
+import HubNavbar from "./HubNavbar.js";
 
 import "../admin/admin.css"
 import DesktopHeader from "../admin/DesktopHeader.js";
 import MobileHeader from "../admin/MobileHeader.js";
 
-const BranchManager = () => {
+const HubManager = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
 
   const handleTabChange = (tab) => {
@@ -27,7 +27,7 @@ const BranchManager = () => {
   
   return (
     <div className="bg-gray-100 font-family-karla flex">
-      <BranchNavbar onTabChange={handleTabChange} />
+      <HubNavbar onTabChange={handleTabChange} />
       <div className="relative w-full flex flex-col h-screen overflow-y-hidden">
         <DesktopHeader />
         <MobileHeader />
@@ -46,4 +46,4 @@ const BranchManager = () => {
   );
 };
 
-export default BranchManager;
+export default HubManager;

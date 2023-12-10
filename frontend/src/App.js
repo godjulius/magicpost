@@ -11,7 +11,11 @@ import CreateAccount from "./CreateAccount/createAccount.js";
 
 import BranchManager from "./BranchManager/BranchManager.js";
 import BranchCreateAccount from "./BranchManager/BranchCreateAccount.js";
-import EmployeeManagement from "./BranchManager/EmployeeManagement.js";
+import BranchEmployeeManagement from "./BranchManager/BranchEmployeeManagement.js";
+
+import HubManager from "./HubManager/HubManager.js";
+import HubCreateAccount from "./HubManager/HubCreateAccount.js";
+import HubEmployeeManagement from "./HubManager/HubEmployeeManagement.js";
 
 export default function App() {
   return (
@@ -27,8 +31,12 @@ export default function App() {
           <Route path="BranchManagement" element={<BranchManagement/>}/>
         </Route>
         <Route path="/BranchManager/*" element={<BranchManager />}>
-          <Route path="EmployeeManagement" element={<EmployeeManagement/>}/>
+          <Route path="BranchEmployeeManagement" element={<BranchEmployeeManagement/>}/>
           <Route path="BranchCreateAccount" element={<BranchCreateAccount />} />
+        </Route>
+        <Route path="/HubManager/*" element={<HubManager />}>
+          <Route path="HubEmployeeManagement" element={<HubEmployeeManagement/>}/>
+          <Route path="HubCreateAccount" element={<HubCreateAccount />} />
         </Route>
       </Routes>
     </>

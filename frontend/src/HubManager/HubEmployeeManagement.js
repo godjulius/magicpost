@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-const EmployeeManagement = () => {
+const HubEmployeeManagement = () => {
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [employees, setEmployees] = useState([]);
   const [branchId, setBranchId] = useState();
@@ -50,7 +50,7 @@ const EmployeeManagement = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const updatedEmployees = employees.filter(
-    (employee) => (employee.role_id === 6 && employee.branch_id === parseInt(branchId))
+    (employee) => (employee.role_id === 4 && employee.branch_id === parseInt(branchId))
   );
 
   // console.log("updatedEmployees: ", updatedEmployees);
@@ -86,7 +86,7 @@ const EmployeeManagement = () => {
         <div>
           <h1 className="text-3xl font-semibold mb-4">User Table</h1>
           <button className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 mb-4 rounded-full">
-            <Link to="/BranchManager/BranchCreateAccount">Create New Account</Link>
+            <Link to="/HubManager/HubCreateAccount">Create New Account</Link>
           </button>
         </div>
         <div className="my-2 flex sm:flex-row flex-col">
@@ -258,4 +258,4 @@ const EmployeeManagement = () => {
   );
 };
 
-export default EmployeeManagement;
+export default HubEmployeeManagement;
