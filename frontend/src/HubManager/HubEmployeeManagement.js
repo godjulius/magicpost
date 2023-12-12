@@ -7,15 +7,13 @@ const HubEmployeeManagement = () => {
   const [employees, setEmployees] = useState([]);
   const [branchId, setBranchId] = useState();
   const [isLoadingEmployeesList, setIsLoadingEmployeesList] = useState(true);
-  
+
   useEffect(() => {
     // Lấy thông tin từ localStorage
     const temp = localStorage.getItem("branchId");
-    setBranchId(temp)
-
+    setBranchId(temp);
   }, []); // useEffect sẽ chạy sau khi component được render
 
-  
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
@@ -47,10 +45,26 @@ const HubEmployeeManagement = () => {
     fetchRoles();
   }, []);
 
+  const [branchs, setBranchs] = useState([]);
+
+  useEffect(() => {
+    const fetchBranchs = async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:3000/branch");
+        setBranchs(response.data);
+      } catch (error) {
+        console.error("Error fetching branchs:", error);
+      }
+    };
+
+    fetchBranchs();
+  }, []);
+
   const [currentPage, setCurrentPage] = useState(1);
 
   const updatedEmployees = employees.filter(
-    (employee) => (employee.role_id === 4 && employee.branch_id === parseInt(branchId))
+    (employee) =>
+      employee.role_id === 4 && employee.branch_id === parseInt(branchId)
   );
 
   // console.log("updatedEmployees: ", updatedEmployees);
@@ -155,7 +169,10 @@ const HubEmployeeManagement = () => {
                     User
                   </th>
                   <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                    Rol
+                    Role
+                  </th>
+                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    Branch
                   </th>
                   <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Date of Birth
@@ -195,6 +212,15 @@ const HubEmployeeManagement = () => {
                             )
                             // employee.role_id
                           }
+                        </p>
+                      </td>
+                      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p className="text-gray-900 whitespace-no-wrap">
+                          {branchs.map((branch) =>
+                            branch.branch_id === employee.branch_id
+                              ? branch.branch_name
+                              : ""
+                          )}
                         </p>
                       </td>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">

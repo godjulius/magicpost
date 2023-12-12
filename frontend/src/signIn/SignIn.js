@@ -5,6 +5,10 @@ import axios from "axios";
 const apiSignInUrl = "http://127.0.0.1:3000/login";
 
 export default function SignIn() {
+
+  localStorage.setItem("userRole", null);
+  localStorage.setItem("branchId", null);
+
   const [account, setAccount] = useState({
     email: "",
     password: "",
@@ -34,6 +38,8 @@ export default function SignIn() {
       // Lưu thông tin người dùng vào localStorage hoặc sessionStorage
       localStorage.setItem("userRole", response.data.employee.role_id);
       localStorage.setItem("branchId", response.data.employee.branch_id);
+
+      console.log(localStorage.getItem("userRole"));
       
       // Nếu tài khoản tồn tại, kiểm tra role
       switch (response.data.employee.role_id) {

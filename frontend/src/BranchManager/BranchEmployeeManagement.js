@@ -7,15 +7,13 @@ const BranchEmployeeManagement = () => {
   const [employees, setEmployees] = useState([]);
   const [branchId, setBranchId] = useState();
   const [isLoadingEmployeesList, setIsLoadingEmployeesList] = useState(true);
-  
+
   useEffect(() => {
     // Lấy thông tin từ localStorage
     const temp = localStorage.getItem("branchId");
-    setBranchId(temp)
-
+    setBranchId(temp);
   }, []); // useEffect sẽ chạy sau khi component được render
 
-  
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
@@ -47,10 +45,26 @@ const BranchEmployeeManagement = () => {
     fetchRoles();
   }, []);
 
+  const [branchs, setBranchs] = useState([]);
+
+  useEffect(() => {
+    const fetchBranchs = async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:3000/branch");
+        setBranchs(response.data);
+      } catch (error) {
+        console.error("Error fetching branchs:", error);
+      }
+    };
+
+    fetchBranchs();
+  }, []);
+
   const [currentPage, setCurrentPage] = useState(1);
 
   const updatedEmployees = employees.filter(
-    (employee) => (employee.role_id === 6 && employee.branch_id === parseInt(branchId))
+    (employee) =>
+      employee.role_id === 6 && employee.branch_id === parseInt(branchId)
   );
 
   // console.log("updatedEmployees: ", updatedEmployees);
@@ -86,7 +100,9 @@ const BranchEmployeeManagement = () => {
         <div>
           <h1 className="text-3xl font-semibold mb-4">User Table</h1>
           <button className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 mb-4 rounded-full">
-            <Link to="/BranchManager/BranchCreateAccount">Create New Account</Link>
+            <Link to="/BranchManager/BranchCreateAccount">
+              Create New Account
+            </Link>
           </button>
         </div>
         <div className="my-2 flex sm:flex-row flex-col">
@@ -155,7 +171,10 @@ const BranchEmployeeManagement = () => {
                     User
                   </th>
                   <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                    Rol
+                    Role
+                  </th>
+                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    Branch
                   </th>
                   <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Date of Birth
@@ -195,6 +214,15 @@ const BranchEmployeeManagement = () => {
                             )
                             // employee.role_id
                           }
+                        </p>
+                      </td>
+                      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p className="text-gray-900 whitespace-no-wrap">
+                          {branchs.map((branch) =>
+                            branch.branch_id === employee.branch_id
+                              ? branch.branch_name
+                              : ""
+                          )}
                         </p>
                       </td>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
