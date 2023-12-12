@@ -1,5 +1,6 @@
 const {models: {Branch, Employee, Parcel}} = require("../models");
 const Joi = require("Joi");
+const {Op} = require("sequelize");
 
 class BranchController {
 
@@ -198,6 +199,38 @@ class BranchController {
             }
         });
         return res.status(200).json(parcels);
+    }
+
+    //GET /branch/search
+    async searchBranch(req, res) {
+        if (!req.session.isLogin) {
+            return res.status(403).json({
+                msg: "You are not login",
+            });
+        }
+        const schema = Joi.object({
+            province: Joi.string().pattern(
+                new RegExp("^[a-zA-Z0-9àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳỵỷỹđĐ,./ ]+$")
+            ),
+            district: Joi.string().pattern(
+                new RegExp("^[a-zA-Z0-9àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳỵỷỹđĐ,./ ]+$")
+            ),
+        });
+        const validate = schema.validate(req.body);
+        if (validate.error) {
+            return res.status(400).send("Bad request");
+        }
+        const province = req.body.province;
+        const district = req.body.district;
+        const branches = await Branch.findAll();
+        let filteredBranches = [...branches];
+        if (province) {
+            filteredBranches = branches.filter(branch => branch.location.includes(province));
+        }
+        if (district) {
+            filteredBranches = filteredBranches.filter(branch => branch.location.includes(district));
+        }
+        return res.status(200).json(filteredBranches);
     }
 
 }
