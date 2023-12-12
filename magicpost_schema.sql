@@ -1,5 +1,5 @@
-DROP DATABASE IF EXISTS magicpost;
-CREATE DATABASE magicpost;
+DROP SCHEMA IF EXISTS magicpost;
+CREATE SCHEMA magicpost;
 USE magicpost;
 
 CREATE TABLE `ParcelType`(
@@ -102,6 +102,47 @@ ALTER TABLE
 ALTER TABLE
     `Order` ADD CONSTRAINT `order_delivery_id_foreign` FOREIGN KEY(`delivery_id`) REFERENCES `Delivery`(`delivery_id`);
 
+INSERT INTO `branch` (`manager_id`, `hub_id`, `branch_name`, `location`, `branch_id`, `is_hub`) VALUES
+(1, NULL, 'Cầu Giấy Hub', 'Quan Hoa, Cầu Giấy, Hà Nội', 4, 0),
+(1, NULL, 'Cầu Giấy Hub', '52 Quan Hoa, Cầu Giấy, Hà Nội', 5, 1),
+(1, NULL, 'Quan Hoa branch', '52 Quan Hoa, Cầu Giấy, Hà Nội', 6, 1),
+(1, NULL, 'Quan Hoa branch', '52 Quan Hoa, Cầu Giấy, Hà Nội', 7, 1),
+(1, NULL, 'Quan Hoa branch', '165 Cầu Giấy, Cầu Giấy, Hà Nội', 8, 1),
+(1, NULL, 'Quan Hoa branch', '165 Nam Từ Liêm, Cầu Giấy, Hà Nội', 9, 1),
+(1, NULL, 'Quan Hoa branch', '165 BắcTừ Liêm, Cầu Giấy, Hà Nội', 10, 1),
+(1, NULL, 'Quan Hoa branch', '165 BắcTừ Liêm, Cầu Giấy, Hà Nội', 11, 1);
+
+INSERT INTO `customer` (`customer_id`, `first_name`, `last_name`, `address`, `email`, `phone`) VALUES
+(1, 'Hải', 'Trần', 'Quan Hoa, Cầu Giấy, Hà Nội', NULL, '23423'),
+(2, 'Hải', 'Trần', 'Quan Hoa, Cầu Giấy, Hà Nội', NULL, '23423'),
+(3, 'Hải', 'Trần', 'Quan Hoa, Cầu Giấy, Hà Nội', NULL, '23423'),
+(4, 'Hải', 'Trần', 'Quan Hoa, Cầu Giấy, Hà Nội', NULL, '23423'),
+(5, 'Hải', 'Trần', 'Quan Hoa, Cầu Giấy, Hà Nội', NULL, '23423'),
+(6, 'Hải', 'Trần', 'Quan Hoa, Cầu Giấy, Hà Nội', NULL, '23423'),
+(7, 'Hải', 'Trần', 'Quan Hoa, Cầu Giấy, Hà Nội', NULL, '23423'),
+(8, 'Duy', 'Nguyễn', 'Ngọc Sơn, Hiệp Hoà, Bắc Giang', NULL, '23423');
+
+INSERT INTO `delivery` (`delivery_id`, `sender_id`, `receiver_id`, `send_date`, `receive_date`, `status_id`) VALUES
+(2, NULL, 4, NULL, '2023-11-26 11:41:01', 1),
+(3, NULL, 4, NULL, '2023-11-26 11:42:10', 1);
+
+INSERT INTO `employee` (`employee_id`, `password`, `first_name`, `last_name`, `email`, `role_id`, `branch_id`, `dob`, `address`, `phone`) VALUES
+(1, '$2b$10$H0GXTnc.DX3.4gAC.WLO9.Yg0Gf315Ai.53ZyhUK/SMKO3J4hlaoy', 'Duy', 'Nguyễn', 'duy@gmail.com', 1, NULL, '2003-04-20', 'Bắc Giang', '0345643253'),
+(2, '$2b$10$UnqQUqGbXolcTr7wfoCdmuY61RMSOtBRcyqgI9OAPWczo4M.KR25O', 'Duy', 'Nguyễn', 'duy2003@gmail.com', 1, NULL, '2003-04-20', 'Bắc Giang', '0345943253');
+
+INSERT INTO `order` (`order_id`, `customer_id`, `delivery_id`, `parcel_id`, `employee_id`, `order_date`) VALUES
+('FOGZ5KG2O8', 8, 3, 5, 2, '2023-11-26 11:42:10'),
+('SZICB8EAK9', 7, 2, 4, 2, '2023-11-26 11:41:01');
+
+INSERT INTO `parcel` (`parcel_id`, `branch_id`, `weight`, `price`, `details`, `type_id`) VALUES
+(3, 4, 55, 334000, 'something...', 1),
+(4, 4, 55, 334000, 'something...', 1),
+(5, 4, 55, 334000, 'something...', 1);
+
+INSERT INTO `parceltype` (`type_id`, `type_name`) VALUES
+(1, 'Tài liệu'),
+(2, 'Bưu phẩm');
+
 INSERT INTO `role` (`role_id`, `role_name`) VALUES
 (1, 'Admin'),
 (2, 'Giám đốc'),
@@ -114,3 +155,9 @@ INSERT INTO `status` (`status_id`, `status_detail`) VALUES
 (2, 'delivering'),
 (3, 'delivered'),
 (4, 'return');
+
+INSERT INTO `parceltype` (`type_id`, `type_name`) VALUES
+(1, 'Tài liệu'),
+(2, 'Bưu phẩm'),
+
+
