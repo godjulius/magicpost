@@ -1,5 +1,6 @@
 const {models: {Branch, Employee, Parcel}} = require("../models");
 const Joi = require("Joi");
+const {Op} = require("sequelize");
 
 class BranchController {
 
@@ -104,7 +105,7 @@ class BranchController {
         if (result.error) {
             return res.status(400).send("Invalid ID");
         }
-        const roleId = req.session.roleId;
+        const roleId = req.session.User.roleId;
         if (roleId !== 1 || roleId !== 2) {
             return res.status(401).json({
                 msg: "You are not authorized to access!"
@@ -129,8 +130,8 @@ class BranchController {
 
     //GET /branch/employee
     async getEmployeeByManager(req, res, next) {
-        const managerId = req.session.employeeId;
-        const roleId = req.session.roleId;
+        const managerId = req.session.User.employeeId;
+        const roleId = req.session.User.roleId;
         if (roleId !== 3 || roleId !== 5) {
             res.status(401).json({
                 msg: "You are not authorized to access!",
@@ -176,17 +177,17 @@ class BranchController {
                 msg: "Branch not found!",
             });
         }
-        if (!req.session.isLogin) {
+        if (!req.session.User.isLogin) {
             return res.status(403).json({
                 msg: "Login first",
             })
         }
-        if (req.session.roleId === 4 || req.session.roleId === 6) {
+        if (req.session.User.roleId === 4 || req.session.User.roleId === 6) {
             return res.status(403).json({
                 msg: "Forbidden",
             })
         }
-        if ((req.session.roleId === 3 || req.session.roleId === 5) && req.session.branchId !== branch.branch_id) {
+        if ((req.session.User.roleId === 3 || req.session.User.roleId === 5) && req.session.User.branchId !== branch.branch_id) {
             return res.status(403).json({
                 msg: "Forbidden",
             })
@@ -198,6 +199,39 @@ class BranchController {
             }
         });
         return res.status(200).json(parcels);
+    }
+
+    //GET /branch/search
+    async searchBranch(req, res) {
+        console.log(req.session.User);
+        if (!req.session.User.isLogin) {
+            return res.status(403).json({
+                msg: "You are not login",
+            });
+        }
+        const schema = Joi.object({
+            province: Joi.string().pattern(
+                new RegExp("^[a-zA-Z0-9àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳỵỷỹđĐ,./ ]+$")
+            ),
+            district: Joi.string().pattern(
+                new RegExp("^[a-zA-Z0-9àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳỵỷỹđĐ,./ ]+$")
+            ),
+        });
+        const validate = schema.validate(req.body);
+        if (validate.error) {
+            return res.status(400).send("Bad request");
+        }
+        const province = req.body.province;
+        const district = req.body.district;
+        const branches = await Branch.findAll();
+        let filteredBranches = [...branches];
+        if (province) {
+            filteredBranches = branches.filter(branch => branch.location.includes(province));
+        }
+        if (district) {
+            filteredBranches = filteredBranches.filter(branch => branch.location.includes(district));
+        }
+        return res.status(200).json(filteredBranches);
     }
 
 }

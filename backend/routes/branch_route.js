@@ -3,6 +3,7 @@ const branchController = require("../controllers/BranchController");
 const router = express.Router();
 
 router.post("/branch/create", branchController.createBranch);
+router.get("/branch/search", branchController.searchBranch);
 router.get("/branch/:branchId/employee", branchController.getEmployeeOfBranch);
 router.get("/branch/employee", branchController.getEmployeeByManager);
 router.get("/branch/:branchId/parcel", branchController.getAllParcelsAtBranch);

@@ -1,7 +1,5 @@
 const {models: {Employee, Branch, Customer, Order, Role}} = require("../models");
 const bcrypt = require("bcrypt");
-const session = require("express-session");
-const {Op} = require("sequelize");
 const sequelize = require("sequelize");
 const Joi = require("joi");
 const bcryptRound = 10;
@@ -197,11 +195,15 @@ class EmployeeController {
                 });
             }
 
-            req.session.isLogin = true;
-            req.session.employeeId = employee.employee_id;
-            req.session.roleId = employee.role_id;
-            req.session.branchId = employee.branch_id;
-            console.log(req.session);
+            req.session.User = {
+                isLogin: true,
+                employeeId: employee.employee_id,
+                roleId: employee.role_id,
+                branchId: employee.branch_id,
+            }
+
+            console.log(req.session)
+
             return res.status(200).json(
                 {
                     employee: employee,
