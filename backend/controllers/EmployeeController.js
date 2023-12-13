@@ -1,7 +1,5 @@
 const {models: {Employee, Branch, Customer, Order, Role}} = require("../models");
 const bcrypt = require("bcrypt");
-const session = require("express-session");
-const {Op} = require("sequelize");
 const sequelize = require("sequelize");
 const Joi = require("joi");
 const bcryptRound = 10;
@@ -204,7 +202,7 @@ class EmployeeController {
                 branchId: employee.branch_id,
             }
 
-            console.log(req.session.User)
+            console.log(req.session)
 
             return res.status(200).json(
                 {

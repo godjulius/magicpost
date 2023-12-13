@@ -7,8 +7,9 @@ router.get("/setCookie", (req, res) => {
 });
 
 router.get("/getData", (req, res) => {
-    const sessionData = req.session.User || "No session data";
-    res.send(`Session data: ${sessionData}`);
+    const sessionData = req.session.User;
+    console.log(req.session.User)
+    return res.json(sessionData);
 });
 
 module.exports = router;

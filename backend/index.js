@@ -18,10 +18,8 @@ app.use(cors(corsOptions));
 // parse requests of content-type - application/json
 app.use(express.json());
 
-app.use(
-    session({
-        name: "sid",
-        resave: false,
+app.use(session({
+        resave: true,
         saveUninitialized: true,
         secret: "never-go-wrong",
         cookie: {
@@ -35,6 +33,7 @@ app.use(express.urlencoded({extended: true}));
 
 // simple route
 app.get("/", (req, res) => {
+
     res.json({message: "Test server 2"});
 
 });
