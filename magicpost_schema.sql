@@ -147,8 +147,9 @@ INSERT INTO `role` (`role_id`, `role_name`) VALUES
 (1, 'Admin'),
 (2, 'Giám đốc'),
 (3, 'Trưởng điểm tập kết'),
-(4, 'Trưởng điểm giao dịch'),
-(5, 'Nhân viên điểm giao dịch');
+(4, 'Nhân viên điểm tập kết'),
+(5, 'Trưởng điểm giao dịch'),
+(6, 'Nhân viên điểm giao dịch');
 
 INSERT INTO `status` (`status_id`, `status_detail`) VALUES
 (1, 'pending'),

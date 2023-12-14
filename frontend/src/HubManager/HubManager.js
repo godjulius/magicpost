@@ -28,7 +28,7 @@ const HubManager = () => {
     console.log("TempUserRole:", tempUserRole);
     console.log("BranchId:", branchId);
 
-    if (UserRole === "null") {
+    if (UserRole === "null" || UserRole != "3") {
       navigate("/SignIn");
     }
 

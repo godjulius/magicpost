@@ -492,7 +492,7 @@ function CreateAccount() {
                       <option value="default" disabled hidden>
                         Year
                       </option>
-                      {Array.from({ length: 73 }, (_, i) => 1950 + i).map(
+                      {Array.from({ length: 54 }, (_, i) => 1970 + i).map(
                         (year) => (
                           <option key={year} value={year}>
                             {year}

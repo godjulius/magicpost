@@ -31,7 +31,7 @@ const Admin = () => {
     console.log("TempUserRole:", tempUserRole);
     console.log("BranchId:", branchId);
 
-    if (UserRole === "null") {
+    if (UserRole === "null" || (UserRole !== "1" && UserRole !== "2")) {
       navigate("/SignIn");
     }
 

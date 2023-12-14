@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Link, Outlet, useNavigate } from "react-router-dom";
-import BranchNavbar from "./BranchNavbar.js";
+import BranchENavbar from "./BranchENavbar.js";
 
 import "../admin/admin.css";
 import DesktopHeader from "../admin/DesktopHeader.js";
 import MobileHeader from "../admin/MobileHeader.js";
 
-const BranchManager = () => {
+const BranchEmployee = () => {
   const navigate = useNavigate();
+  var UserRole = "null";
 
   const [activeTab, setActiveTab] = useState("dashboard");
-
-  var UserRole = "null";
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -29,7 +28,7 @@ const BranchManager = () => {
     console.log("TempUserRole:", tempUserRole);
     console.log("BranchId:", branchId);
 
-    if (UserRole === "null" || UserRole !== "5") {
+    if (UserRole === "null" || UserRole != "6") {
       navigate("/SignIn");
     }
 
@@ -38,7 +37,7 @@ const BranchManager = () => {
 
   return (
     <div className="bg-gray-100 font-family-karla flex">
-      <BranchNavbar onTabChange={handleTabChange} />
+        <BranchENavbar onTabChange={handleTabChange} />
       <div className="relative w-full flex flex-col h-screen overflow-y-hidden">
         <DesktopHeader />
         <MobileHeader />
@@ -57,4 +56,4 @@ const BranchManager = () => {
   );
 };
 
-export default BranchManager;
+export default BranchEmployee;
