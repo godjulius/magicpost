@@ -21,6 +21,7 @@ const BranchManager = () => {
     // Lấy thông tin từ localStorage
     const tempUserRole = localStorage.getItem("userRole");
     const branchId = localStorage.getItem("branchId");
+    const employeeId = localStorage.getItem("employeeId");
 
     UserRole = tempUserRole;
 
@@ -28,6 +29,7 @@ const BranchManager = () => {
     console.log("UserRole:", UserRole);
     console.log("TempUserRole:", tempUserRole);
     console.log("BranchId:", branchId);
+    console.log("EmployeeId:", employeeId);
 
     if (UserRole === "null" || UserRole !== "5") {
       navigate("/SignIn");

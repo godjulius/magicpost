@@ -87,6 +87,9 @@ class OrderController {
     //POST /order/create
     async createOrder(req, res, next) {
         const schema = Joi.object({
+            name: Joi.string().pattern(
+                new RegExp("^[a-zA-ZàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳỵỷỹđĐ ]+$")
+            ),
             firstName: Joi.string().pattern(
                 new RegExp("^[a-zA-ZàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳỵỷỹđĐ ]+$")
             ).required(),

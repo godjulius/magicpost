@@ -8,6 +8,7 @@ export default function SignIn() {
 
   localStorage.setItem("userRole", null);
   localStorage.setItem("branchId", null);
+  localStorage.setItem("employeeId", null);
 
   const [account, setAccount] = useState({
     email: "",
@@ -38,8 +39,7 @@ export default function SignIn() {
       // Lưu thông tin người dùng vào localStorage hoặc sessionStorage
       localStorage.setItem("userRole", response.data.employee.role_id);
       localStorage.setItem("branchId", response.data.employee.branch_id);
-
-      console.log(localStorage.getItem("userRole"));
+      localStorage.setItem("employeeId", response.data.employee.employee_id);
       
       // Nếu tài khoản tồn tại, kiểm tra role
       switch (response.data.employee.role_id) {

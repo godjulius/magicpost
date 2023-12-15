@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const submitURL = "";
+const submitURL = "http://127.0.0.1:3000/order/create";
 const apiProvincesURL = "https://provinces.open-api.vn/api/?depth=2";
 const BranchPaymentForm = () => {
-
   const [order, setOrder] = useState({
+    firstName: "",
+    lastName: "",
     name: "", // tach thanh firstName + lastName
     phone: "",
     detailAddress: "",
@@ -16,9 +17,10 @@ const BranchPaymentForm = () => {
     receiverDetailAddress: "",
     receiverProvince: "",
     receiverDistrict: "",
-    type: "", // 0 la thu con 1 la buu kien
+    typeId: "", // 0 la thu con 1 la buu kien
     weight: 0,
     price: 0,
+    details: "something...",
   });
   // Fetch API province thanh pho
   const [codeTinh, setCodeTinh] = useState(0);
@@ -49,37 +51,62 @@ const BranchPaymentForm = () => {
   const handleSenderTinhChange = (event) => {
     const temp = {
       ...order,
-      province: cities[event.target.value].name
-    }
+      province: cities[event.target.value].name,
+    };
     setCodeTinh(event.target.value);
     setOrder(temp);
   };
   const handleReceiverTinhChange = (event) => {
     const temp = {
       ...order,
-      receiverProvince: cities[event.target.value].name
-    }
+      receiverProvince: cities[event.target.value].name,
+    };
     setCodeTinhReceiver(event.target.value);
     setOrder(temp);
   };
   const handleChange = (event) => {
-    const temp = {
-      ...order,
-      [event.target.name]: event.target.value
-    };
-    setOrder(temp);
-  }
+    const { name, value } = event.target;
+
+    if (name === "name") {
+      const lastSpaceIndex = value.lastIndexOf(" ");
+      const lastName = value.slice(lastSpaceIndex + 1).trim();
+      const firstName = value.slice(0, lastSpaceIndex).trim();
+
+      const temp = {
+        ...order,
+        firstName,
+        lastName,
+        [name]: value,
+      };
+      // console.log(firstName + "-" + lastName);
+      setOrder(temp);
+    } else {
+      const temp = {
+        ...order,
+        [name]: value,
+      };
+
+      setOrder(temp);
+    }
+
+    // const temp = {
+    //   ...order,
+    //   [event.target.name]: event.target.value
+    // };
+    // setOrder(temp);
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(order);
     // Call api gửi dữ liệu lên server
-    
-    // try {
-    //   const response = await axios.post(submitURL, paymentt);
-    //   console.log("Submit success", response.data);
-    // } catch (err) {
-    //   console.error("Submit fail", err.response.data);
-    // }
+
+    try {
+      const response = await axios.post(submitURL, order);
+      console.log(response.data);
+      console.log("Submit success", response.data);
+    } catch (err) {
+      console.error("Submit fail", err.response.data);
+    }
   };
 
   return (
@@ -107,7 +134,7 @@ const BranchPaymentForm = () => {
                   type="text"
                   required=""
                   placeholder="Tên người gửi"
-                  aria-label="senderName"                
+                  aria-label="senderName"
                   onChange={handleChange}
                 />
               </div>
@@ -305,7 +332,7 @@ const BranchPaymentForm = () => {
                 </label>
                 <select
                   id="loaiHang"
-                  name="type"
+                  name="typeId"
                   className="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded h-10"
                   defaultValue="default"
                   onChange={handleChange}
@@ -346,6 +373,7 @@ const BranchPaymentForm = () => {
                   type="number"
                   placeholder="...VND"
                   aria-label="price"
+                  onChange={handleChange}
                 />
               </div>
             </div>

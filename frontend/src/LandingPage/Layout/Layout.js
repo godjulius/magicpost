@@ -11,11 +11,13 @@ const Layout = ({ children }) => {
   // console.log(typeof(localStorage.getItem("userRole")));
   localStorage.setItem("branchId", null);
   // console.log(typeof(localStorage.getItem("branchId")));
+  localStorage.setItem("employeeId", null);
 
   useEffect(() => {
     // Lấy thông tin từ localStorage
     const tempUserRole = localStorage.getItem("userRole");
     const branchId = localStorage.getItem("branchId");
+    const employeeId = localStorage.getItem("employeeId");
 
     // setUserRole(tempUserRole);
 

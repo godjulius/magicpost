@@ -20,6 +20,7 @@ const HubManager = () => {
     // Lấy thông tin từ localStorage
     const tempUserRole = localStorage.getItem("userRole");
     const branchId = localStorage.getItem("branchId");
+    const employeeId = localStorage.getItem("employeeId");
 
     UserRole = tempUserRole;
 
