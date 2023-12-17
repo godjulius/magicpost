@@ -15,11 +15,14 @@ class DeliveryController {
             customerId: idSchema.required(),
             employeeId: idSchema.required(),
         });
+
         const dataToValidate = {
             customerId: req.params.deliveryId,
             employeeId: req.body.receiverId,
         }
+        
         const result = objectIdSchema.validate(dataToValidate);
+
         if (result.error) {
             return res.status(400).send("Bad request");
         }
@@ -62,6 +65,7 @@ class DeliveryController {
                 delivery_id: deliveryId,
             },
         });
+
         return res.status(200).json(delivery);
     }
 

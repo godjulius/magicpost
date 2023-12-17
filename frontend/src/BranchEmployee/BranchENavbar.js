@@ -26,6 +26,14 @@ const BranchENavbar = ({ onTabChange }) => {
           <i className="fas fa-table mr-2"></i>
           Payment Form
         </Link>
+        <Link
+          to="/BranchEmployee/BranchOrderManagement"
+          onClick={() => handleTabClick('branchOrderManagement')}
+          className={`flex items-center ${currentTab === 'branchOrderManagement' ? 'active-nav-item' : 'nav-item'} text-gray-600 py-4 pl-4 nav-item w-full ${currentTab === 'branchOrderManagement' ? 'bg-gray-300' : 'hover:bg-gray-300'}`}
+        >
+          <i className="fas fa-table mr-2"></i>
+          Order Management
+        </Link>
       </nav>
     </aside>
   );

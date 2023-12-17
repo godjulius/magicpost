@@ -15,6 +15,8 @@ import BranchEmployeeManagement from "./BranchManager/BranchEmployeeManagement.j
 
 import BranchEmployee from "./BranchEmployee/BranchEmployee.js";
 import BranchPaymentForm from "./BranchEmployee/BranchPaymentForm.js";
+import BranchOrderManagement from "./BranchEmployee/BranchOrderManagement.js";
+import BranchTransshipment from "./BranchEmployee/BranchTransshipment.js";
 
 import HubManager from "./HubManager/HubManager.js";
 import HubCreateAccount from "./HubManager/HubCreateAccount.js";
@@ -42,6 +44,8 @@ export default function App() {
         </Route>
         <Route path="/BranchEmployee/*" element={<BranchEmployee />}>
           <Route path="BranchPaymentForm" element={<BranchPaymentForm/>}/>
+          <Route path="BranchOrderManagement" element={<BranchOrderManagement/>}/>
+          <Route path="BranchTransshipment/:deliveryId" element={<BranchTransshipment/>}/>
         </Route>
         <Route path="/HubManager/*" element={<HubManager />}>
           <Route path="HubEmployeeManagement" element={<HubEmployeeManagement/>}/>

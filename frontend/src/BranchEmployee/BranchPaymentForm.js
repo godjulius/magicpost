@@ -22,6 +22,7 @@ const BranchPaymentForm = () => {
     price: 0,
     details: "something...",
   });
+
   // Fetch API province thanh pho
   const [codeTinh, setCodeTinh] = useState(0);
   const [codeTinhReceiver, setCodeTinhReceiver] = useState(0);
@@ -69,8 +70,8 @@ const BranchPaymentForm = () => {
 
     if (name === "name") {
       const lastSpaceIndex = value.lastIndexOf(" ");
-      const lastName = value.slice(lastSpaceIndex + 1).trim();
-      const firstName = value.slice(0, lastSpaceIndex).trim();
+      const firstName = value.slice(lastSpaceIndex + 1).trim();
+      const lastName = value.slice(0, lastSpaceIndex).trim();
 
       const temp = {
         ...order,
@@ -95,6 +96,9 @@ const BranchPaymentForm = () => {
     // };
     // setOrder(temp);
   };
+
+  const [showNotification, setShowNotification] = useState(false);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(order);
@@ -102,6 +106,8 @@ const BranchPaymentForm = () => {
 
     try {
       const response = await axios.post(submitURL, order);
+      setShowNotification(true);
+
       console.log(response.data);
       console.log("Submit success", response.data);
     } catch (err) {
@@ -132,7 +138,7 @@ const BranchPaymentForm = () => {
                   id="senderName"
                   name="name"
                   type="text"
-                  required=""
+                  required
                   placeholder="Tên người gửi"
                   aria-label="senderName"
                   onChange={handleChange}
@@ -217,6 +223,7 @@ const BranchPaymentForm = () => {
               </div>
             </div>
           </div>
+
           {/* Nguoi nhan */}
           <div className="w-full lg:w-1/2 my-6 pr-0 lg:pl-2 font-custom-sans-serif">
             <p className="text-xl pb-6 text-black flex items-center">
@@ -317,6 +324,18 @@ const BranchPaymentForm = () => {
               </div>
             </div>
           </div>
+
+          {showNotification && (
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-200 text-gray-800 p-6 rounded shadow-xl border border-gray-500">
+              <p>Ghi nhận đơn hàng thành công!</p>
+              <button
+                className="mt-4 bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded mx-auto block"
+                onClick={() => setShowNotification(false)}
+              >
+                Đóng
+              </button>
+            </div>
+          )}
 
           <div className="w-full lg:w-full my-6 pr-0 lg:pr-2 font-custom-sans-serif">
             <div className="w-full text-xl pb-6 items-center text-center">
