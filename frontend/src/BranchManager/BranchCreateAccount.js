@@ -34,7 +34,7 @@ function BranchCreateAccount() {
     month: "",
     year: "",
     roleId: "",
-    brandId: "",
+    branchId: "",
     phone: "",
     address: "",
   });

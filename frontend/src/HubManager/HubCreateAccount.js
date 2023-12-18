@@ -34,7 +34,7 @@ function HubCreateAccount() {
     month: "",
     year: "",
     roleId: "",
-    brandId: "",
+    branchId: "",
     phone: "",
     address: "",
   });
