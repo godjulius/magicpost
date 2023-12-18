@@ -177,7 +177,7 @@ class BranchController {
                 msg: "Branch not found!",
             });
         }
-        if (!req.session.User.isLogin) {
+        if (!req.session.User) {
             return res.status(403).json({
                 msg: "Login first",
             })
@@ -204,7 +204,7 @@ class BranchController {
     //GET /branch/search
     async searchBranch(req, res) {
         console.log(req.session.User);
-        if (!req.session.User.isLogin) {
+        if (!req.session.User) {
             return res.status(403).json({
                 msg: "You are not login",
             });
