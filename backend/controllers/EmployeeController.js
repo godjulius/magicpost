@@ -136,12 +136,11 @@ class EmployeeController {
         }
         let roleId
         let branchId;
-        req.session.roleId = 1;
-        if (req.session.roleId === 1 || req.session.roleId === 2) {
+        if (req.session.User.roleId === 1 || req.session.User.roleId === 2) {
             roleId = req.body.roleId;
             branchId = req.body.branchId;
         }
-        if (req.session.roleId === 3 || req.session.roleId === 5) {
+        if (req.session.User.roleId === 3 || req.session.User.roleId === 5) {
             roleId = req.session.roleId;
             branchId = req.session.branchId;
         }
@@ -176,43 +175,37 @@ class EmployeeController {
         const employee = await Employee.findOne({
             where: {
                 email: req.body.email,
-                // email: "duy@gmail.com"
             },
         });
-        try {
-            if (!employee) {
-                return res.status(200).json({
-                    msg: "Invalid email",
-                })
-            }
-            const checkedPassword = await bcrypt.compareSync(
-                req.body.password,
-                employee.password,
-            );
-            if (!checkedPassword) {
-                return res.status(200).json({
-                    msg: "Invalid password",
-                });
-            }
-
-            req.session.User = {
-                isLogin: true,
-                employeeId: employee.employee_id,
-                roleId: employee.role_id,
-                branchId: employee.branch_id,
-            }
-
-            console.log(req.session)
-
-            return res.status(200).json(
-                {
-                    employee: employee,
-                    cookie: req.headers.cookie,
-                }
-            );
-        } catch (err) {
-            next(err);
+        if (!employee) {
+            return res.status(200).json({
+                msg: "Invalid email",
+            })
         }
+        const checkedPassword = await bcrypt.compareSync(
+            req.body.password,
+            employee.password,
+        );
+        if (!checkedPassword) {
+            return res.status(200).json({
+                msg: "Invalid password",
+            });
+        }
+
+        req.session.User = {
+            employeeId: employee.employee_id,
+            roleId: employee.role_id,
+            branchId: employee.branch_id,
+        }
+
+        console.log(req.session.User)
+
+        return res.status(200).json(
+            {
+                employee: employee,
+                cookie: req.headers.cookie,
+            }
+        );
     }
 
 //GET /employee/:employeeId/customer
@@ -267,8 +260,6 @@ class EmployeeController {
         });
         return res.status(200).json(hubManagers);
     }
-
-//
 
 }
 

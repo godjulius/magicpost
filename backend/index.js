@@ -11,36 +11,29 @@ const db = require("./models");
 
 const corsOptions = {
     origin: "http://localhost:8081",
+    credentials: true,
 };
 
 app.use(cors(corsOptions));
 
-// parse requests of content-type - application/json
 app.use(express.json());
 
-app.use(session({
-        resave: true,
-        saveUninitialized: true,
-        secret: "never-go-wrong",
-        cookie: {
-            secure: false
+app.use(
+    session({
+            resave: false,
+            saveUninitialized: true,
+            secret: "never-go-wrong",
+            cookie: {
+                secure: false
+            }
         }
-    })
+    )
 )
 
-// parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({extended: true}));
-
-// simple route
-app.get("/", (req, res) => {
-
-    res.json({message: "Test server 2"});
-
-});
 
 routesInit(app);
 
-// set port, listen for requests
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {

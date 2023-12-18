@@ -33,9 +33,9 @@ class OrderController {
     //GET order/tracking
     async getOrderByIds(req, res, next) {
         const schema = Joi.object({
-            search: Joi.string().pattern(/^[A-Z,]+$/).required(),
+            searchValue: Joi.string().pattern(new RegExp('^[A-Z0-9,]+$')).required(),
         });
-        const validate = schema.validate(req.body.searchValue);
+        const validate = schema.validate(req.body);
         if (validate.error) {
             return res.status(400).send("Bad request");
         }
@@ -166,8 +166,7 @@ class OrderController {
         });
 
         //create parcel
-        // const branchId = req.session.branchId;
-        const branchId = 4;
+        const branchId = req.session.User.branchId;
         const parcel = await Parcel.create({
             branch_id: branchId,
             weight: weight,
@@ -189,8 +188,7 @@ class OrderController {
         });
 
         //create order
-        // const employeeId = req.session.employeeId;
-        const employeeId = 2;
+        const employeeId = req.session.User.employeeId;
         const orderId = generateRandomString();
         const order = await Order.create({
             order_id: orderId,
