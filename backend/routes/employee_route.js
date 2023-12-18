@@ -4,6 +4,7 @@ const router = express.Router();
 
 router.post("/employee/create", employeeController.createAccount);
 router.post("/login", employeeController.logIn);
+router.post("/logout", employeeController.logOut);
 router.get("/employee/:employeeId/customer", employeeController.getCustomerOfEmployee);
 router.get("/employee/:id", employeeController.getEmployeeById);
 router.get("/employee/hubManager", employeeController.getAllHubManager);
