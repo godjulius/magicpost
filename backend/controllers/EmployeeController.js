@@ -208,7 +208,25 @@ class EmployeeController {
         );
     }
 
-//GET /employee/:employeeId/customer
+    //POST /logout
+    async logOut(req, res) {
+        req.session.destroy(err => {
+            if (err) {
+                return res.status(500).json({
+                    success: false,
+                    msg: "Error logging out",
+                });
+            } else {
+                res.clearCookie("connect.sid");
+                return res.json({
+                    success: true,
+                    msg: "Logout successfully",
+                })
+            }
+        })
+    }
+
+    //GET /employee/:employeeId/customer
     async getCustomerOfEmployee(req, res, next) {
         const employeeId = req.params.employeeId;
         const employee = await Employee.findOne({
@@ -260,7 +278,6 @@ class EmployeeController {
         });
         return res.status(200).json(hubManagers);
     }
-
 }
 
 module.exports = new EmployeeController();
