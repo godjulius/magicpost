@@ -5,6 +5,7 @@ const session = require("express-session");
 
 const app = express();
 const db = require("./models");
+
 (async () => {
     await db.sequelize.sync();
 })();
@@ -20,12 +21,10 @@ app.use(express.json());
 
 app.use(
     session({
+            name: "sid",
             resave: false,
-            saveUninitialized: true,
+            saveUninitialized: false,
             secret: "never-go-wrong",
-            cookie: {
-                secure: false
-            }
         }
     )
 )
