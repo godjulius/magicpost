@@ -44,6 +44,8 @@ export default function SignIn() {
       // Nếu tài khoản tồn tại, kiểm tra role
       switch (response.data.employee.role_id) {
         case 1:
+          // const response1 = await axios.get("http://127.0.0.1:3000/branch");
+          // console.log(response1.data)
           // Chuyển hướng đến trang admin
           navigate("/admin");
           break;

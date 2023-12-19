@@ -5,6 +5,16 @@ import { Link } from "react-router-dom";
 const BranchOrderManagement = () => {
   const [isLoading, setIsLoading] = useState(true);
 
+  {
+    /* {tab1 là đơn hàng chuyển từ điểm giao dịch lên điểm tập kết} */
+  }
+  {
+    /* {tab2 là đơn hàng chuyển nhận từ điểm tập kết về điểm giao dịch} */
+  }
+  const [currentTab, setCurrentTab] = useState("tab1");
+
+  const branchId = parseInt(localStorage.getItem("branchId"));
+
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
@@ -22,11 +32,62 @@ const BranchOrderManagement = () => {
     fetchOrders();
   }, []);
 
+  const [deliveries, setDeliveries] = useState([]);
+
+  useEffect(() => {
+    const fetchDeliveries = async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:3000/delivery");
+        setDeliveries(response.data);
+      } catch (error) {
+        console.error("Error fetching deliveries", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchDeliveries();
+  }, []);
+
+  // Function để thay đổi tab
+  const handleTabChange = (tab) => {
+    setCurrentTab(tab);
+  };
+
   const [itemsPerPage, setItemsPerPage] = useState(5);
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  const totalItems = orders.length;
+  const updatedOrder1 = [];
+
+  // if (currentTab === "tab1") {
+  orders.forEach((order) => {
+    deliveries.forEach((delivery) => {
+      if (
+        order.delivery_id === delivery.delivery_id &&
+        delivery.status_id === (currentTab === "tab1" ? 1 : 2) &&
+        // delivery.status_id === 1 &&
+        delivery.receiver_id === branchId
+      ) {
+        updatedOrder1.push(order);
+      }
+    });
+  });
+  // } else {
+  //   orders.forEach((order) => {
+  //     deliveries.forEach((delivery) => {
+  //       if (
+  //         order.delivery_id === delivery.delivery_id &&
+  //         delivery.status_id === 2 &&
+  //         delivery.receiver_id === branchId
+  //       ) {
+  //         updatedOrder1.push(order);
+  //       }
+  //     });
+  //   });
+  // }
+
+  const totalItems = updatedOrder1.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   const handleNextPage = () => {
@@ -49,12 +110,31 @@ const BranchOrderManagement = () => {
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentOrders = orders.slice(startIndex, endIndex);
+  const currentOrders = updatedOrder1.slice(startIndex, endIndex);
 
   return (
     <div className="w-full h-screen overflow-x-hidden border-t flex flex-col font-custom-sans-serif">
       <main className="w-full flex-grow p-6">
         <h1 className="w-full text-3xl text-black pb-6">Quản lý đơn hàng</h1>
+        <div className="flex mb-4 justify-center">
+          <button
+            className={`flex-1 max-w-xs py-2 px-4 text-lg border rounded-md ${
+              currentTab === "tab1" ? "bg-green-500 text-white" : "bg-gray-200"
+            }`}
+            onClick={() => handleTabChange("tab1")}
+          >
+            Gửi đơn hàng lên điểm tập kết
+          </button>
+          <button
+            className={`flex-1 max-w-xs py-2 px-4 text-lg border rounded-md ${
+              currentTab === "tab2" ? "bg-green-500 text-white" : "bg-gray-200"
+            }`}
+            onClick={() => handleTabChange("tab2")}
+          >
+            Nhận đơn hàng từ điểm giao dịch
+          </button>
+        </div>
+
         <div className="my-2 flex sm:flex-row flex-col">
           <div className="flex flex-row mb-1 sm:mb-0">
             <div className="relative">
@@ -93,27 +173,33 @@ const BranchOrderManagement = () => {
             />
           </div>
         </div>
+
+        {/* {Đơn hàng chuyển từ điểm giao dịch lên điểm tập kết} */}
+        <div></div>
         <div className="bg-white overflow-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider sm:w-1/6">
                   Mã đơn hàng
                 </th>
-                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider sm:w-1/6">
                   Tên khách hàng
                 </th>
-                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider sm:w-1/6">
                   Mã vận chuyển
                 </th>
-                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider sm:w-1/6">
                   Mã bưu kiện
                 </th>
-                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider sm:w-1/6">
                   Mã nhân viên
                 </th>
-                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                  Vận chuyển đơn hàng
+                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider sm:w-1/6">
+                  {currentTab === "tab1"
+                    ? "Vận chuyển đơn hàng"
+                    : "Xác nhận đơn hàng"}
+                  {/* // Vận chuyển đơn hàng */}
                 </th>
               </tr>
             </thead>
@@ -129,7 +215,9 @@ const BranchOrderManagement = () => {
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                       <p className="text-gray-900 whitespace-no-wrap">
-                        {order.customer.last_name + " " + order.customer.first_name}
+                        {order.customer.last_name +
+                          " " +
+                          order.customer.first_name}
                       </p>
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -149,9 +237,20 @@ const BranchOrderManagement = () => {
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                       <button className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">
-                        <Link to={`/BranchEmployee/BranchTransshipment/${order.delivery_id}`}>
-                          Bắt đầu vận chuyển
-                        </Link>
+                        {currentTab === "tab1" && (
+                          <Link
+                            to={`/BranchEmployee/BranchTransshipment/${order.delivery_id}`}
+                          >
+                            Bắt đầu vận chuyển
+                          </Link>
+                        )}
+                        {currentTab === "tab2" && (
+                          // <Link
+                          //   to={`/BranchEmployee/BranchTransshipment/${order.delivery_id}`}
+                          // >
+                          <div>Đơn hàng đã đến điểm giao dịch</div>
+                          //  </Link>
+                        )}
                       </button>
                     </td>
                   </tr>

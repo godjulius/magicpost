@@ -49,19 +49,26 @@ const HubOrderManagement = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  const updatedDeliveryItems = [];
+  // const updatedDeliveryItems = [];
 
-  deliveryItems.forEach((delivery) => {
-    branchs.forEach((branch) => {
-      if (
-        branch.branch_id === delivery.sender_id &&
-        branch.hub_id === parseInt(branchId)
-      ) {
-        console.log("thanh cong");
-        updatedDeliveryItems.push(delivery);
-      }
-    });
-  });
+  // deliveryItems.forEach((delivery) => {
+  //   branchs.forEach((branch) => {
+  //     if (
+  //       branch.branch_id === delivery.sender_id &&
+  //       branch.hub_id === parseInt(branchId)
+  //     ) {
+  //       console.log("thanh cong");
+  //       updatedDeliveryItems.push(delivery);
+  //     }
+  //   });
+  // });
+
+  const updatedDeliveryItems = deliveryItems.filter((delivery) => 
+    delivery.receiver_id === parseInt(branchId) && delivery.status_id === 1
+  )
+
+  console.log("deliveryItems: ", deliveryItems);
+  console.log("updatedDeliveryItems: ", updatedDeliveryItems);
 
   const handleConfirmDelivery = async (deliveryId) => {
     try {

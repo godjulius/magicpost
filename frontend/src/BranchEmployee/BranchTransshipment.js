@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 
 const BranchTransshipment = () => {
   const orderForm = {
@@ -15,6 +15,8 @@ const BranchTransshipment = () => {
   //   console.log(temp);
 
   const submitURL = `http://127.0.0.1:3000/delivery/${deliveryId}/transshipment`;
+
+  const navigate = useNavigate;
   //   console.log(submitURL);
 
   const [orders, setOrders] = useState([]);
@@ -122,15 +124,19 @@ const BranchTransshipment = () => {
     return " " + result;
   };
 
+  const [showNotification, setShowNotification] = useState(false);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
       const response = await axios.post(submitURL, orderForm);
-    //   console.log(response.data);
-    //   console.log("Submit success", response.data);
+      setShowNotification(true);
+      console.log(response.data);
+      console.log("Submit success", response.data);
+      // navigate("../BranchOrderManagement")
     } catch (err) {
-    //   console.error("Submit fail", err.response.data);
+      console.error("Submit fail", err.response.data);
     }
   };
 
@@ -172,6 +178,19 @@ const BranchTransshipment = () => {
                 {/* Thêm thông tin cần hiển thị ở cột thứ hai */}
               </div>
             </div>
+
+            {showNotification && (
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-200 text-gray-800 p-6 rounded shadow-xl border border-gray-500">
+                <p>Gửi hàng đến điểm tập kết thành công!</p>
+                <button
+                  className="mt-4 bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded mx-auto block"
+                  onClick={() => setShowNotification(false)}
+                >
+                  <Link to="../BranchOrderManagement">Đóng</Link>
+                </button>
+              </div>
+            )}
+
             {/* Nút xác nhận */}
             <div className="flex justify-center mt-4">
               <button
