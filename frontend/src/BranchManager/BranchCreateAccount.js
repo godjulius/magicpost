@@ -120,7 +120,10 @@ function BranchCreateAccount() {
   useEffect(() => {
     const fetchRoles = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:3000/role");
+        const response = await axios.get("http://localhost:3000/role",
+        {
+          withCredentials: true,
+        });
         setRoles(response.data);
       } catch (error) {
         console.error("Error fetching roles:", error);
@@ -135,7 +138,10 @@ function BranchCreateAccount() {
   useEffect(() => {
     const fetchBranchs = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:3000/branch");
+        const response = await axios.get("http://localhost:3000/branch",
+        {
+          withCredentials: true,
+        });
         setBranchs(response.data);
       } catch (error) {
         console.error("Error fetching branchs:", error);
@@ -191,7 +197,10 @@ function BranchCreateAccount() {
       if (passwordsMatch) {
         const response = await axios.post(
           "http://localhost:3000/employee/create",
-          formData
+          formData,
+          {
+            withCredentials: true,
+          }
         );
         console.log("Registration successful:", response.data);
         // console.log(response.data.msg + " " + passwordsMatch);

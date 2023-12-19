@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const submitURL = "http://127.0.0.1:3000/order/create";
+const submitURL = "http://localhost:3000/order/create";
 const apiProvincesURL = "https://provinces.open-api.vn/api/?depth=2";
 const BranchPaymentForm = () => {
   const [order, setOrder] = useState({
@@ -105,7 +105,10 @@ const BranchPaymentForm = () => {
     // Call api gửi dữ liệu lên server
 
     try {
-      const response = await axios.post(submitURL, order);
+      const response = await axios.post(submitURL, order,
+        {
+          withCredentials: true,
+        });
       setShowNotification(true);
 
       console.log(response.data);

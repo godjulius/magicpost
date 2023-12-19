@@ -11,7 +11,10 @@ const AccountManagement = () => {
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:3000/employee");
+        const response = await axios.get("http://localhost:3000/employee",
+        {
+          withCredentials: true,
+        });
         setEmployees(response.data);
       } catch (error) {
         console.error("Error fetching employees:", error);
@@ -28,7 +31,10 @@ const AccountManagement = () => {
   useEffect(() => {
     const fetchRoles = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:3000/role");
+        const response = await axios.get("http://localhost:3000/role",
+        {
+          withCredentials: true,
+        });
         setRoles(response.data);
       } catch (error) {
         console.error("Error fetching roles:", error);
@@ -43,7 +49,10 @@ const AccountManagement = () => {
   useEffect(() => {
     const fetchBranchs = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:3000/branch");
+        const response = await axios.get("http://localhost:3000/branch",
+        {
+          withCredentials: true,
+        });
         setBranchs(response.data);
       } catch (error) {
         console.error("Error fetching branchs:", error);

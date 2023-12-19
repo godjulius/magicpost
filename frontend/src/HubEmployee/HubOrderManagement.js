@@ -19,7 +19,10 @@ const HubOrderManagement = () => {
   useEffect(() => {
     const fetchDeliveryItems = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:3000/delivery");
+        const response = await axios.get("http://localhost:3000/delivery",
+        {
+          withCredentials: true,
+        });
         // console.log(response.data);
         setDeliveryItems(response.data);
       } catch (error) {
@@ -37,7 +40,10 @@ const HubOrderManagement = () => {
   useEffect(() => {
     const fetchBranchs = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:3000/branch");
+        const response = await axios.get("http://localhost:3000/branch",
+        {
+          withCredentials: true,
+        });
         setBranchs(response.data);
       } catch (error) {
         console.error("Error fetching branchs:", error);
@@ -81,7 +87,10 @@ const HubOrderManagement = () => {
 
       // Gửi yêu cầu API để cập nhật trạng thái của đơn hàng
       const response = await axios.post(
-        `http://127.0.0.1:3000/delivery/${deliveryId}/transshipment`
+        `http://localhost:3000/delivery/${deliveryId}/transshipment`,
+        {
+          withCredentials: true,
+        }
       );
       
       console.log("Registration successful:", response.data);

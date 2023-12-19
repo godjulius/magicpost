@@ -14,7 +14,7 @@ const BranchTransshipment = () => {
   const temp = parseInt(deliveryId);
   //   console.log(temp);
 
-  const submitURL = `http://127.0.0.1:3000/delivery/${deliveryId}/transshipment`;
+  const submitURL = `http://localhost:3000/delivery/${deliveryId}/transshipment`;
 
   const navigate = useNavigate;
   //   console.log(submitURL);
@@ -24,7 +24,10 @@ const BranchTransshipment = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:3000/order");
+        const response = await axios.get("http://localhost:3000/order",
+        {
+          withCredentials: true,
+        });
         setOrders(response.data);
       } catch (error) {
         console.error("Error fetching orders", error);
@@ -39,7 +42,10 @@ const BranchTransshipment = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:3000/branch");
+        const response = await axios.get("http://localhost:3000/branch",
+        {
+          withCredentials: true,
+        });
         setBranchs(response.data);
       } catch (error) {
         console.error("Error fetching branchs", error);
@@ -130,7 +136,10 @@ const BranchTransshipment = () => {
     event.preventDefault();
 
     try {
-      const response = await axios.post(submitURL, orderForm);
+      const response = await axios.post(submitURL, orderForm,
+        {
+          withCredentials: true,
+        });
       setShowNotification(true);
       console.log(response.data);
       console.log("Submit success", response.data);

@@ -112,7 +112,10 @@ function CreateAccount() {
   useEffect(() => {
     const fetchRoles = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:3000/role");
+        const response = await axios.get("http://localhost:3000/role",
+        {
+          withCredentials: true,
+        });
         setRoles(response.data);
       } catch (error) {
         console.error("Error fetching roles:", error);
@@ -127,7 +130,10 @@ function CreateAccount() {
   useEffect(() => {
     const fetchBranchs = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:3000/branch");
+        const response = await axios.get("http://localhost:3000/branch",
+        {
+          withCredentials: true,
+        });
         setBranchs(response.data);
       } catch (error) {
         console.error("Error fetching branchs:", error);
@@ -183,7 +189,10 @@ function CreateAccount() {
       if (passwordsMatch) {
         const response = await axios.post(
           "http://localhost:3000/employee/create",
-          formData
+          formData,
+          {
+            withCredentials: true,
+          }
         );
         console.log("Registration successful:", response.data);
         // console.log(response.data.msg + " " + passwordsMatch);
@@ -433,14 +442,11 @@ function CreateAccount() {
                   <option value="default" disabled hidden>
                     Select branch
                   </option>
-                  {branchs.map(
-                    (branch) =>
-                      (
-                        <option key={branch.branch_id} value={branch.branch_id}>
-                          {branch.branch_name}
-                        </option>
-                      )
-                  )}
+                  {branchs.map((branch) => (
+                    <option key={branch.branch_id} value={branch.branch_id}>
+                      {branch.branch_name}
+                    </option>
+                  ))}
                 </select>
               </div>
 

@@ -1,14 +1,64 @@
 import { Link, useNavigate } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const apiSignInUrl = "http://127.0.0.1:3000/login";
+const apiSignInUrl = "http://localhost:3000/login";
 
 export default function SignIn() {
-
   localStorage.setItem("userRole", null);
   localStorage.setItem("branchId", null);
   localStorage.setItem("employeeId", null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/getData", {
+          withCredentials: true,
+        });
+
+
+        switch (response.data.roleId) {
+          case undefined:
+            break;
+          case 1:
+            // Xử lý cho role_id = 1
+            // Chuyển hướng đến trang admin
+            navigate("/admin");
+            break;
+          case 3:
+            // Xử lý cho role_id = 3
+            // Chuyển hướng đến trang quản lý điểm tập kết
+            navigate("/HubManager");
+            // ...
+            break;
+          case 4:
+            // Xử lý cho role_id = 4
+            // Chuyển hướng đến trang nhân viên điểm tập kết
+            navigate("/HubEmployee");
+            // ...
+            break;
+          case 5:
+            // Xử lý cho role_id = 5
+            // Chuyển hướng đến trang quản lý điểm giao dịch
+            navigate("/BranchManager");
+            // ...
+            break;
+          case 6:
+            // Xử lý cho role_id = 6
+            // Chuyển hướng đến trang nhân viên điểm giao dịch
+            navigate("/BranchEmployee");
+            // ...
+            break;
+          default:
+            console.error("Unauthorized access: Invalid role");
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []); // useEffect sẽ chạy sau khi component được render
 
   const [account, setAccount] = useState({
     email: "",
@@ -32,7 +82,9 @@ export default function SignIn() {
 
     try {
       // Kiểm tra tài khoản tồn tại trên API
-      const response = await axios.post(apiSignInUrl, account);
+      const response = await axios.post(apiSignInUrl, account, {
+        withCredentials: true,
+      });
 
       console.log(response.data.employee.role_id); // Xem tài khoản là role nào
 
@@ -40,32 +92,35 @@ export default function SignIn() {
       localStorage.setItem("userRole", response.data.employee.role_id);
       localStorage.setItem("branchId", response.data.employee.branch_id);
       localStorage.setItem("employeeId", response.data.employee.employee_id);
-      
+
       // Nếu tài khoản tồn tại, kiểm tra role
       switch (response.data.employee.role_id) {
         case 1:
-          // const response1 = await axios.get("http://127.0.0.1:3000/branch");
-          // console.log(response1.data)
+          // Xử lý cho role_id = 1
           // Chuyển hướng đến trang admin
           navigate("/admin");
           break;
         case 3:
           // Xử lý cho role_id = 3
+          // Chuyển hướng đến trang quản lý điểm tập kết
           navigate("/HubManager");
           // ...
           break;
         case 4:
           // Xử lý cho role_id = 4
+          // Chuyển hướng đến trang nhân viên điểm tập kết
           navigate("/HubEmployee");
           // ...
           break;
         case 5:
           // Xử lý cho role_id = 5
+          // Chuyển hướng đến trang quản lý điểm giao dịch
           navigate("/BranchManager");
           // ...
           break;
         case 6:
           // Xử lý cho role_id = 6
+          // Chuyển hướng đến trang nhân viên điểm giao dịch
           navigate("/BranchEmployee");
           // ...
           break;

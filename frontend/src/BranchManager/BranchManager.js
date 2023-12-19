@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Link, Outlet, useNavigate } from "react-router-dom";
 import BranchNavbar from "./BranchNavbar.js";
+import axios from "axios";
 
 import "../admin/admin.css";
 import DesktopHeader from "../admin/DesktopHeader.js";
 import MobileHeader from "../admin/MobileHeader.js";
 
 const BranchManager = () => {
-  const navigate = useNavigate();
-
   const [activeTab, setActiveTab] = useState("dashboard");
 
   var UserRole = "null";
@@ -17,25 +16,25 @@ const BranchManager = () => {
     setActiveTab(tab);
   };
 
+  const navigate = useNavigate();
+  
   useEffect(() => {
-    // Lấy thông tin từ localStorage
-    const tempUserRole = localStorage.getItem("userRole");
-    const branchId = localStorage.getItem("branchId");
-    const employeeId = localStorage.getItem("employeeId");
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/getData", {
+          withCredentials: true,
+        });
 
-    UserRole = tempUserRole;
+        if (response.data === "No data"|| response.data.roleId !== 5) {
+          navigate("/SignIn");
+        }
 
-    // Sử dụng thông tin ở đây, ví dụ:
-    console.log("UserRole:", UserRole);
-    console.log("TempUserRole:", tempUserRole);
-    console.log("BranchId:", branchId);
-    console.log("EmployeeId:", employeeId);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } 
+    };
 
-    if (UserRole === "null" || UserRole !== "5") {
-      navigate("/SignIn");
-    }
-
-    // Ghi chú: Kiểm tra xem giá trị có tồn tại hay không trước khi sử dụng để tránh lỗi
+    fetchData();
   }, []); // useEffect sẽ chạy sau khi component được render
 
   return (

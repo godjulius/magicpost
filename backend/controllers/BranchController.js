@@ -1,5 +1,5 @@
 const {models: {Branch, Employee, Parcel}} = require("../models");
-const Joi = require("Joi");
+const Joi = require("joi");
 const {Op} = require("sequelize");
 
 class BranchController {

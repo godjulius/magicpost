@@ -20,7 +20,9 @@ const BranchOrderManagement = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:3000/order");
+        const response = await axios.get("http://localhost:3000/order", {
+          withCredentials: true,
+        });
         setOrders(response.data);
       } catch (error) {
         console.error("Error fetching orders", error);
@@ -37,7 +39,9 @@ const BranchOrderManagement = () => {
   useEffect(() => {
     const fetchDeliveries = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:3000/delivery");
+        const response = await axios.get("http://localhost:3000/delivery", {
+          withCredentials: true,
+        });
         setDeliveries(response.data);
       } catch (error) {
         console.error("Error fetching deliveries", error);
@@ -58,21 +62,37 @@ const BranchOrderManagement = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  const updatedOrder1 = [];
+  // const updatedOrder = [];
 
-  // if (currentTab === "tab1") {
-  orders.forEach((order) => {
-    deliveries.forEach((delivery) => {
-      if (
-        order.delivery_id === delivery.delivery_id &&
-        delivery.status_id === (currentTab === "tab1" ? 1 : 2) &&
-        // delivery.status_id === 1 &&
-        delivery.receiver_id === branchId
-      ) {
-        updatedOrder1.push(order);
-      }
-    });
-  });
+  let updatedOrder;
+
+  if (currentTab === "tab1") {
+    updatedOrder = orders.filter(
+      (order) =>
+        order.delivery.status_id === 1 &&
+        order.delivery.receiver_id === branchId &&
+        order.delivery.sender_id === null
+    );
+  } else {
+    updatedOrder = orders.filter(
+      (order) =>
+        order.delivery.status_id === 2 &&
+        order.delivery.receiver_id === branchId &&
+        order.delivery.sender_id !== null
+    );
+  }
+
+  // orders.forEach((order) => {
+  //   deliveries.forEach((delivery) => {
+  //     if (
+  //       order.delivery_id === delivery.delivery_id &&
+  //       delivery.status_id === (currentTab === "tab1" ? 1 : 2) &&
+  //       delivery.receiver_id === branchId
+  //     ) {
+  //       updatedOrder.push(order);
+  //     }
+  //   });
+  // });
   // } else {
   //   orders.forEach((order) => {
   //     deliveries.forEach((delivery) => {
@@ -81,13 +101,13 @@ const BranchOrderManagement = () => {
   //         delivery.status_id === 2 &&
   //         delivery.receiver_id === branchId
   //       ) {
-  //         updatedOrder1.push(order);
+  //         updatedOrder.push(order);
   //       }
   //     });
   //   });
   // }
 
-  const totalItems = updatedOrder1.length;
+  const totalItems = updatedOrder.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   const handleNextPage = () => {
@@ -110,7 +130,7 @@ const BranchOrderManagement = () => {
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentOrders = updatedOrder1.slice(startIndex, endIndex);
+  const currentOrders = updatedOrder.slice(startIndex, endIndex);
 
   return (
     <div className="w-full h-screen overflow-x-hidden border-t flex flex-col font-custom-sans-serif">
@@ -131,7 +151,7 @@ const BranchOrderManagement = () => {
             }`}
             onClick={() => handleTabChange("tab2")}
           >
-            Nhận đơn hàng từ điểm giao dịch
+            Nhận đơn hàng từ điểm tập kết
           </button>
         </div>
 

@@ -21,10 +21,10 @@ app.use(express.json());
 
 app.use(
     session({
-            name: "sid",
             resave: false,
             saveUninitialized: false,
             secret: "never-go-wrong",
+
         }
     )
 )
