@@ -73,8 +73,8 @@ db.models.Parcel.hasOne(db.models.Order, {foreignKey: "parcel_id"});
 db.models.Parcel.belongsTo(db.models.Branch, {foreignKey: "branch_id"});
 db.models.Branch.hasMany(db.models.Parcel, {foreignKey: "branch_id"});
 
-db.models.Order.belongsTo(db.models.Status, {foreignKey: "status_id"});
-db.models.Status.hasMany(db.models.Order, {foreignKey: "status_id"});
+db.models.Delivery.belongsTo(db.models.Status, {foreignKey: "status_id"});
+db.models.Status.hasMany(db.models.Delivery, {foreignKey: "status_id"});
 
 db.models.Parcel.belongsTo(db.models.ParcelType, {foreignKey: "type_id"});
 db.models.ParcelType.hasMany(db.models.Parcel, {foreignKey: "type_id"});
