@@ -95,7 +95,7 @@ ALTER TABLE
 ALTER TABLE
     `Delivery` ADD CONSTRAINT `delivery_order_id_foreign` FOREIGN KEY(`order_id`) REFERENCES `Order`(`order_id`);
 ALTER TABLE
-    `Order` ADD CONSTRAINT `order_status_id_foreign` FOREIGN KEY(`status_id`) REFERENCES `Status`(`status_id`);+
+    `Order` ADD CONSTRAINT `order_status_id_foreign` FOREIGN KEY(`status_id`) REFERENCES `Status`(`status_id`);
 ALTER TABLE
     `Delivery` ADD CONSTRAINT `delivery_sender_id_foreign` FOREIGN KEY(`sender_id`) REFERENCES `Branch`(`branch_id`);
 ALTER TABLE
@@ -113,8 +113,9 @@ INSERT INTO `role` (`role_id`, `role_name`) VALUES
 (1, 'Admin'),
 (2, 'Giám đốc'),
 (3, 'Trưởng điểm tập kết'),
-(4, 'Trưởng điểm giao dịch'),
-(5, 'Nhân viên điểm giao dịch');
+(4, 'Nhân viên điểm tập kết'),
+(5, 'Trưởng điểm giao dịch'),
+(6, 'Nhân viên điểm giao dịch');
 
 INSERT INTO `status` (`status_id`, `status_detail`) VALUES
 (1, 'pending'),
