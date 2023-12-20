@@ -11,6 +11,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const SearchPage = ({ children }) => {
+  window.scrollTo(0,0); 
   const navigate = useNavigate();
 
   useEffect(() => {
