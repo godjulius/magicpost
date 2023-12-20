@@ -249,6 +249,8 @@ class OrderController {
     //create order
     const employeeId = req.session.User.employeeId;
     const orderId = generateRandomString();
+    // console.log(receiverName, receiverPhone, receiverAddress);
+    // return;
     const order = await Order.create({
       order_id: orderId,
       customer_id: customer.customer_id,
@@ -261,6 +263,7 @@ class OrderController {
       receiver_phone: receiverPhone,
       receiver_address: receiverAddress,
     });
+
     return res.status(200).json({
       msg: "Create order success!",
       order: order,
