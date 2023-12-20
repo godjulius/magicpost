@@ -5,11 +5,6 @@ import { Link } from "react-router-dom";
 const BranchCurrentOrder = () => {
   const [isLoading, setIsLoading] = useState(true);
 
-  /* {tab1 là đơn hàng chuyển từ điểm giao dịch lên điểm tập kết} */
-  /* {tab2 là đơn hàng chuyển nhận từ điểm tập kết về điểm giao dịch} */
-
-  const [currentTab, setCurrentTab] = useState("tab1");
-
   const [branchId, setBranchId] = useState();
 
   useEffect(() => {
@@ -64,11 +59,6 @@ const BranchCurrentOrder = () => {
 
     fetchDeliveries();
   }, []);
-
-  // Function để thay đổi tab
-  const handleTabChange = (tab) => {
-    setCurrentTab(tab);
-  };
 
   const [itemsPerPage, setItemsPerPage] = useState(5);
 
@@ -205,7 +195,7 @@ const BranchCurrentOrder = () => {
                   Mã nhân viên
                 </th>
                 <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                  Vận chuyển đơn hàng
+                  Chuyển đơn cho người nhận
                 </th>
                 <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   Hoàn trả đơn hàng
