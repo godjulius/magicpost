@@ -1,3 +1,4 @@
+const {flatten} = require("express/lib/utils");
 const Order = function (sequelize, Sequelize) {
     return sequelize.define("order", {
         order_id: {
@@ -11,14 +12,6 @@ const Order = function (sequelize, Sequelize) {
             references: {
                 model: "customer",
                 key: "customer_id",
-            },
-        },
-        delivery_id: {
-            type: Sequelize.BIGINT.UNSIGNED,
-            allowNull: false,
-            references: {
-                model: "delivery",
-                key: "delivery_id",
             },
         },
         parcel_id: {
@@ -37,10 +30,30 @@ const Order = function (sequelize, Sequelize) {
                 key: "employee_id",
             },
         },
+        status_id: {
+            type: Sequelize.TINYINT(1).UNSIGNED,
+            allowNull: false,
+            references: {
+                model: "status",
+                key: "status_id",
+            }
+        },
         order_date: {
             type: Sequelize.DATE,
             allowNull: false,
-        }
+        },
+        receiver_name: {
+            type: Sequelize.DATE,
+            allowNull: false,
+        },
+        receiver_phone: {
+            type: Sequelize.DATE,
+            allowNull: false,
+        },
+        receiver_address: {
+            type: Sequelize.DATE,
+            allowNull: false,
+        },
     }, {
         sequelize,
         tableName: "order",
@@ -75,11 +88,11 @@ const Order = function (sequelize, Sequelize) {
                     {name: "parcel_id",},
                 ],
             }, {
-                name: "order_delivery_id_foreign",
+                name: "order_status_id_foreign",
                 using: "BTREE",
                 unique: false,
                 fields: [
-                    {name: "delivery_id",},
+                    {name: "status_id",},
                 ],
             }
         ]
