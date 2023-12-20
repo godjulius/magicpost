@@ -157,9 +157,9 @@ const BranchTransshipment = () => {
         <h1 className="w-full text-3xl text-black pb-6">Vận chuyển đơn hàng</h1>
         <form className="flex flex-wrap" onSubmit={handleSubmit}>
           <div className="w-full my-6 pr-0 lg:pr-2 font-custom-sans-serif">
-            <div className="leading-loose p-10 bg-white rounded shadow-xl flex">
+            <div className="leading-loose p-10 bg-white rounded shadow-xl flex flex-wrap sm:flex-row">
               {/* Cột thứ nhất */}
-              <div className="w-1/2 pr-4 flex-row sm:flex-col">
+              <div className="w-full sm:w-1/2 pr-4">
                 <p className="text-gray-900 whitespace-no-wrap">
                   Tên khách hàng: {getCustomerName()}
                 </p>
@@ -176,7 +176,7 @@ const BranchTransshipment = () => {
               </div>
 
               {/* Cột thứ hai */}
-              <div className="w-1/2 pl-4 flex-row sm:flex-col">
+              <div className="w-full sm:w-1/2 pr-4">
                 <p className="text-gray-900 whitespace-no-wrap">
                   Mã vận chuyển: {" " + deliveryId}
                 </p>
