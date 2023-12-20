@@ -68,6 +68,7 @@ CREATE TABLE `Order`(
     `parcel_id` BIGINT UNSIGNED NOT NULL,
     `employee_id` BIGINT UNSIGNED NOT NULL,
     `status_id` TINYINT UNSIGNED NOT NULL,
+    `branch_id` BIGINT UNSIGNED NOT NULL,
     `order_date` DATETIME NOT NULL,
     `receiver_name` VARCHAR(255) NOT NULL,
     `receiver_phone` VARCHAR(255) NOT NULL,
@@ -87,6 +88,8 @@ ALTER TABLE
     `Delivery` ADD CONSTRAINT `delivery_receiver_id_foreign` FOREIGN KEY(`receiver_id`) REFERENCES `Branch`(`branch_id`);
 ALTER TABLE
     `Order` ADD CONSTRAINT `order_customer_id_foreign` FOREIGN KEY(`customer_id`) REFERENCES `Customer`(`customer_id`);
+ALTER TABLE
+    `Order` ADD CONSTRAINT `order_branch_id_foreign` FOREIGN KEY(`branch_id`) REFERENCES `Branch`(`branch_id`);
 ALTER TABLE
     `Employee` ADD CONSTRAINT `employee_role_id_foreign` FOREIGN KEY(`role_id`) REFERENCES `Role`(`role_id`);
 ALTER TABLE
@@ -121,4 +124,4 @@ INSERT INTO `status` (`status_id`, `status_detail`) VALUES
 
 INSERT INTO `parceltype` (`type_id`, `type_name`) VALUES
 (1, 'Tài liệu'),
-(2, 'Bưu phẩm'),
+(2, 'Bưu phẩm');
