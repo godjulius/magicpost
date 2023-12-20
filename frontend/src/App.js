@@ -26,6 +26,8 @@ import HubEmployeeManagement from "./HubManager/HubEmployeeManagement.js";
 
 import HubEmployee from "./HubEmployee/HubEmployee.js";
 import HubOrderManagement from "./HubEmployee/HubOrderManagement.js";
+import HubCurrentOrder from "./HubEmployee/HubCurrentOrder.js";
+import HubTransshipment from "./HubEmployee/HubTransshipment.js";
 
 export default function App() {
   return (
@@ -57,6 +59,8 @@ export default function App() {
         </Route>
         <Route path="/HubEmployee/*" element={<HubEmployee />}>
           <Route path="HubOrderManagement" element={<HubOrderManagement/>}/>
+          <Route path="HubCurrentOrder" element={<HubCurrentOrder/>}/>
+          <Route path="HubTransshipment/:deliveryId" element={<HubTransshipment/>}/>
         </Route>
       </Routes>
     </>
