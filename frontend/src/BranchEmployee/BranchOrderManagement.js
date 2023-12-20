@@ -62,25 +62,24 @@ const BranchOrderManagement = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  console.log(orders);
+  // console.log(orders);
 
   let updatedOrder = orders;
 
-  // if (currentTab === "tab1") {
-  //   updatedOrder = orders.filter(
-  //     (order) =>
-  //       order.status_id === 1 &&
-  //       order.delivery.receiver_id === branchId &&
-  //       order.delivery.sender_id === null
-  //   );
-  // } else {
-  //   updatedOrder = orders.filter(
-  //     (order) =>
-  //       order.delivery.status_id === 2 &&
-  //       order.delivery.receiver_id === branchId &&
-  //       order.delivery.sender_id !== null
-  //   );
-  // }
+  if (currentTab === "tab1") {
+    updatedOrder = orders.filter(
+      (order) =>
+        order.status_id === 1 &&
+        order.parcel.branch_id === branchId
+        // order.branch_id === branchId &&
+    );
+  } else {
+    updatedOrder = orders.filter(
+      (order) =>
+        order.status_id === 2 &&
+        order.deliveries.receiver_id === branchId
+    );
+  }
 
   // orders.forEach((order) => {
   //   deliveries.forEach((delivery) => {
@@ -259,7 +258,7 @@ const BranchOrderManagement = () => {
                       <button className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">
                         {currentTab === "tab1" && (
                           <Link
-                            to={`/BranchEmployee/BranchTransshipment/${order.delivery_id}`}
+                            to={`/BranchEmployee/BranchTransshipment/${order.order_id}`}
                           >
                             Vận chuyển
                           </Link>

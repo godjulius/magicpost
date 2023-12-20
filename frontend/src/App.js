@@ -51,7 +51,7 @@ export default function App() {
           <Route path="BranchPaymentForm" element={<BranchPaymentForm/>}/>
           <Route path="BranchOrderManagement" element={<BranchOrderManagement/>}/>
           <Route path="BranchCurrentOrder" element={<BranchCurrentOrder/>}/>
-          <Route path="BranchTransshipment/:deliveryId" element={<BranchTransshipment/>}/>
+          <Route path="BranchTransshipment/:orderId" element={<BranchTransshipment/>}/>
         </Route>
         <Route path="/HubManager/*" element={<HubManager />}>
           <Route path="HubEmployeeManagement" element={<HubEmployeeManagement/>}/>

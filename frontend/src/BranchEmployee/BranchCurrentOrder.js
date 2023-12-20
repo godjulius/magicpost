@@ -64,7 +64,12 @@ const BranchCurrentOrder = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  let updatedOrder = orders.filter((order) => order.branch_id === branchId);
+  let updatedOrder = orders.filter(
+    (order) =>
+      order.status_id === 2 &&
+      order.parcel.branch_id === branchId
+      // order.branch_id === branchId &&
+  );
 
   console.log(updatedOrder);
 

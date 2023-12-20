@@ -14,7 +14,7 @@ const HubNavbar = ({ onTabChange }) => {
     <aside className="relative bg-gray-100 h-screen w-64 hidden sm:block shadow-xl">
       <div className="">
         <Link to="/" className="text-gray-600 text-3xl font-semibold uppercase hover:text-gray-300">
-          <img src="./asset/Logo.png" alt="LOGO" className="h-16 mx-auto"></img>
+          <img src="../asset/Logo.png" alt="LOGO" className="h-16 mx-auto"></img>
         </Link>
       </div>
       <nav className="text-gray-600 text-base font-semibold pt-3">

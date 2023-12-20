@@ -3,20 +3,34 @@ import axios from "axios";
 import { useParams, useNavigate, Link } from "react-router-dom";
 
 const BranchTransshipment = () => {
+  const { orderId } = useParams();
+
   const orderForm = {
+    orderId: orderId,
     receiverId: "",
-    employeeId: parseInt(localStorage.getItem("employeeId")),
   };
 
-  const { deliveryId } = useParams();
-  //   console.log(deliveryId);
-
-  const temp = parseInt(deliveryId);
-  //   console.log(temp);
 
   // const submitURL = `http://localhost:3000/delivery/${deliveryId}/transshipment`;
 
-  const submitURL = `http://localhost:3000/delivery/${deliveryId}/transshipment`;
+  const submitURL = "http://localhost:3000/delivery/create";
+
+  const [branchId, setBranchId] = useState();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/getData", {
+          withCredentials: true,
+        });
+        setBranchId(response.data.branchId);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []); // useEffect sẽ chạy sau khi component được render
 
   const navigate = useNavigate;
   //   console.log(submitURL);
@@ -60,7 +74,7 @@ const BranchTransshipment = () => {
   const getCustomerName = () => {
     var result = "";
     orders.forEach((order) => {
-      if (order.delivery_id === temp) {
+      if (order.order_id === orderId) {
         result = order.customer.last_name + " " + order.customer.first_name;
       }
     });
@@ -68,19 +82,13 @@ const BranchTransshipment = () => {
   };
 
   const getOrderId = () => {
-    var result = "";
-    orders.forEach((order) => {
-      if (order.delivery_id === temp) {
-        result = order.order_id;
-      }
-    });
-    return " " + result;
+    return " " + orderId;
   };
 
   const getBranchName = () => {
     var result = "";
     branchs.forEach((branch) => {
-      if (branch.branch_id === parseInt(localStorage.getItem("branchId"))) {
+      if (branch.branch_id === branchId) {
         result = branch.branch_name;
       }
     });
@@ -92,7 +100,7 @@ const BranchTransshipment = () => {
     var tempHubId = "";
 
     branchs.forEach((branch) => {
-      if (branch.branch_id === parseInt(localStorage.getItem("branchId"))) {
+      if (branch.branch_id === branchId) {
         tempHubId = branch.hub_id;
       }
     });
@@ -112,7 +120,7 @@ const BranchTransshipment = () => {
     var result = "";
 
     orders.forEach((order) => {
-      if (order.delivery_id === temp) {
+      if (order.order_id === orderId) {
         result = order.parcel.weight;
       }
     });
@@ -124,13 +132,24 @@ const BranchTransshipment = () => {
     var result = "";
 
     orders.forEach((order) => {
-      if (order.delivery_id === temp) {
+      if (order.order_id === orderId) {
         result = order.parcel.price;
       }
     });
 
     return " " + result;
   };
+
+  const getParcelId = () => {
+    var result = "";
+    orders.forEach((order) => {
+      if (order.order_id === orderId) {
+        result = order.parcel.parcel_id;
+      }
+    });
+
+    return " " + result;
+  }
 
   const [showNotification, setShowNotification] = useState(false);
 
@@ -167,10 +186,10 @@ const BranchTransshipment = () => {
                   Mã đơn hàng: {getOrderId()}
                 </p>
                 <p className="text-gray-900 whitespace-no-wrap">
-                  Cân nặng: {getWeight()}
+                  Cân nặng: {getWeight()} g
                 </p>
                 <p className="text-gray-900 whitespace-no-wrap">
-                  Giá tiền: {getPrice()}
+                  Giá tiền: {getPrice()} VND
                 </p>
                 {/* Thêm thông tin cần hiển thị ở cột thứ nhất */}
               </div>
@@ -178,7 +197,7 @@ const BranchTransshipment = () => {
               {/* Cột thứ hai */}
               <div className="w-full sm:w-1/2 pr-4">
                 <p className="text-gray-900 whitespace-no-wrap">
-                  Mã vận chuyển: {" " + deliveryId}
+                  Mã bưu kiện: {getParcelId()}
                 </p>
                 <p className="text-gray-900 whitespace-no-wrap">
                   Chi nhánh gửi: {getBranchName()}
