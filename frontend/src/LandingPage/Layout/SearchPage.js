@@ -15,21 +15,19 @@ const SearchPage = ({ children }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("http://localhost:3000/getData", {
-          withCredentials: true,
-        });
+    // const fetchData = async () => {
+    //   try {
+    //     const response = await axios.get("http://localhost:3000/order/tracking", {
+    //       withCredentials: true,
+    //     });
+    //     console.log(response.data);
+    //   } catch (error) {
+    //     console.error("Error fetching data:", error);
+    //   }
+    // };
+    // fetchData();
+    console.log(1); // lay order id tu session de in thong tin don hang
 
-        // if (response.data === "No data") {
-        //   navigate("/SignIn");
-        // }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
   }, []); // useEffect sẽ chạy sau khi component được render
 
   return (

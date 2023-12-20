@@ -11,7 +11,6 @@ export default function SearchBar() {
   }
 
   function handleSubmit (event) {
-    // navigate('SearchPage')
     event.preventDefault();
     console.log(madonhang);
     // Call api gửi dữ liệu lên server
@@ -22,6 +21,7 @@ export default function SearchBar() {
     // } catch (err) {
     //   console.error("Submit fail", err.response.data);
     // }
+    navigate('SearchPage')
   }
 
   return (
