@@ -67,9 +67,6 @@ db.models.Branch.hasMany(db.models.Delivery, {foreignKey: "sender_id"});
 db.models.Delivery.belongsTo(db.models.Branch, {foreignKey: "receiver_id"});
 db.models.Branch.hasMany(db.models.Delivery, {foreignKey: "receiver_id"});
 
-db.models.Delivery.belongsTo(db.models.Order, {foreignKey: "order_id"});
-db.models.Order.hasMany(db.models.Delivery, {foreignKey: "order_id"});
-
 db.models.Order.belongsTo(db.models.Parcel, {foreignKey: "parcel_id"});
 db.models.Parcel.hasOne(db.models.Order, {foreignKey: "parcel_id"});
 
