@@ -117,8 +117,6 @@ function HubCreateAccount() {
         const branch_id = response.data.branchId;
         const role_id = response.data.roleId + 1;
 
-        console.log(role_id);
-
         setFormData({
           ...formData,
           branchId: branch_id,
@@ -197,7 +195,6 @@ function HubCreateAccount() {
       }
     });
 
-    console.log(result);
     return result;
   };
 
@@ -209,7 +206,6 @@ function HubCreateAccount() {
       }
     });
 
-    console.log(result);
     return result;
   };
 

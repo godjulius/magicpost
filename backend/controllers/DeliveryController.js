@@ -101,7 +101,7 @@ class DeliveryController {
             })
         }
         const delivery = await Delivery.create({
-            order_id: orderId,
+            order_id: order,
             sender_id: sender,
             receiver_id: receiver,
             send_date: sendDate
