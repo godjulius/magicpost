@@ -175,17 +175,8 @@ class OrderController {
             details: details,
         });
 
-
-        //create delivery
         const receiverAddress = `${receiverDetailAddress}, ${receiverDistrict}, ${receiverProvince}`;
         const today = new Date();
-        const delivery = await Delivery.create({
-            receiver_id: branchId,
-            receive_date: today,
-            receiver_name: receiverName,
-            receiver_phone: receiverPhone,
-            receiver_address: receiverAddress,
-        });
 
         //create order
         const employeeId = req.session.User.employeeId;
@@ -193,10 +184,14 @@ class OrderController {
         const order = await Order.create({
             order_id: orderId,
             customer_id: customer.customer_id,
-            delivery_id: delivery.delivery_id,
             parcel_id: parcel.parcel_id,
             employee_id: employeeId,
+            branch_id: branchId,
             order_date: today,
+            receive_date: today,
+            receiver_name: receiverName,
+            receiver_phone: receiverPhone,
+            receiver_address: receiverAddress,
         });
         return res.status(200).json({
             msg: "Create order success!",

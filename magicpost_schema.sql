@@ -1,5 +1,5 @@
-DROP SCHEMA IF EXISTS magicpost;
-CREATE SCHEMA magicpost;
+DROP DATABASE IF EXISTS magicpost;
+CREATE DATABASE magicpost;
 USE magicpost;
 
 CREATE TABLE `ParcelType`(
@@ -95,7 +95,7 @@ ALTER TABLE
 ALTER TABLE
     `Delivery` ADD CONSTRAINT `delivery_order_id_foreign` FOREIGN KEY(`order_id`) REFERENCES `Order`(`order_id`);
 ALTER TABLE
-    `Order` ADD CONSTRAINT `order_status_id_foreign` FOREIGN KEY(`status_id`) REFERENCES `Status`(`status_id`);
+    `Order` ADD CONSTRAINT `order_status_id_foreign` FOREIGN KEY(`status_id`) REFERENCES `Status`(`status_id`);+
 ALTER TABLE
     `Delivery` ADD CONSTRAINT `delivery_sender_id_foreign` FOREIGN KEY(`sender_id`) REFERENCES `Branch`(`branch_id`);
 ALTER TABLE

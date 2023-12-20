@@ -56,6 +56,12 @@ class EmployeeController {
 
     //POST /employee/create
     async createAccount(req, res, next) {
+
+        if (!req.session.User) {
+            return res.status(401).json({
+                msg: "Login first",
+            })
+        }
         const schema = Joi.object({
             email: Joi.string().email().required(),
             password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
@@ -134,7 +140,7 @@ class EmployeeController {
                 msg: "Phone is already existed!",
             });
         }
-        let roleId
+        let roleId;
         let branchId;
         if (req.session.User.roleId === 1 || req.session.User.roleId === 2) {
             roleId = req.body.roleId;
