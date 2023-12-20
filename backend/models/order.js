@@ -38,6 +38,14 @@ const Order = function (sequelize, Sequelize) {
                 key: "status_id",
             }
         },
+        branch_id:{
+            type:Sequelize.BIGINT.UNSIGNED,
+            allowNull:false,
+            references:{
+                model:"branch",
+                key:"branch_id"
+            }
+        },
         order_date: {
             type: Sequelize.DATE,
             allowNull: false,
