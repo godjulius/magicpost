@@ -6,9 +6,17 @@ const Delivery = function (sequelize, Sequelize) {
             autoIncrement: true,
             primaryKey: true,
         },
+        order_id: {
+            type: Sequelize.STRING,
+            allowNull: false,
+            references: {
+                model: "order",
+                key: "order_id",
+            }
+        },
         sender_id: {
             type: Sequelize.BIGINT.UNSIGNED,
-            allowNull: true,
+            allowNull: false,
             references: {
                 model: "branch",
                 key: "branch_id",
@@ -16,7 +24,7 @@ const Delivery = function (sequelize, Sequelize) {
         },
         receiver_id: {
             type: Sequelize.BIGINT.UNSIGNED,
-            allowNull: true,
+            allowNull: false,
             references: {
                 model: "branch",
                 key: "branch_id",
@@ -30,23 +38,6 @@ const Delivery = function (sequelize, Sequelize) {
             type: Sequelize.DATE,
             allowNull: true,
         },
-        status_id: {
-            type: Sequelize.TINYINT(1),
-            allowNull: false, // 1: pending, 2: delivering, 3: delivered, 4: return
-            defaultValue: 1,
-        },
-        receiver_name:{
-            type:Sequelize.STRING,
-            allowNull:false,
-        },
-        receiver_phone:{
-            type:Sequelize.STRING,
-            allowNull:false,
-        },
-        receiver_address:{
-            type:Sequelize.STRING,
-            allowNull:false,
-        }
     }, {
         sequelize,
         tableName: "delivery",
@@ -73,14 +64,14 @@ const Delivery = function (sequelize, Sequelize) {
                 fields: [
                     {name: "sender_id",},
                 ],
-            }, {
-                name: "delivery_status_id_foreign",
-                using: "BTREE",
-                unique: false,
-                fields: [
-                    {name: "status_id",},
-                ],
-            },
+            },{
+            name:"delivery_order_id_foreign",
+                using:"BTREE",
+                unique:false,
+                fields:[
+                    {name: "order_id"},
+                ]
+            }
         ],
     });
 }
