@@ -1,4 +1,5 @@
 import Layout from "./LandingPage/Layout/Layout.js";
+import SearchPage from "./LandingPage/Layout/SearchPage.js"
 import Admin from "./admin/admin.js";
 import { Routes, Route, Link, Outlet, Navigate } from "react-router-dom";
 import SignIn from "./signIn/SignIn.js";
@@ -31,6 +32,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Layout />} />
         <Route path="/SignIn" element={<SignIn />} />
+        <Route path="/SearchPage" element={<SearchPage />} />
         <Route path="/admin/*" element={<Admin />}>
           <Route path="PaymentForm" element={<PaymentForm />} />
           <Route path="Dashboard" element={<Dashboard/>}/>
