@@ -60,7 +60,7 @@ const Pricing = () => {
                   ></img>
                 </div>
                 <p className="text-lg text-black_cus-600 font-medium capitalize my-2 sm:my-7">
-                  Gói A
+                  MP Tài liệu
                 </p>
                 <ul className="flex flex-col list-inside pl-6 xl:pl-0 items-start justify-start text-left text-black_cus-500 flex-grow">
                   <li className="relative check custom-list my-2">
@@ -78,7 +78,7 @@ const Pricing = () => {
                 </ul>
                 <div className="flex flex-col w-full justify-center mb-8 flex-none mt-12">
                   <p className="text-2xl text-black_cus-600 text-center mb-4 ">
-                    Free
+                    5VND <span className="text-black_cus-500">/ đơn</span>
                   </p>
                   <ButtonOutline>Select</ButtonOutline>
                 </div>
@@ -110,7 +110,7 @@ const Pricing = () => {
                   ></img>
                 </div>
                 <p className="text-lg text-black_cus-600 font-medium capitalize my-2 sm:my-7">
-                  Gói B{" "}
+                  MP Bưu phẩm{" "}
                 </p>
                 <ul className="flex flex-col list-inside pl-6 xl:pl-0 items-start justify-start text-left text-black_cus-500 flex-grow">
                   <li className="relative check custom-list my-2">
@@ -131,7 +131,7 @@ const Pricing = () => {
                 </ul>
                 <div className="flex flex-col w-full justify-center mb-8 flex-none mt-12">
                   <p className="text-2xl text-black_cus-600 text-center mb-4 ">
-                    $10 <span className="text-black_cus-500">/ mo</span>
+                    10VND <span className="text-black_cus-500">/ đơn</span>
                   </p>
                   <ButtonOutline>Select</ButtonOutline>
                 </div>
@@ -163,7 +163,7 @@ const Pricing = () => {
                   ></img>
                 </div>
                 <p className="text-lg text-black_cus-600 font-medium capitalize my-2 sm:my-7">
-                  Gói C{" "}
+                  MP Hỏa Tốc{" "}
                 </p>
                 <ul className="flex flex-col list-inside pl-6 xl:pl-0 items-start justify-start text-left text-black_cus-500 flex-grow">
                   <li className="relative check custom-list my-2">
@@ -187,7 +187,7 @@ const Pricing = () => {
                 </ul>
                 <div className="flex flex-col w-full justify-center mb-8 flex-none mt-12">
                   <p className="text-2xl text-black_cus-600 text-center mb-4 ">
-                    $10 <span className="text-black_cus-500">/ mo</span>
+                    100VND <span className="text-black_cus-500">/ đơn</span>
                   </p>
 
                   <ButtonOutline>Select</ButtonOutline>
@@ -202,14 +202,13 @@ const Pricing = () => {
               variants={scrollAnimation}
               className="text-2xl sm:text-3xl lg:text-4xl font-medium text-black_cus-600 leading-relaxed w-9/12 sm:w-6/12 lg:w-4/12 mx-auto"
             >
-              Huge Global Network of Fast VPN{" "}
+              Chuyển phát nhanh toàn cầu{" "}
             </motion.h3>
             <motion.p
               className="leading-normal  mx-auto my-2 w-10/12 sm:w-7/12 lg:w-6/12"
               variants={scrollAnimation}
             >
-              See LaslesVPN everywhere to make it easier for you when you move
-              locations.
+              Chuyển đơn hàng của bạn đến mọi nơi bạn muốn một cách an toàn và nhanh nhất
             </motion.p>
           </ScrollAnimationWrapper>
           <ScrollAnimationWrapper>
