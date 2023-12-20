@@ -16,14 +16,6 @@ function HubCreateAccount() {
     setShowPassword(!showPassword);
   };
 
-  const [branchId, setBranchId] = useState();
-  useEffect(() => {
-    // Lấy thông tin từ localStorage
-    const temp = localStorage.getItem("branchId");
-    setBranchId(temp)
-
-  }, []); // useEffect sẽ chạy sau khi component được render
-
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -115,6 +107,32 @@ function HubCreateAccount() {
     fetchAddresses();
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/getData", {
+          withCredentials: true,
+        });
+
+        const branch_id = response.data.branchId;
+        const role_id = response.data.roleId + 1;
+
+        console.log(role_id);
+
+        setFormData({
+          ...formData,
+          branchId: branch_id,
+          roleId: role_id,
+        });
+
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const [roles, setRoles] = useState([]);
 
   useEffect(() => {
@@ -171,24 +189,29 @@ function HubCreateAccount() {
     }
   };
 
-  // const handlePasswordChange = (e) => {
-  //   const { value } = e.target;
+  const getRoleName = () => {
+    let result;
+    roles.forEach((role) => {
+      if (role.role_id === formData.roleId) {
+        result = role.role_name;
+      }
+    });
 
-  //   setFormData({
-  //     ...formData,
-  //     password: value,
-  //   });
+    console.log(result);
+    return result;
+  };
 
-  //   // Đặt trạng thái passwordChanged thành true khi mật khẩu thay đổi
-  //   setPasswordChanged(true);
-  // };
+  const getBranchName = () => {
+    let result;
+    branchs.forEach((branch) => {
+      if (branch.branch_id === formData.branchId) {
+        result = branch.branch_name;
+      }
+    });
 
-  // const handleConfirmPasswordChange = (e) => {
-  //   const { value } = e.target;
-
-  //   // Kiểm tra sự trùng khớp và cập nhật state
-  //   setPasswordsMatch(value === formData.password);
-  // };
+    console.log(result);
+    return result;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -401,64 +424,24 @@ function HubCreateAccount() {
                 </label>
               </div>
 
-              <div className="mb-4">
+              <div className="mb-4 flex items-center">
                 <label
                   htmlFor="role"
-                  className="block mb-2 text-sm font-medium text-gray-900"
+                  className="block mr-2 text-sm font-medium text-gray-900"
                 >
-                  Role
+                  Role:
                 </label>
-                <select
-                  id="role"
-                  name="roleId"
-                  className="bg-gray-100 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                  // value={formData.role}
-                  onChange={handleChange}
-                  required=""
-                  defaultValue="default"
-                >
-                  <option value="default" disabled hidden>
-                    Select role
-                  </option>
-                  {roles.map(
-                    (role) =>
-                      role.role_id === 4 && (
-                        <option key={role.role_id} value={role.role_id}>
-                          {role.role_name}
-                        </option>
-                      )
-                  )}
-                </select>
+                <p>{getRoleName()}</p>
               </div>
 
-              <div className="mb-4">
+              <div className="mb-4 flex items-center">
                 <label
                   htmlFor="branch"
-                  className="block mb-2 text-sm font-medium text-gray-900"
+                  className="block mr-2 text-sm font-medium text-gray-900"
                 >
-                  Branch
+                  Branch:
                 </label>
-                <select
-                  id="branch"
-                  name="branchId"
-                  className="bg-gray-100 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                  // value={formData.branch}
-                  onChange={handleChange}
-                  required=""
-                  defaultValue="default"
-                >
-                  <option value="default" disabled hidden>
-                    Select branch
-                  </option>
-                  {branchs.map(
-                    (branch) =>
-                      branch.branch_id === parseInt(branchId) && (
-                        <option key={branch.branch_id} value={branch.branch_id}>
-                          {branch.branch_name}
-                        </option>
-                      )
-                  )}
-                </select>
+                <p>{getBranchName()}</p>
               </div>
 
               <div className="mb-4">
