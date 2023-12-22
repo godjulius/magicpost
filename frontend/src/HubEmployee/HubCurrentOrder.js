@@ -2,18 +2,25 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-const BranchOrderManagement = () => {
+const HubCurrentOrder = () => {
   const [isLoading, setIsLoading] = useState(true);
 
-  {
-    /* {tab1 là đơn hàng chuyển từ điểm giao dịch lên điểm tập kết} */
-  }
-  {
-    /* {tab2 là đơn hàng chuyển nhận từ điểm tập kết về điểm giao dịch} */
-  }
-  const [currentTab, setCurrentTab] = useState("tab1");
+  const [branchId, setBranchId] = useState();
 
-  const branchId = parseInt(localStorage.getItem("branchId"));
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/getData", {
+          withCredentials: true,
+        });
+        setBranchId(response.data.branchId);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []); // useEffect sẽ chạy sau khi component được render
 
   const [orders, setOrders] = useState([]);
 
@@ -34,76 +41,48 @@ const BranchOrderManagement = () => {
     fetchOrders();
   }, []);
 
-  // const [deliveries, setDeliveries] = useState([]);
+  const [deliveries, setDeliveries] = useState([]);
 
-  // useEffect(() => {
-  //   const fetchDeliveries = async () => {
-  //     try {
-  //       const response = await axios.get("http://localhost:3000/delivery", {
-  //         withCredentials: true,
-  //       });
-  //       setDeliveries(response.data);
-  //     } catch (error) {
-  //       console.error("Error fetching deliveries", error);
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchDeliveries = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/delivery", {
+          withCredentials: true,
+        });
+        setDeliveries(response.data);
+      } catch (error) {
+        console.error("Error fetching deliveries", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  //   fetchDeliveries();
-  // }, []);
-
-  // Function để thay đổi tab
-  const handleTabChange = (tab) => {
-    setCurrentTab(tab);
-  };
+    fetchDeliveries();
+  }, []);
 
   const [itemsPerPage, setItemsPerPage] = useState(5);
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  // console.log(orders);
-
   let updatedOrder = orders;
+//   let updatedOrder = orders.filter((order) => order.branch_id === branchId);
 
-  if (currentTab === "tab1") {
-    updatedOrder = orders.filter(
-      (order) =>
-        order.status_id === 1 &&
-        order.parcel.branch_id === branchId
-        // order.branch_id === branchId &&
-    );
-  } else {
-    updatedOrder = orders.filter(
-      (order) =>
-        order.status_id === 2 &&
-        order.deliveries.receiver_id === branchId
-    );
-  }
+  console.log(updatedOrder);
 
-  // orders.forEach((order) => {
-  //   deliveries.forEach((delivery) => {
-  //     if (
-  //       order.delivery_id === delivery.delivery_id &&
-  //       delivery.status_id === (currentTab === "tab1" ? 1 : 2) &&
-  //       delivery.receiver_id === branchId
-  //     ) {
-  //       updatedOrder.push(order);
-  //     }
-  //   });
-  // });
+  // if (currentTab === "tab1") {
+  //   updatedOrder = orders.filter(
+  //     (order) =>
+  //       order.status_id === 1 &&
+  //       order.delivery.receiver_id === branchId &&
+  //       order.delivery.sender_id === null
+  //   );
   // } else {
-  //   orders.forEach((order) => {
-  //     deliveries.forEach((delivery) => {
-  //       if (
-  //         order.delivery_id === delivery.delivery_id &&
-  //         delivery.status_id === 2 &&
-  //         delivery.receiver_id === branchId
-  //       ) {
-  //         updatedOrder.push(order);
-  //       }
-  //     });
-  //   });
+  //   updatedOrder = orders.filter(
+  //     (order) =>
+  //       order.delivery.status_id === 2 &&
+  //       order.delivery.receiver_id === branchId &&
+  //       order.delivery.sender_id !== null
+  //   );
   // }
 
   const totalItems = updatedOrder.length;
@@ -134,8 +113,10 @@ const BranchOrderManagement = () => {
   return (
     <div className="w-full h-screen overflow-x-hidden border-t flex flex-col font-custom-sans-serif">
       <main className="w-full flex-grow p-6">
-        <h1 className="w-full text-3xl text-black pb-6">Quản lý đơn hàng</h1>
-        <div className="flex mb-4 justify-center">
+        <h1 className="w-full font-semibold text-3xl text-black pb-6">
+          Danh sách đơn hàng hiện tại
+        </h1>
+        {/* <div className="flex mb-4 justify-center">
           <button
             className={`flex-1 max-w-xs py-2 px-4 text-lg border rounded-md ${
               currentTab === "tab1" ? "bg-green-500 text-white" : "bg-gray-200"
@@ -152,7 +133,7 @@ const BranchOrderManagement = () => {
           >
             Nhận đơn hàng từ điểm tập kết
           </button>
-        </div>
+        </div> */}
 
         <div className="my-2 flex sm:flex-row flex-col">
           <div className="flex flex-row mb-1 sm:mb-0">
@@ -199,26 +180,23 @@ const BranchOrderManagement = () => {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider sm:w-1/6">
+                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   Mã đơn hàng
                 </th>
-                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider sm:w-1/6">
+                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   Tên khách hàng
                 </th>
-                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider sm:w-1/6">
+                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   Mã vận chuyển
                 </th>
-                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider sm:w-1/6">
+                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   Mã bưu kiện
                 </th>
-                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider sm:w-1/6">
+                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   Mã nhân viên
                 </th>
-                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider sm:w-1/6">
-                  {currentTab === "tab1"
-                    ? "Vận chuyển đơn hàng"
-                    : "Xác nhận đơn hàng"}
-                  {/* // Vận chuyển đơn hàng */}
+                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  Vận chuyển đơn hàng
                 </th>
               </tr>
             </thead>
@@ -256,20 +234,13 @@ const BranchOrderManagement = () => {
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                       <button className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">
-                        {currentTab === "tab1" && (
+
                           <Link
-                            to={`/BranchEmployee/BranchTransshipment/${order.order_id}`}
+                            to={`../HubTransshipment/${order.delivery_id}`}
                           >
                             Vận chuyển
                           </Link>
-                        )}
-                        {currentTab === "tab2" && (
-                          // <Link
-                          //   to={`/BranchEmployee/BranchTransshipment/${order.delivery_id}`}
-                          // >
-                          <div>Xác nhận</div>
-                          //  </Link>
-                        )}
+
                       </button>
                     </td>
                   </tr>
@@ -310,4 +281,4 @@ const BranchOrderManagement = () => {
   );
 };
 
-export default BranchOrderManagement;
+export default HubCurrentOrder;

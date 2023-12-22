@@ -11,7 +11,6 @@ export default function SearchBar() {
   }
 
   function handleSubmit (event) {
-    navigate('admin')
     event.preventDefault();
     console.log(madonhang);
     // Call api gửi dữ liệu lên server
@@ -22,6 +21,7 @@ export default function SearchBar() {
     // } catch (err) {
     //   console.error("Submit fail", err.response.data);
     // }
+    navigate('SearchPage')
   }
 
   return (
@@ -47,11 +47,11 @@ export default function SearchBar() {
               type="submit"
               className="w-full md:w-auto px-6 py-3 bg-orange_cus-500 border-black-500 text-white fill-white active:scale-95 duration-100 border will-change-transform overflow-hidden relative rounded-2xl transition-all"
               >
-              {/* <Link to="admin">             */}
+              <Link to="SearchPage">            
               <div className="flex items-center transition-all opacity-1">
-                <img src="./asset/search-white.png" className="w-4"></img>
+                <img src="./asset/search-white.png" className="w-4 mx-auto"></img>
               </div>
-              {/* </Link> */}
+              </Link>
             </button>
           </label>
         </form>

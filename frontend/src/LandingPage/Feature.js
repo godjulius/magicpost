@@ -5,10 +5,10 @@ import getScrollAnimation from "../utils/getScrollAnimation";
 import ScrollAnimationWrapper from "./Layout/ScrollAnimationWrapper";
 
 const features = [
-  "Powerfull online protection.",
-  "Internet without borders.",
-  "Supercharged VPN",
-  "No specific time limits."
+  "Giao hàng nhanh chóng.",
+  "Theo dõi trực tuyến.",
+  "Bảo hiểm và an toàn",
+  "Dịch vụ toàN quốc."
 ]
 
 const Feature = () => {
@@ -37,11 +37,10 @@ const Feature = () => {
 
         <motion.div className="flex flex-col items-end justify-center ml-auto w-full lg:w-9/12" variants={scrollAnimation}>
           <h3 className="text-3xl lg:text-4xl font-medium leading-relaxed text-black_cus-600">
-            We Provide Many Features You Can Use
+          Chúng tôi cung cấp dịch vụ vận chuyển với nhiều ưu điểm vượt trội
           </h3>
           <p className="my-2 text-black_cus-500">
-            You can explore the features that we provide with fun and have their
-            own functions each feature.
+          Khám phá những tính năng độc đáo và thú vị mà chúng tôi cung cấp
           </p>
           <ul className="text-black_cus-500 self-start list-inside ml-8">
             {features.map((feature, index) => (
