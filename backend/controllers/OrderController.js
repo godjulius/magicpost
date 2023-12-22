@@ -66,12 +66,12 @@ class OrderController {
             });
             if (!order) {
                 result.push({
-                    msg: `Can't find the order with id ${orderId}`,
+                    isFound:false,
                 });
             } else {
                 result.push({
                     order: order,
-                    msg: `Tracking successfully!`,
+                    isFound:true,
                 });
             }
         }
