@@ -13,9 +13,6 @@ class OrderController {
                     model: Customer,
                     required: true,
                 }, {
-                    model: Delivery,
-                    required: true,
-                }, {
                     model: Employee,
                     required: true,
                     attributes: {
