@@ -52,15 +52,15 @@ const Order = function (sequelize, Sequelize) {
             allowNull: false,
         },
         receiver_name: {
-            type: Sequelize.DATE,
+            type: Sequelize.STRING,
             allowNull: false,
         },
         receiver_phone: {
-            type: Sequelize.DATE,
+            type: Sequelize.STRING,
             allowNull: false,
         },
         receiver_address: {
-            type: Sequelize.DATE,
+            type: Sequelize.STRING,
             allowNull: false,
         },
     }, {

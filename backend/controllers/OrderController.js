@@ -56,9 +56,6 @@ class OrderController {
                             [sequelize.fn("concat", sequelize.col("Customer.first_name"), " ", sequelize.col("Customer.last_name")), "fullName"],
                         ],
                     }, {
-                        model: Delivery,
-                        required: true,
-                    }, {
                         model: Employee,
                         required: true,
                         attributes: [
