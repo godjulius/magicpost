@@ -8,18 +8,18 @@ import ScrollAnimationWrapper from "./Layout/ScrollAnimationWrapper";
 const Hero = ({
   listUser = [
     {
-      name: "Users",
-      number: "390",
+      name: "Khách hàng",
+      number: "10000",
       icon: "/asset/heroicons_sm-user.svg",
     },
     {
-      name: "Locations",
-      number: "20",
+      name: "Quốc gia",
+      number: "180",
       icon: "/asset/gridicons_location.svg",
     },
     {
-      name: "Server",
-      number: "50",
+      name: "Điểm giao dịch",
+      number: "200",
       icon: "/asset/bx_bxs-server.svg",
     },
   ],
@@ -40,8 +40,7 @@ const Hero = ({
                 Want anything to be easy with <strong>MagicPost</strong>.
               </h1>
               <p className="text-black_cus-500 mt-4 mb-6">
-                Provide a network for all your needs with ease and fun using
-                LaslesVPN discover interesting features from us.
+              Chúng tôi mang đến dịch vụ giao hàng nhanh chóng và đáng tin cậy. Với đội ngũ chuyên nghiệp và hệ thống theo dõi hiện đại, chúng tôi cam kết đưa sản phẩm của bạn đến tay khách hàng một cách thuận lợi nhất!
               </p>
               <ButtonPrimary>Get Started</ButtonPrimary>
             </div>

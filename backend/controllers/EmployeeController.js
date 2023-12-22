@@ -147,8 +147,8 @@ class EmployeeController {
             branchId = req.body.branchId;
         }
         if (req.session.User.roleId === 3 || req.session.User.roleId === 5) {
-            roleId = req.session.roleId;
-            branchId = req.session.branchId;
+            roleId = req.session.User.roleId + 1;
+            branchId = req.session.User.branchId;
         }
         const hashedPw = await bcrypt.hash(password, bcryptRound);
         if (!hashedPw) {

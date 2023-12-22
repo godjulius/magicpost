@@ -5,22 +5,31 @@ import { Link } from "react-router-dom";
 const HubOrderManagement = () => {
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [deliveryItems, setDeliveryItems] = useState([]);
-  const [branchId, setBranchId] = useState();
 
   const [isLoadingDeliveryItemsList, setIsLoadingDeliveryItemsList] =
     useState(true);
 
+  const [branchId, setBranchId] = useState();
+
   useEffect(() => {
-    // Lấy thông tin từ localStorage
-    const temp = localStorage.getItem("branchId");
-    setBranchId(temp);
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/getData", {
+          withCredentials: true,
+        });
+        setBranchId(response.data.branchId);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
   }, []); // useEffect sẽ chạy sau khi component được render
 
   useEffect(() => {
     const fetchDeliveryItems = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/delivery",
-        {
+        const response = await axios.get("http://localhost:3000/delivery", {
           withCredentials: true,
         });
         // console.log(response.data);
@@ -40,8 +49,7 @@ const HubOrderManagement = () => {
   useEffect(() => {
     const fetchBranchs = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/branch",
-        {
+        const response = await axios.get("http://localhost:3000/branch", {
           withCredentials: true,
         });
         setBranchs(response.data);
@@ -68,10 +76,11 @@ const HubOrderManagement = () => {
   //     }
   //   });
   // });
-
-  const updatedDeliveryItems = deliveryItems.filter((delivery) => 
-    delivery.receiver_id === parseInt(branchId) && delivery.status_id === 1
-  )
+  const updatedDeliveryItems = deliveryItems;
+  // const updatedDeliveryItems = deliveryItems.filter(
+  //   (delivery) =>
+  //     delivery.receiver_id === parseInt(branchId) && delivery.status_id === 1
+  // );
 
   console.log("deliveryItems: ", deliveryItems);
   console.log("updatedDeliveryItems: ", updatedDeliveryItems);
@@ -79,22 +88,21 @@ const HubOrderManagement = () => {
   const handleConfirmDelivery = async (deliveryId) => {
     try {
       // Cập nhật danh sách đơn hàng sau khi xác nhận
-    //   deliveryItems.forEach((delivery) => {
-    //     if (delivery.sender_id == deliveryId) {
-    //       updatedDeliveryItems.pop(delivery);
-    //     }
-    //   });
+      //   deliveryItems.forEach((delivery) => {
+      //     if (delivery.sender_id == deliveryId) {
+      //       updatedDeliveryItems.pop(delivery);
+      //     }
+      //   });
 
       // Gửi yêu cầu API để cập nhật trạng thái của đơn hàng
       const response = await axios.post(
-        `http://localhost:3000/delivery/${deliveryId}/transshipment`,
+        `http://localhost:3000/delivery/${deliveryId}/receive`, {},
         {
           withCredentials: true,
         }
       );
-      
-      console.log("Registration successful:", response.data);
 
+      console.log("Registration successful:", response.data);
 
       //   const updatedDeliveryItems = deliveryItems.map((delivery) =>
       //     delivery.delivery_id === deliveryId
@@ -192,7 +200,7 @@ const HubOrderManagement = () => {
               <thead>
                 <tr>
                   <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                    Id
+                    Mã đơn hàng
                   </th>
                   <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Chi nhánh gửi
@@ -220,7 +228,7 @@ const HubOrderManagement = () => {
                     <tr key={delivery.delivery_id}>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p className="text-gray-900 whitespace-no-wrap">
-                          {delivery.delivery_id}
+                          {delivery.order_id}
                         </p>
                       </td>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -248,7 +256,8 @@ const HubOrderManagement = () => {
                       </td>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p className="text-gray-900 whitespace-no-wrap">
-                          {delivery.status_id}
+                          ????
+                          {/* {delivery.status_id} */}
                         </p>
                       </td>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -258,7 +267,7 @@ const HubOrderManagement = () => {
                           }
                           className="text-sm bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg mt-2"
                         >
-                          Đơn hàng đã đến
+                          Xác nhận
                         </button>
                       </td>
                     </tr>

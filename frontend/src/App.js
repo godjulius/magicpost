@@ -1,4 +1,5 @@
 import Layout from "./LandingPage/Layout/Layout.js";
+import SearchPage from "./LandingPage/Layout/SearchPage.js"
 import Admin from "./admin/admin.js";
 import { Routes, Route, Link, Outlet, Navigate } from "react-router-dom";
 import SignIn from "./signIn/SignIn.js";
@@ -16,6 +17,7 @@ import BranchEmployeeManagement from "./BranchManager/BranchEmployeeManagement.j
 import BranchEmployee from "./BranchEmployee/BranchEmployee.js";
 import BranchPaymentForm from "./BranchEmployee/BranchPaymentForm.js";
 import BranchOrderManagement from "./BranchEmployee/BranchOrderManagement.js";
+import BranchCurrentOrder from "./BranchEmployee/BranchCurrentOrder.js";
 import BranchTransshipment from "./BranchEmployee/BranchTransshipment.js";
 
 import HubManager from "./HubManager/HubManager.js";
@@ -24,6 +26,8 @@ import HubEmployeeManagement from "./HubManager/HubEmployeeManagement.js";
 
 import HubEmployee from "./HubEmployee/HubEmployee.js";
 import HubOrderManagement from "./HubEmployee/HubOrderManagement.js";
+import HubCurrentOrder from "./HubEmployee/HubCurrentOrder.js";
+import HubTransshipment from "./HubEmployee/HubTransshipment.js";
 
 export default function App() {
   return (
@@ -31,6 +35,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Layout />} />
         <Route path="/SignIn" element={<SignIn />} />
+        <Route path="/SearchPage" element={<SearchPage />} />
         <Route path="/admin/*" element={<Admin />}>
           <Route path="PaymentForm" element={<PaymentForm />} />
           <Route path="Dashboard" element={<Dashboard/>}/>
@@ -45,7 +50,8 @@ export default function App() {
         <Route path="/BranchEmployee/*" element={<BranchEmployee />}>
           <Route path="BranchPaymentForm" element={<BranchPaymentForm/>}/>
           <Route path="BranchOrderManagement" element={<BranchOrderManagement/>}/>
-          <Route path="BranchTransshipment/:deliveryId" element={<BranchTransshipment/>}/>
+          <Route path="BranchCurrentOrder" element={<BranchCurrentOrder/>}/>
+          <Route path="BranchTransshipment/:orderId" element={<BranchTransshipment/>}/>
         </Route>
         <Route path="/HubManager/*" element={<HubManager />}>
           <Route path="HubEmployeeManagement" element={<HubEmployeeManagement/>}/>
@@ -53,6 +59,8 @@ export default function App() {
         </Route>
         <Route path="/HubEmployee/*" element={<HubEmployee />}>
           <Route path="HubOrderManagement" element={<HubOrderManagement/>}/>
+          <Route path="HubCurrentOrder" element={<HubCurrentOrder/>}/>
+          <Route path="HubTransshipment/:deliveryId" element={<HubTransshipment/>}/>
         </Route>
       </Routes>
     </>

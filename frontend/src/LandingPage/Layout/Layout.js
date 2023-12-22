@@ -11,26 +11,6 @@ import { useNavigate } from "react-router-dom";
 
 const Layout = ({ children }) => {
   const navigate = useNavigate();
-  // localStorage.setItem("userRole", null);
-  // // console.log(typeof(localStorage.getItem("userRole")));
-  // localStorage.setItem("branchId", null);
-  // // console.log(typeof(localStorage.getItem("branchId")));
-  // localStorage.setItem("employeeId", null);
-
-  // useEffect(() => {
-  //   // Lấy thông tin từ localStorage
-  //   const tempUserRole = localStorage.getItem("userRole");
-  //   const branchId = localStorage.getItem("branchId");
-  //   const employeeId = localStorage.getItem("employeeId");
-
-  //   // setUserRole(tempUserRole);
-
-  //   // Sử dụng thông tin ở đây, ví dụ:
-  //   console.log("UserRole:", tempUserRole);
-  //   console.log("BranchId:", branchId);
-
-  //   // Ghi chú: Kiểm tra xem giá trị có tồn tại hay không trước khi sử dụng để tránh lỗi
-  // }, []); // useEffect sẽ chạy sau khi component được render
 
   useEffect(() => {
     const fetchData = async () => {
