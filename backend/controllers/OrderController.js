@@ -27,7 +27,7 @@ class OrderController {
         return res.status(200).json(orders);
     }
 
-    //GET order/tracking
+    //GET order/tracking/:searchValue
     async getOrderByIds(req, res, next) {
         const schema = Joi.object({
             searchValue: Joi.string().pattern(new RegExp('^[A-Z0-9,]+$')).required(),
