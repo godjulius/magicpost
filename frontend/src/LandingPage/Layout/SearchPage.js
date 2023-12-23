@@ -6,51 +6,51 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+const trackingUrl = "http://localhost:3000/order/tracking";
+
 const SearchPage = ({ children }) => {
   window.scrollTo(0, 0);
-  const [orderDetail, setOrderDetail] = useState({
-    isFound: true,
-    orderId: "28072003",
-    senderName: "Nguyen Duong",
-    senderPhone: "0825763438",
-    senderAddress:
-      "ngách 20, ngõ 105, Doãn Kế Thiện, phường Mai Dịch, quận Cầu Giấy, thành phố Hà Nội",
-    receiverName: "Tran Hai",
-    receiverPhone: "0924433854",
-    receiverAddress: "Dia chi B, Yen Bai",
-    type: "Bưu phẩm",
-    weight: "0.5",
-    detail: "Hang de vo, xin nhe tay",
-    price: 20000,
-    cod: 200000,
-  });
-
-  function handleSubmit(event) {
+  const [orderId, setOrderId] = useState("");
+  const [isFound, setIsFound] = useState(false);
+  const [orderDetail, setOrderDetail] = useState({});
+  const [haveFindYet, setHaveFindYet] = useState(false);
+  const handleSubmit = async function (event) {
     event.preventDefault();
-    console.log(orderDetail.orderId);
-    console.log(orderDetail);
-  }
+    // setIsFound(false);
+    setHaveFindYet(true);
+    try {
+      const response = await axios.get(`${trackingUrl}/${orderId}`, {
+        withCredentials: true,
+      });
+      setOrderDetail(response.data[0]);
+      setIsFound(response.data[0].isFound);
+      console.log(response.data[0]);
+    } catch (error) {
+      console.error("Error fetching orders", error);
+      setIsFound(false);
+    } finally {
+
+    }
+  };
+
   function onChangeOrderId(event) {
-    setOrderDetail({
-      ...orderDetail,
-      orderId: event.target.value
-    })
+    setOrderId(event.target.value);
   }
-  useEffect(() => {
-     // lay order id tu session de in thong tin don hang
-  }, []); // useEffect sẽ chạy sau khi component được render
 
   return (
     <>
       <HeaderSearchPage />
       <div className="pt-10"></div>
-      <SearchBar handleSubmit={handleSubmit} onChangeOrderId={onChangeOrderId}/>
-      {orderDetail.isFound ? (
+      <SearchBar
+        handleSubmit={handleSubmit}
+        onChangeOrderId={onChangeOrderId}
+      />
+      {isFound ? (
         <div>
           <div className="max-w-screen-xl px-8 xl:px-16 mx-auto">
             <div className="flex justify-start item-start space-y-2 flex-col mt-5">
               <h1 className="text-3xl lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800">
-                Ord#{orderDetail.orderId}
+                Ord#{orderDetail.order.order_id}
               </h1>
             </div>
             <div className="mt-10 flex flex-col xl:flex-row jusitfy-center items-stretch w-full xl:space-x-8 space-y-4 md:space-y-6 xl:space-y-0">
@@ -77,17 +77,17 @@ const SearchPage = ({ children }) => {
                         <div className="flex justify-start items-start flex-col space-y-2">
                           <p className="text-sm leading-none text-gray-800">
                             <span className="text-gray-300">Họ và tên: </span>{" "}
-                            {orderDetail.senderName}
+                            {orderDetail.order.customer.fullName}
                           </p>
                           <p className="text-sm leading-none text-gray-800">
                             <span className="text-gray-300">Địa chỉ: </span>
-                            {orderDetail.senderAddress}
+                            {orderDetail.order.customer.address}
                           </p>
                           <p className="text-sm leading-none text-gray-800">
                             <span className="text-gray-300">
                               Số điện thoại:{" "}
                             </span>{" "}
-                            {orderDetail.senderPhone}
+                            {orderDetail.order.customer.phone}
                           </p>
                         </div>
                       </div>
@@ -116,17 +116,17 @@ const SearchPage = ({ children }) => {
                         <div className="flex justify-start items-start flex-col space-y-2">
                           <p className="text-sm leading-none text-gray-800">
                             <span className="text-gray-300">Họ và tên: </span>{" "}
-                            {orderDetail.receiverName}
+                            {orderDetail.order.receiver_name}
                           </p>
                           <p className="text-sm leading-none text-gray-800">
                             <span className="text-gray-300">Địa chỉ: </span>{" "}
-                            {orderDetail.receiverAddress}
+                            {orderDetail.order.receiver_address}
                           </p>
                           <p className="text-sm leading-none text-gray-800">
                             <span className="text-gray-300">
                               Số điện thoại:{" "}
                             </span>{" "}
-                            {orderDetail.receiverPhone}
+                            {orderDetail.order.receiver_phone}
                           </p>
                         </div>
                       </div>
@@ -157,19 +157,19 @@ const SearchPage = ({ children }) => {
                             <span className="text-gray-300">
                               Loại hàng gửi:{" "}
                             </span>{" "}
-                            {orderDetail.type}
+                            {orderDetail.order.parcel.type_id == 1 ? "Bưu phẩm" : "Tài liệu"}
                           </p>
                           <p className="text-sm leading-none text-gray-800">
                             <span className="text-gray-300">
                               Khối lượng(nếu có):{" "}
                             </span>
-                            {orderDetail.weight}(kg)
+                            {orderDetail.order.parcel.weight}(kg)
                           </p>
                           <p className="text-sm leading-none text-gray-800">
                             <span className="text-gray-300">
                               Chi tiết thêm:{" "}
                             </span>{" "}
-                            {orderDetail.detail}
+                            {orderDetail.order.parcel.details}
                           </p>
                         </div>
                       </div>
@@ -187,7 +187,7 @@ const SearchPage = ({ children }) => {
                           Phí giao hàng
                         </p>
                         <p className="text-base leading-4 text-gray-600">
-                          {orderDetail.price}VND
+                          {orderDetail.order.parcel.price}VND
                         </p>
                       </div>
                       <div className="flex justify-between items-center w-full">
@@ -215,7 +215,7 @@ const SearchPage = ({ children }) => {
                         Tổng
                       </p>
                       <p className="text-base font-semibold leading-4 text-gray-600">
-                        {orderDetail.price}VND
+                        {orderDetail.order.parcel.price}VND
                       </p>
                     </div>
                   </div>
@@ -243,7 +243,7 @@ const SearchPage = ({ children }) => {
                         </div>
                       </div>
                       <p className="text-lg font-semibold leading-6 text-gray-800">
-                        {orderDetail.price}VND
+                        {orderDetail.order.parcel.price}VND
                       </p>
                     </div>
                     <div className="w-full flex justify-center items-center">
@@ -309,15 +309,16 @@ const SearchPage = ({ children }) => {
             </ol>
           </div>
         </div>
-      ) : (
+      ) : (haveFindYet && (
         <div className="max-w-screen-xl px-8 xl:px-16 mx-auto">
           <div className="flex justify-start item-start space-y-2 flex-col mt-5">
             <h1 className="text-3xl lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800">
-              Không tìm thấy đơn hàng với mã #{orderDetail.orderId}
+              Không tìm thấy đơn hàng với mã #
+              {orderId}
             </h1>
           </div>
         </div>
-      )}
+      ))}
       <Footer />
     </>
   );
