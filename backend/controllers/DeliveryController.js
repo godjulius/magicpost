@@ -9,67 +9,6 @@ class DeliveryController {
         return res.status(200).json(deliveries);
     }
 
-    //POST /delivery/:deliveryId/transshipment
-    async transshipment(req, res) {
-        const idSchema = Joi.number().integer().min(1);
-        const objectIdSchema = Joi.object({
-            customerId: idSchema.required(),
-            employeeId: idSchema.required(),
-        });
-
-        const dataToValidate = {
-            customerId: req.params.deliveryId,
-            employeeId: req.body.receiverId,
-        }
-
-        const result = objectIdSchema.validate(dataToValidate);
-
-        if (result.error) {
-            return res.status(400).send("Bad request");
-        }
-        const deliveryId = req.params.deliveryId;
-        let delivery = await Delivery.findOne({
-            where: {
-                delivery_id: deliveryId,
-            },
-        });
-        if (!delivery) {
-            return res.status(404).json({
-                msg: `Delivery with id ${deliveryId} is not found!`,
-            });
-        }
-        const receiverId = req.body.receiverId;
-        const receiver = await Branch.findOne({
-            where: {
-                branch_id: receiverId,
-            }
-        });
-        if (!receiver) {
-            return res.status(404).json({
-                msg: "Branch not found",
-            })
-        }
-
-        const senderId = delivery.receiver_id;
-
-        await Delivery.update({
-                sender_id: senderId,
-                receiver_id: receiverId,
-            }, {
-                where: {
-                    delivery_id: deliveryId,
-                },
-            }
-        );
-        delivery = await Delivery.findOne({
-            where: {
-                delivery_id: deliveryId,
-            },
-        });
-
-        return res.status(200).json(delivery);
-    }
-
     //POST /delivery/create
     async createDelivery(req, res) {
 
@@ -78,17 +17,29 @@ class DeliveryController {
                 msg: "Login first",
             })
         }
-        const order = req.body.orderId;
+        const orderId = req.body.orderId;
         const sender = req.session.User.branchId;
         const receiver = req.body.receiverId;
         const sendDate = new Date();
-        if (!(await Order.findOne({
+        const order = await Order.findOne({
             where: {
-                order_id: order,
-            }
-        }))) {
+                order_id: orderId,
+            },
+            include: [
+                {
+                    model: Parcel,
+                    required: true,
+                },
+            ],
+        });
+        if (!order) {
             return res.status(404).json({
                 msg: "Order not found",
+            })
+        }
+        if (order.parcel.branch_id !== sender) {
+            return res.status(403).json({
+                msg: "Forbidden",
             })
         }
         if (!(await Branch.findOne({
@@ -101,7 +52,7 @@ class DeliveryController {
             })
         }
         const delivery = await Delivery.create({
-            order_id: order,
+            order_id: orderId,
             sender_id: sender,
             receiver_id: receiver,
             send_date: sendDate
@@ -133,16 +84,25 @@ class DeliveryController {
                 msg: "Delivery not found",
             });
         }
-        await delivery.update({
-            send_date: receiveDate,
+        const order = await Order.findOne({
+            where: {
+                order_id: delivery.order_id,
+            },
+            include: Parcel,
         });
+        await order.parcel.update({
+            branch_id: req.session.User.branchId,
+        })
+        await delivery.update({
+            receive_date: receiveDate,
+        });
+
         return res.status(200).json(delivery);
     }
 
     //GET /delivery/:orderId
     async getPath(req, res) {
-
-        const orderId = req.params.orderId;
+        const orderId = req.params.orderId
         const order = await Order.findOne({
             where: {
                 order_id: orderId,
@@ -150,7 +110,7 @@ class DeliveryController {
         });
         if (!order) {
             return res.status(404).json({
-                nsg: "Order not found",
+                msg: "Order not found",
             })
         }
         const path = await Delivery.findAll({
@@ -158,10 +118,7 @@ class DeliveryController {
                 order_id: orderId,
             }
         });
-        return res.status(200).json({
-            path: path,
-        })
-
+        return res.status(200).json(path);
     }
 
 }

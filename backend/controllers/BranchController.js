@@ -19,29 +19,32 @@ class BranchController {
 
     //POST /branch/create
     async createBranch(req, res, next) {
-        const {managerId, branchName, province, district, detailAddress, isHub} = req.body;
+        if (!req.session.User) {
+            return res.status(401).json({
+                msg: "Login first",
+            })
+        }
+        if (req.session.User.roleId !== 1 && req.session.User.roleId !== 2) {
+            return res.status(403).json({
+                msg: "No authorize",
+            })
+        }
         const schema = Joi.object({
-            managerId: Joi.number().integer().min(0).required(),
+            managerId: Joi.number().integer().min(1).required(),
             branchName: Joi.string().required(),
             province: Joi.string().required(),
             district: Joi.string().required(),
             detailAddress: Joi.string().required(),
             isHub: Joi.number().integer().min(0).max(1).required(),
+            hubId: Joi.number().integer().min(1),
         });
 
-        const result = schema.validate({
-            managerId: managerId,
-            branchName: branchName,
-            province: province,
-            district: district,
-            detailAddress: detailAddress,
-            isHub: isHub,
-        });
+        const result = schema.validate(req.body);
 
         if (result.error) {
             return res.status(400).send("Bad request");
         }
-
+        const {managerId, branchName, province, district, detailAddress, isHub} = req.body;
         const newBranch = async () => {
             if (isHub === 1) {
                 return await Branch.create({
