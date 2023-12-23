@@ -64,7 +64,7 @@ const HubCurrentOrder = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  let updatedOrder = orders;
+  let updatedOrder = orders.filter((order) => order.parcel.branch_id === branchId);
 //   let updatedOrder = orders.filter((order) => order.branch_id === branchId);
 
   console.log(updatedOrder);
@@ -236,7 +236,7 @@ const HubCurrentOrder = () => {
                       <button className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">
 
                           <Link
-                            to={`../HubTransshipment/${order.delivery_id}`}
+                            to={`../HubTransshipment/${order.order_id}`}
                           >
                             Vận chuyển
                           </Link>
