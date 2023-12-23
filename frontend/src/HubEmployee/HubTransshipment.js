@@ -3,20 +3,16 @@ import axios from "axios";
 import { useParams, useNavigate, Link } from "react-router-dom";
 
 const HubTransshipment = () => {
+  const { orderId } = useParams();
+
   const orderForm = {
+    orderId: orderId,
     receiverId: "",
-    employeeId: parseInt(localStorage.getItem("employeeId")),
   };
-
-  const { deliveryId } = useParams();
-  //   console.log(deliveryId);
-
-  const temp = parseInt(deliveryId);
-  //   console.log(temp);
 
   // const submitURL = `http://localhost:3000/delivery/${deliveryId}/transshipment`;
 
-  const submitURL = `http://localhost:3000/delivery/${deliveryId}/transshipment`;
+  const submitURL = "http://localhost:3000/delivery/create";
 
   const navigate = useNavigate;
   //   console.log(submitURL);
@@ -87,7 +83,7 @@ const HubTransshipment = () => {
   const getCustomerName = () => {
     var result = "";
     orders.forEach((order) => {
-      if (order.delivery_id === temp) {
+      if (order.order_id === orderId) {
         result = order.customer.last_name + " " + order.customer.first_name;
       }
     });
@@ -95,51 +91,33 @@ const HubTransshipment = () => {
   };
 
   const getOrderId = () => {
-    var result = "";
-    orders.forEach((order) => {
-      if (order.delivery_id === temp) {
-        result = order.order_id;
-      }
-    });
-    return " " + result;
+    return " " + orderId;
   };
 
   const getBranchName = () => {
     var result = "";
     branchs.forEach((branch) => {
-      if (branch.branch_id === parseInt(localStorage.getItem("branchId"))) {
+      if (branch.branch_id === branchId) {
         result = branch.branch_name;
       }
     });
     return " " + result;
   };
 
-  const getHubName = () => {
-    var result = "";
-    var tempHubId = "";
-
-    branchs.forEach((branch) => {
-      if (branch.branch_id === parseInt(localStorage.getItem("branchId"))) {
-        tempHubId = branch.hub_id;
-      }
-    });
-
-    branchs.forEach((branch) => {
-      if (branch.branch_id === tempHubId) {
-        result = branch.branch_name;
-      }
-    });
-
-    orderForm.receiverId = tempHubId;
-
-    return " " + result;
-  };
+  const handleChange = (e) => {
+    orderForm.receiverId = e.target.value
+    console.log(orderForm);
+    // setFormData({
+    //   ...formData,
+    //   [e.target.name]: e.target.value,
+    // });
+  }
 
   const getWeight = () => {
     var result = "";
 
     orders.forEach((order) => {
-      if (order.delivery_id === temp) {
+      if (order.order_id === orderId) {
         result = order.parcel.weight;
       }
     });
@@ -151,7 +129,7 @@ const HubTransshipment = () => {
     var result = "";
 
     orders.forEach((order) => {
-      if (order.delivery_id === temp) {
+      if (order.order_id === orderId) {
         result = order.parcel.price;
       }
     });
@@ -159,21 +137,32 @@ const HubTransshipment = () => {
     return " " + result;
   };
 
+  const getParcelId = () => {
+    var result = "";
+    orders.forEach((order) => {
+      if (order.order_id === orderId) {
+        result = order.parcel.parcel_id;
+      }
+    });
+
+    return " " + result;
+  }
+
   const [showNotification, setShowNotification] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const response = await axios.post(submitURL, orderForm, {
-        withCredentials: true,
-      });
+      // const response = await axios.post(submitURL, orderForm, {
+      //   withCredentials: true,
+      // });
       setShowNotification(true);
-      console.log(response.data);
-      console.log("Submit success", response.data);
+      // console.log(response.data);
+      // console.log("Submit success", response.data);
       // navigate("../BranchOrderManagement")
     } catch (err) {
-      console.error("Submit fail", err.response.data);
+      // console.error("Submit fail", err.response.data);
     }
   };
 
@@ -204,7 +193,7 @@ const HubTransshipment = () => {
               {/* Cột thứ hai */}
               <div className="w-full sm:w-1/2 pr-4">
                 <p className="text-gray-900 whitespace-no-wrap">
-                  Mã vận chuyển: {" " + deliveryId}
+                Mã bưu kiện: {getParcelId()}
                 </p>
                 <p className="text-gray-900 whitespace-no-wrap">
                   Chi nhánh gửi: {getBranchName()}
@@ -214,11 +203,11 @@ const HubTransshipment = () => {
                     Chi nhánh nhận:
                   </p>
                   <select
-                    id="branch"
-                    name="branchId"
+                    id="receiverId"
+                    name="receiverId"
                     className="bg-gray-100 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 w-full p-2.5"
                     // value={formData.branch}
-                    // onChange={handleChange}
+                    onChange={handleChange}
                     required=""
                     defaultValue="default"
                   >
@@ -244,7 +233,7 @@ const HubTransshipment = () => {
                   className="mt-4 bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded mx-auto block"
                   onClick={() => setShowNotification(false)}
                 >
-                  <Link to="../BranchOrderManagement">Đóng</Link>
+                  <Link to="../HubCurrentOrder">Đóng</Link>
                 </button>
               </div>
             )}

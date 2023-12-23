@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const HubOrderManagement = () => {
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [deliveryItems, setDeliveryItems] = useState([]);
+  const [forceUpdate, setForceUpdate] = useState(false);
+
+  const navigate = useNavigate();
 
   const [isLoadingDeliveryItemsList, setIsLoadingDeliveryItemsList] =
     useState(true);
@@ -42,7 +45,7 @@ const HubOrderManagement = () => {
     };
 
     fetchDeliveryItems();
-  }, []);
+  }, [forceUpdate]);
 
   const [branchs, setBranchs] = useState([]);
 
@@ -63,64 +66,33 @@ const HubOrderManagement = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  // const updatedDeliveryItems = [];
-
-  // deliveryItems.forEach((delivery) => {
-  //   branchs.forEach((branch) => {
-  //     if (
-  //       branch.branch_id === delivery.sender_id &&
-  //       branch.hub_id === parseInt(branchId)
-  //     ) {
-  //       console.log("thanh cong");
-  //       updatedDeliveryItems.push(delivery);
-  //     }
-  //   });
-  // });
-  const updatedDeliveryItems = deliveryItems;
-  // const updatedDeliveryItems = deliveryItems.filter(
-  //   (delivery) =>
-  //     delivery.receiver_id === parseInt(branchId) && delivery.status_id === 1
-  // );
-
-  console.log("deliveryItems: ", deliveryItems);
-  console.log("updatedDeliveryItems: ", updatedDeliveryItems);
+  const updatedDeliveryItems
+   = deliveryItems.filter(
+    (delivery) =>
+      delivery.receiver_id === branchId && delivery.receive_date === null
+  );
 
   const handleConfirmDelivery = async (deliveryId) => {
     try {
-      // Cập nhật danh sách đơn hàng sau khi xác nhận
-      //   deliveryItems.forEach((delivery) => {
-      //     if (delivery.sender_id == deliveryId) {
-      //       updatedDeliveryItems.pop(delivery);
-      //     }
-      //   });
-
       // Gửi yêu cầu API để cập nhật trạng thái của đơn hàng
       const response = await axios.post(
-        `http://localhost:3000/delivery/${deliveryId}/receive`, {},
+        `http://localhost:3000/delivery/${deliveryId}/receive`,
+        {},
         {
           withCredentials: true,
         }
       );
 
+      // navigate("../HubOrderManagement")
+      setForceUpdate((prev) => !prev);
+
       console.log("Registration successful:", response.data);
-
-      //   const updatedDeliveryItems = deliveryItems.map((delivery) =>
-      //     delivery.delivery_id === deliveryId
-      //       ? { ...delivery, status_id: "confirmed", sender_id: branchId }
-      //       : delivery
-      //   );
-
-      //   setDeliveryItems(updatedDeliveryItems);
 
       console.log(`Delivery ${deliveryId} has been confirmed.`);
     } catch (error) {
       console.error(`Error confirming delivery ${deliveryId}:`, error);
     }
   };
-
-  // const updatedDeliveryItems = deliveryItems;
-
-  console.log("updeliveryItems: ", updatedDeliveryItems);
 
   const totalItems = updatedDeliveryItems.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -256,7 +228,7 @@ const HubOrderManagement = () => {
                       </td>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p className="text-gray-900 whitespace-no-wrap">
-                          ????
+                          Đang giao(nhớ sửa code)
                           {/* {delivery.status_id} */}
                         </p>
                       </td>

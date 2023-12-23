@@ -60,7 +60,7 @@ export default function App() {
         <Route path="/HubEmployee/*" element={<HubEmployee />}>
           <Route path="HubOrderManagement" element={<HubOrderManagement/>}/>
           <Route path="HubCurrentOrder" element={<HubCurrentOrder/>}/>
-          <Route path="HubTransshipment/:deliveryId" element={<HubTransshipment/>}/>
+          <Route path="HubTransshipment/:orderId" element={<HubTransshipment/>}/>
         </Route>
       </Routes>
     </>
