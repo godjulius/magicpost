@@ -32,11 +32,11 @@ class OrderController {
         const schema = Joi.object({
             searchValue: Joi.string().pattern(new RegExp('^[A-Z0-9,]+$')).required(),
         });
-        const validate = schema.validate(req.body);
+        const validate = schema.validate(req.params);
         if (validate.error) {
             return res.status(400).send("Bad request");
         }
-        const searchValue = req.body.searchValue;
+        const searchValue = req.params.searchValue;
         const orderIds = searchValue.split(",");
         console.log(orderIds);
         let result = [];
