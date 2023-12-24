@@ -64,44 +64,27 @@ const HubCurrentOrder = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  // let updatedOrder = [];
+  let updatedOrder = [];
 
-  // orders.forEach((order) => {
-  //   const temp = 0;
-  //   deliveries.forEach((delivery) => {
-  //     if (order.parcel.branch_id === branchId) {
-  //       if (
-  //         delivery.order_id === order.order_id &&
-  //         delivery.receiver_id === branchId &&
-  //         delivery.receive_date !== null
-  //       ) {
-  //         temp = 1;
-  //       }
-  //     }
-  //   });
-  //   updatedOrder.push(order);
-  // });
-
-  //orders.filter((order) => order.parcel.branch_id === branchId);
-  let updatedOrder = orders.filter((order) => order.parcel.branch_id === branchId);
-
+  orders.forEach((order) => {
+    let shouldIncludeOrder = false;
+  
+    deliveries.forEach((delivery) => {
+      if (order.parcel.branch_id === branchId && delivery.order_id === order.order_id) {
+        if (delivery.receiver_id === branchId && delivery.receive_date !== null) {
+          shouldIncludeOrder = true;
+        } else if (delivery.sender_id === branchId) {
+          shouldIncludeOrder = false;
+        }
+      }
+    });
+  
+    if (shouldIncludeOrder) {
+      updatedOrder.push(order);
+    }
+  });
+  
   // console.log(updatedOrder);
-
-  // if (currentTab === "tab1") {
-  //   updatedOrder = orders.filter(
-  //     (order) =>
-  //       order.status_id === 1 &&
-  //       order.delivery.receiver_id === branchId &&
-  //       order.delivery.sender_id === null
-  //   );
-  // } else {
-  //   updatedOrder = orders.filter(
-  //     (order) =>
-  //       order.delivery.status_id === 2 &&
-  //       order.delivery.receiver_id === branchId &&
-  //       order.delivery.sender_id !== null
-  //   );
-  // }
 
   const totalItems = updatedOrder.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -134,24 +117,6 @@ const HubCurrentOrder = () => {
         <h1 className="w-full font-semibold text-3xl text-black pb-6">
           Danh sách đơn hàng hiện tại
         </h1>
-        {/* <div className="flex mb-4 justify-center">
-          <button
-            className={`flex-1 max-w-xs py-2 px-4 text-lg border rounded-md ${
-              currentTab === "tab1" ? "bg-green-500 text-white" : "bg-gray-200"
-            }`}
-            onClick={() => handleTabChange("tab1")}
-          >
-            Gửi đơn hàng lên điểm tập kết
-          </button>
-          <button
-            className={`flex-1 max-w-xs py-2 px-4 text-lg border rounded-md ${
-              currentTab === "tab2" ? "bg-green-500 text-white" : "bg-gray-200"
-            }`}
-            onClick={() => handleTabChange("tab2")}
-          >
-            Nhận đơn hàng từ điểm tập kết
-          </button>
-        </div> */}
 
         <div className="my-2 flex sm:flex-row flex-col">
           <div className="flex flex-row mb-1 sm:mb-0">

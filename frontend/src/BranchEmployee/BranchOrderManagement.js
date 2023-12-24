@@ -5,12 +5,10 @@ import { Link } from "react-router-dom";
 const BranchOrderManagement = () => {
   const [isLoading, setIsLoading] = useState(true);
 
-  {
-    /* {tab1 là đơn hàng chuyển từ điểm giao dịch lên điểm tập kết} */
-  }
-  {
-    /* {tab2 là đơn hàng chuyển nhận từ điểm tập kết về điểm giao dịch} */
-  }
+  const [forceUpdate, setForceUpdate] = useState(false);
+
+  /* {tab1 là đơn hàng chuyển từ điểm giao dịch lên điểm tập kết} */
+  /* {tab2 là đơn hàng chuyển nhận từ điểm tập kết về điểm giao dịch} */
   const [currentTab, setCurrentTab] = useState("tab1");
 
   const branchId = parseInt(localStorage.getItem("branchId"));
@@ -51,6 +49,23 @@ const BranchOrderManagement = () => {
     };
 
     fetchDeliveries();
+  }, [forceUpdate]);
+
+  const [branchs, setBranchs] = useState([]);
+
+  useEffect(() => {
+    const fetchBranchs = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/branch", {
+          withCredentials: true,
+        });
+        setBranchs(response.data);
+      } catch (error) {
+        console.error("Error fetching branchs:", error);
+      }
+    };
+
+    fetchBranchs();
   }, []);
 
   // Function để thay đổi tab
@@ -62,9 +77,8 @@ const BranchOrderManagement = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  // console.log(orders);
-
   let updatedOrder = [];
+  let updatedDeliveries = [];
 
   if (currentTab === "tab1") {
     updatedOrder = orders.filter(
@@ -72,51 +86,53 @@ const BranchOrderManagement = () => {
       // order.branch_id === branchId &&
     );
   } else {
-    // updatedOrder = orders.filter(
-    //   (order) =>
-    //     order.status_id === 2 &&
-    //     order.deliveries.receiver_id === branchId
-    // );
-    orders.forEach((order) => {
-      deliveries.forEach((delivery) => {
-        if (
-          order.status_id !== 1 &&
-          delivery.order_id === order.order_id &&
-          delivery.receiver_id === branchId && 
-          delivery.receive_date === null
-        ) {
-          updatedOrder.push(order);
-        }
-      });
-    });
+    updatedDeliveries = deliveries.filter(
+      (delivery) =>
+        delivery.receiver_id === branchId && delivery.receive_date === null
+    );
+    // orders.forEach((order) => {
+    //   deliveries.forEach((delivery) => {
+    //     if (
+    //       order.status_id !== 1 &&
+    //       delivery.order_id === order.order_id &&
+    //       delivery.receiver_id === branchId &&
+    //       delivery.receive_date === null
+    //     ) {
+    //       updatedOrder.push(order);
+    //     }
+    //   });
+    // });
   }
 
-  // orders.forEach((order) => {
-  //   deliveries.forEach((delivery) => {
-  //     if (
-  //       order.delivery_id === delivery.delivery_id &&
-  //       delivery.status_id === (currentTab === "tab1" ? 1 : 2) &&
-  //       delivery.receiver_id === branchId
-  //     ) {
-  //       updatedOrder.push(order);
-  //     }
-  //   });
-  // });
-  // } else {
-  //   orders.forEach((order) => {
-  //     deliveries.forEach((delivery) => {
-  //       if (
-  //         order.delivery_id === delivery.delivery_id &&
-  //         delivery.status_id === 2 &&
-  //         delivery.receiver_id === branchId
-  //       ) {
-  //         updatedOrder.push(order);
-  //       }
-  //     });
-  //   });
-  // }
+  const handleConfirmDelivery = async (deliveryId) => {
+    try {
+      // Gửi yêu cầu API để cập nhật trạng thái của đơn hàng
+      const response = await axios.post(
+        `http://localhost:3000/delivery/${deliveryId}/receive`,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
 
-  const totalItems = updatedOrder.length;
+      // navigate("../HubOrderManagement")
+      setForceUpdate((prev) => !prev);
+
+      console.log("Registration successful:", response.data);
+
+      console.log(`Delivery ${deliveryId} has been confirmed.`);
+    } catch (error) {
+      console.error(`Error confirming delivery ${deliveryId}:`, error);
+    }
+  };
+  let totalItems = 0;
+
+  if (currentTab === "tab1") {
+    totalItems = updatedOrder.length;
+  } else {
+    totalItems = updatedDeliveries.length;
+  }
+
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   const handleNextPage = () => {
@@ -139,6 +155,7 @@ const BranchOrderManagement = () => {
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
+
   const currentOrders = updatedOrder.slice(startIndex, endIndex);
 
   return (
@@ -213,16 +230,24 @@ const BranchOrderManagement = () => {
                   Mã đơn hàng
                 </th>
                 <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider sm:w-1/6">
-                  Tên khách hàng
+                  {currentTab === "tab1"
+                    ? "Tên khách hàng"
+                    : "Chi nhánh gửi"}
                 </th>
                 <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider sm:w-1/6">
-                  Mã vận chuyển
+                  {currentTab === "tab1"
+                    ? "Mã vận chuyển"
+                    : "Chi nhánh nhận"}
                 </th>
                 <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider sm:w-1/6">
-                  Mã bưu kiện
+                  {currentTab === "tab1"
+                    ? "Mã bưu kiện"
+                    : "Ngày gửi"}
                 </th>
                 <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider sm:w-1/6">
-                  Mã nhân viên
+                  {currentTab === "tab1"
+                    ? "Mã nhân viên"
+                    : "Trạng thái"}
                 </th>
                 <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider sm:w-1/6">
                   {currentTab === "tab1"
@@ -234,57 +259,103 @@ const BranchOrderManagement = () => {
             </thead>
 
             {isLoading || (
-              <tbody className="bg-white divide-y divide-gray-200">
-                {currentOrders.map((order) => (
-                  <tr key={order.order_id}>
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <p className="text-gray-900 whitespace-no-wrap">
-                        {order.order_id}
-                      </p>
-                    </td>
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <p className="text-gray-900 whitespace-no-wrap">
-                        {order.customer.last_name +
-                          " " +
-                          order.customer.first_name}
-                      </p>
-                    </td>
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <p className="text-gray-900 whitespace-no-wrap">
-                        {order.delivery_id}
-                      </p>
-                    </td>
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <p className="text-gray-900 whitespace-no-wrap">
-                        {order.parcel_id}
-                      </p>
-                    </td>
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <p className="text-gray-900 whitespace-no-wrap">
-                        {order.employee_id}
-                      </p>
-                    </td>
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <button className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">
-                        {currentTab === "tab1" && (
-                          <Link
-                            to={`/BranchEmployee/BranchTransshipment/${order.order_id}`}
+              <>
+                {currentTab === "tab1" ? (
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {currentOrders.map((order) => (
+                      <tr key={order.order_id}>
+                        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                          <p className="text-gray-900 whitespace-no-wrap">
+                            {order.order_id}
+                          </p>
+                        </td>
+                        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                          <p className="text-gray-900 whitespace-no-wrap">
+                            {order.customer.last_name +
+                              " " +
+                              order.customer.first_name}
+                          </p>
+                        </td>
+                        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                          <p className="text-gray-900 whitespace-no-wrap">
+                            {/* {order.delivery_id} */}
+                          </p>
+                        </td>
+                        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                          <p className="text-gray-900 whitespace-no-wrap">
+                            {order.parcel_id}
+                          </p>
+                        </td>
+                        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                          <p className="text-gray-900 whitespace-no-wrap">
+                            {order.employee_id}
+                          </p>
+                        </td>
+                        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                          <button className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">
+                            <Link
+                              to={`/BranchEmployee/BranchTransshipment/${order.order_id}`}
+                            >
+                              Vận chuyển
+                            </Link>
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                ) : (
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {updatedDeliveries.map((delivery) => (
+                      <tr key={delivery.delivery_id}>
+                        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                          <p className="text-gray-900 whitespace-no-wrap">
+                            {delivery.order_id}
+                          </p>
+                        </td>
+                        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                          <p className="text-gray-900 whitespace-no-wrap">
+                          {branchs.map((branch) =>
+                            branch.branch_id === delivery.sender_id
+                              ? branch.branch_name
+                              : ""
+                          )}
+                          </p>
+                        </td>
+                        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                          <p className="text-gray-900 whitespace-no-wrap">
+                          {branchs.map((branch) =>
+                            branch.branch_id === delivery.receiver_id
+                              ? branch.branch_name
+                              : ""
+                          )}
+                          </p>
+                        </td>
+                        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                          <p className="text-gray-900 whitespace-no-wrap">
+                          {delivery.send_date}
+                          </p>
+                        </td>
+                        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                          <p className="text-gray-900 whitespace-no-wrap">
+                          Đang giao(nhớ sửa code)
+                          {/* {delivery.status_id} */}
+                          </p>
+                        </td>
+                        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                          <button
+                            onClick={() =>
+                              handleConfirmDelivery(delivery.delivery_id)
+                            }
+                            className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded"
                           >
-                            Vận chuyển
-                          </Link>
-                        )}
-                        {currentTab === "tab2" && (
-                          // <Link
-                          //   to={`/BranchEmployee/BranchTransshipment/${order.delivery_id}`}
-                          // >
-                          <div>Xác nhận</div>
-                          //  </Link>
-                        )}
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
+                            Xác nhận
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                )}
+              </>
             )}
           </table>
         </div>

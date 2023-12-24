@@ -228,7 +228,7 @@ const HubTransshipment = () => {
 
             {showNotification && (
               <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-200 text-gray-800 p-6 rounded shadow-xl border border-gray-500">
-                <p>Gửi hàng đến điểm tập kết thành công!</p>
+                <p>Gửi hàng thành công!</p>
                 <button
                   className="mt-4 bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded mx-auto block"
                   onClick={() => setShowNotification(false)}

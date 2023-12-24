@@ -66,8 +66,7 @@ const HubOrderManagement = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  const updatedDeliveryItems
-   = deliveryItems.filter(
+  const updatedDeliveryItems = deliveryItems.filter(
     (delivery) =>
       delivery.receiver_id === branchId && delivery.receive_date === null
   );
@@ -124,7 +123,7 @@ const HubOrderManagement = () => {
       <main className="w-full flex-grow p-6">
         <div>
           <h1 className="text-3xl font-semibold mb-4">
-            Hàng gửi từ điểm giao dịch
+            Đơn hàng đang tới
           </h1>
         </div>
         <div className="my-2 flex sm:flex-row flex-col">

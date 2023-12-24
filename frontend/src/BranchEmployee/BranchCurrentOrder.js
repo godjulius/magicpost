@@ -64,30 +64,34 @@ const BranchCurrentOrder = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  let updatedOrder = orders.filter(
-    (order) =>
-      order.status_id === 2 &&
-      order.parcel.branch_id === branchId
-      // order.branch_id === branchId &&
-  );
+  // let updatedOrder = orders.filter(
+  //   (order) =>
+  //     order.status_id === 2 &&
+  //     order.parcel.branch_id === branchId
+  //     // order.branch_id === branchId &&
+  // );
 
-  console.log(updatedOrder);
+  // console.log(updatedOrder);
 
-  // if (currentTab === "tab1") {
-  //   updatedOrder = orders.filter(
-  //     (order) =>
-  //       order.status_id === 1 &&
-  //       order.delivery.receiver_id === branchId &&
-  //       order.delivery.sender_id === null
-  //   );
-  // } else {
-  //   updatedOrder = orders.filter(
-  //     (order) =>
-  //       order.delivery.status_id === 2 &&
-  //       order.delivery.receiver_id === branchId &&
-  //       order.delivery.sender_id !== null
-  //   );
-  // }
+  let updatedOrder = [];
+
+  orders.forEach((order) => {
+    let shouldIncludeOrder = false;
+  
+    deliveries.forEach((delivery) => {
+      if (order.parcel.branch_id === branchId && delivery.order_id === order.order_id) {
+        if (delivery.receiver_id === branchId && delivery.receive_date !== null) {
+          shouldIncludeOrder = true;
+        } else if (delivery.sender_id === branchId) {
+          shouldIncludeOrder = false;
+        }
+      }
+    });
+  
+    if (shouldIncludeOrder) {
+      updatedOrder.push(order);
+    }
+  });
 
   const totalItems = updatedOrder.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
