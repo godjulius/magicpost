@@ -1,6 +1,5 @@
-const {models: {Branch, Employee, Parcel}} = require("../models");
+const {models: {Branch, Employee, Parcel, Delivery, Order, Customer, ParcelType, Status}} = require("../models");
 const Joi = require("joi");
-const {Op} = require("sequelize");
 
 class BranchController {
 
@@ -235,6 +234,138 @@ class BranchController {
             filteredBranches = filteredBranches.filter(branch => branch.location.includes(district));
         }
         return res.status(200).json(filteredBranches);
+    }
+
+    //GET /branch/:branchId/send
+    async getSendByBranch(req, res) {
+        if (!req.session.User) {
+            return res.status(401).json({
+                msg: "Login first",
+            })
+        }
+        const schema = Joi.number().integer().min(1).required();
+        const validateResult = schema.validate(req.params.branchId);
+        if (validateResult.error) {
+            return res.status(403).send("Bad request");
+        }
+
+        const branch = await Branch.findOne({
+            where: {
+                branch_id: req.params.branchId,
+            }
+        });
+        if (!branch) {
+            return res.status(404).json({
+                msg: "Branch not found",
+            });
+        }
+        const send = await Delivery.findAll({
+            where: {
+                sender_id: req.params.branchId,
+            },
+            include: [
+                {
+                    model: Order,
+                    required: true,
+                    include: [
+                        {
+                            model: Customer,
+                            required: true,
+                        }, {
+                            model: Employee,
+                            required: true,
+                            attributes: [
+                                "first_name", "last_name"
+                            ]
+                        }, {
+                            model: Parcel,
+                            required: true,
+                            include: [
+                                {
+                                    model: ParcelType,
+                                    required: true,
+                                }
+                            ]
+                        }, {
+                            model: Status,
+                            required: true,
+                        }
+                    ],
+                },
+            ],
+        });
+        if (!send) {
+            return res.status(200).json({
+                msg: "No data",
+            });
+        }
+        return res.status(200).json(send);
+    }
+
+    //GET /branch/:branchId/receive
+    async getReceiveByBranch(req, res) {
+        if (!req.session.User) {
+            return res.status(401).json({
+                msg: "Login first",
+            })
+        }
+        const schema = Joi.number().integer().min(1).required();
+        const validateResult = schema.validate(req.params.branchId);
+        if (validateResult.error) {
+            return res.status(403).send("Bad request");
+        }
+
+        const branch = await Branch.findOne({
+            where: {
+                branch_id: req.params.branchId,
+            }
+        });
+        if (!branch) {
+            return res.status(404).json({
+                msg: "Branch not found",
+            });
+        }
+        const receive = await Delivery.findAll({
+            where: {
+                receiver_id: req.params.branchId,
+            },
+            include: [
+                {
+                    model: Order,
+                    required: true,
+                    include: [
+                        {
+                            model: Customer,
+                            required: true,
+                        }, {
+                            model: Employee,
+                            required: true,
+                            attributes: [
+                                "first_name", "last_name"
+                            ]
+                        }, {
+                            model: Parcel,
+                            required: true,
+                            include: [
+                                {
+                                    model: ParcelType,
+                                    required: true,
+                                }
+                            ]
+                        }, {
+                            model: Status,
+                            required: true,
+                        }
+                    ],
+                },
+            ],
+        });
+        if (!receive) {
+            return res.status(200).json({
+                msg: "No data",
+            });
+        }
+        return res.status(200).json(receive);
     }
 
 }
