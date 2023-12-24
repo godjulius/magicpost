@@ -53,7 +53,7 @@ class DeliveryController {
         }
         await order.update({
             status_id: 2,
-        })
+        });
 
         const delivery = await Delivery.create({
             order_id: orderId,
