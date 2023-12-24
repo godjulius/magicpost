@@ -66,12 +66,12 @@ class OrderController {
             });
             if (!order) {
                 result.push({
-                    isFound:false,
+                    isFound: false,
                 });
             } else {
                 result.push({
                     order: order,
-                    isFound:true,
+                    isFound: true,
                 });
             }
         }
@@ -191,6 +191,26 @@ class OrderController {
             msg: "Create order success!",
             order: order,
         });
+    }
+
+    //GET order/:statusId
+    async getOrderByStatus(req, res) {
+        const schema = Joi.number().integer().min(1).max(4).required();
+        const validateResult = schema.validate(req.params.statusId);
+        if (validateResult.error) {
+            return res.status(403).send("Bad request");
+        }
+        const order = await Order.findAll({
+            where: {
+                status_id: req.params.statusId,
+            },
+        });
+        if (!order) {
+            return res.status(200).json({
+                msg: "No order",
+            });
+        }
+        return res.status(200).json(order);
     }
 }
 
