@@ -64,10 +64,28 @@ const HubCurrentOrder = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  let updatedOrder = orders.filter((order) => order.parcel.branch_id === branchId);
-//   let updatedOrder = orders.filter((order) => order.branch_id === branchId);
+  // let updatedOrder = [];
 
-  console.log(updatedOrder);
+  // orders.forEach((order) => {
+  //   const temp = 0;
+  //   deliveries.forEach((delivery) => {
+  //     if (order.parcel.branch_id === branchId) {
+  //       if (
+  //         delivery.order_id === order.order_id &&
+  //         delivery.receiver_id === branchId &&
+  //         delivery.receive_date !== null
+  //       ) {
+  //         temp = 1;
+  //       }
+  //     }
+  //   });
+  //   updatedOrder.push(order);
+  // });
+
+  //orders.filter((order) => order.parcel.branch_id === branchId);
+  let updatedOrder = orders.filter((order) => order.parcel.branch_id === branchId);
+
+  // console.log(updatedOrder);
 
   // if (currentTab === "tab1") {
   //   updatedOrder = orders.filter(
@@ -234,13 +252,9 @@ const HubCurrentOrder = () => {
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                       <button className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">
-
-                          <Link
-                            to={`../HubTransshipment/${order.order_id}`}
-                          >
-                            Vận chuyển
-                          </Link>
-
+                        <Link to={`../HubTransshipment/${order.order_id}`}>
+                          Vận chuyển
+                        </Link>
                       </button>
                     </td>
                   </tr>

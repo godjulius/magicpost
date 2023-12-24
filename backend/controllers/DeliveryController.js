@@ -52,8 +52,9 @@ class DeliveryController {
             })
         }
         await order.update({
-            status: 2,
+            status_id: 2,
         })
+
         const delivery = await Delivery.create({
             order_id: orderId,
             sender_id: sender,

@@ -34,24 +34,24 @@ const BranchOrderManagement = () => {
     fetchOrders();
   }, []);
 
-  // const [deliveries, setDeliveries] = useState([]);
+  const [deliveries, setDeliveries] = useState([]);
 
-  // useEffect(() => {
-  //   const fetchDeliveries = async () => {
-  //     try {
-  //       const response = await axios.get("http://localhost:3000/delivery", {
-  //         withCredentials: true,
-  //       });
-  //       setDeliveries(response.data);
-  //     } catch (error) {
-  //       console.error("Error fetching deliveries", error);
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchDeliveries = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/delivery", {
+          withCredentials: true,
+        });
+        setDeliveries(response.data);
+      } catch (error) {
+        console.error("Error fetching deliveries", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  //   fetchDeliveries();
-  // }, []);
+    fetchDeliveries();
+  }, []);
 
   // Function để thay đổi tab
   const handleTabChange = (tab) => {
@@ -64,21 +64,31 @@ const BranchOrderManagement = () => {
 
   // console.log(orders);
 
-  let updatedOrder = orders;
+  let updatedOrder = [];
 
   if (currentTab === "tab1") {
     updatedOrder = orders.filter(
-      (order) =>
-        order.status_id === 1 &&
-        order.parcel.branch_id === branchId
-        // order.branch_id === branchId &&
+      (order) => order.status_id === 1 && order.parcel.branch_id === branchId
+      // order.branch_id === branchId &&
     );
   } else {
-    updatedOrder = orders.filter(
-      (order) =>
-        order.status_id === 2 &&
-        order.deliveries.receiver_id === branchId
-    );
+    // updatedOrder = orders.filter(
+    //   (order) =>
+    //     order.status_id === 2 &&
+    //     order.deliveries.receiver_id === branchId
+    // );
+    orders.forEach((order) => {
+      deliveries.forEach((delivery) => {
+        if (
+          order.status_id !== 1 &&
+          delivery.order_id === order.order_id &&
+          delivery.receiver_id === branchId && 
+          delivery.receive_date === null
+        ) {
+          updatedOrder.push(order);
+        }
+      });
+    });
   }
 
   // orders.forEach((order) => {

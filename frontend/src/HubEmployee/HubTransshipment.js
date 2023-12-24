@@ -154,9 +154,9 @@ const HubTransshipment = () => {
     event.preventDefault();
 
     try {
-      // const response = await axios.post(submitURL, orderForm, {
-      //   withCredentials: true,
-      // });
+      const response = await axios.post(submitURL, orderForm, {
+        withCredentials: true,
+      });
       setShowNotification(true);
       // console.log(response.data);
       // console.log("Submit success", response.data);
