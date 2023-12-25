@@ -230,24 +230,20 @@ const BranchOrderManagement = () => {
                   Mã đơn hàng
                 </th>
                 <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider sm:w-1/6">
-                  {currentTab === "tab1"
-                    ? "Tên khách hàng"
-                    : "Chi nhánh gửi"}
+                  {currentTab === "tab1" ? "Tên khách hàng" : "Chi nhánh gửi"}
+                </th>
+                {currentTab === "tab2" ? (
+                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider sm:w-1/6">
+                    Chi nhánh nhận
+                  </th>
+                ) : (
+                  <></>
+                )}
+                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider sm:w-1/6">
+                  {currentTab === "tab1" ? "Mã bưu kiện" : "Ngày gửi"}
                 </th>
                 <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider sm:w-1/6">
-                  {currentTab === "tab1"
-                    ? "Mã vận chuyển"
-                    : "Chi nhánh nhận"}
-                </th>
-                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider sm:w-1/6">
-                  {currentTab === "tab1"
-                    ? "Mã bưu kiện"
-                    : "Ngày gửi"}
-                </th>
-                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider sm:w-1/6">
-                  {currentTab === "tab1"
-                    ? "Mã nhân viên"
-                    : "Trạng thái"}
+                  {currentTab === "tab1" ? "Mã nhân viên" : "Trạng thái"}
                 </th>
                 <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider sm:w-1/6">
                   {currentTab === "tab1"
@@ -274,11 +270,6 @@ const BranchOrderManagement = () => {
                             {order.customer.last_name +
                               " " +
                               order.customer.first_name}
-                          </p>
-                        </td>
-                        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                          <p className="text-gray-900 whitespace-no-wrap">
-                            {/* {order.delivery_id} */}
                           </p>
                         </td>
                         <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -314,31 +305,31 @@ const BranchOrderManagement = () => {
                         </td>
                         <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                           <p className="text-gray-900 whitespace-no-wrap">
-                          {branchs.map((branch) =>
-                            branch.branch_id === delivery.sender_id
-                              ? branch.branch_name
-                              : ""
-                          )}
+                            {branchs.map((branch) =>
+                              branch.branch_id === delivery.sender_id
+                                ? branch.branch_name
+                                : ""
+                            )}
                           </p>
                         </td>
                         <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                           <p className="text-gray-900 whitespace-no-wrap">
-                          {branchs.map((branch) =>
-                            branch.branch_id === delivery.receiver_id
-                              ? branch.branch_name
-                              : ""
-                          )}
+                            {branchs.map((branch) =>
+                              branch.branch_id === delivery.receiver_id
+                                ? branch.branch_name
+                                : ""
+                            )}
                           </p>
                         </td>
                         <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                           <p className="text-gray-900 whitespace-no-wrap">
-                          {delivery.send_date}
+                            {delivery.send_date}
                           </p>
                         </td>
                         <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                           <p className="text-gray-900 whitespace-no-wrap">
-                          Đang giao(nhớ sửa code)
-                          {/* {delivery.status_id} */}
+                            Đang giao(nhớ sửa code)
+                            {/* {delivery.status_id} */}
                           </p>
                         </td>
                         <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">

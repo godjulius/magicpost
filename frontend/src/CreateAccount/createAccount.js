@@ -163,25 +163,6 @@ function CreateAccount() {
     }
   };
 
-  // const handlePasswordChange = (e) => {
-  //   const { value } = e.target;
-
-  //   setFormData({
-  //     ...formData,
-  //     password: value,
-  //   });
-
-  //   // Đặt trạng thái passwordChanged thành true khi mật khẩu thay đổi
-  //   setPasswordChanged(true);
-  // };
-
-  // const handleConfirmPasswordChange = (e) => {
-  //   const { value } = e.target;
-
-  //   // Kiểm tra sự trùng khớp và cập nhật state
-  //   setPasswordsMatch(value === formData.password);
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
