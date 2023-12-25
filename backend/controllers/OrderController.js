@@ -212,6 +212,43 @@ class OrderController {
         }
         return res.status(200).json(order);
     }
+
+    //POST /order/:orderId/:statusId
+    async receiveOrReturn(req, res) {
+        if (!req.session.User) {
+            return res.status(401).json({
+                msg: "Login first",
+            });
+        }
+        const schema = Joi.object({
+            orderId: Joi.string().pattern(new RegExp('^[A-Z0-9]+$')).required(),
+            statusId: Joi.number().integer().min(3).max(4).required(),
+        })
+        const validateResult = schema.validate({
+            orderId: req.params.orderId,
+            statusId: re.params.statusId,
+        });
+        if (validateResult.error) {
+            return res.status(403).send("Bad request");
+        }
+        const order = await Order.findOne({
+            where: {
+                order_id: req.params.orderId,
+            }
+        });
+        if (!order) {
+            return res.status(404).json({
+                msg: "Order not found",
+            });
+        }
+        await order.update({
+            status_id: req.params.statusId,
+        });
+        return res.status(200).json({
+            msg: "Update successfully",
+            order: order,
+        })
+    }
 }
 
 function generateRandomString() {
