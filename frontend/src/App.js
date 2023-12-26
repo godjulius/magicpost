@@ -22,6 +22,7 @@ import BranchCurrentOrder from "./BranchEmployee/BranchCurrentOrder.js";
 import BranchTransshipment from "./BranchEmployee/BranchTransshipment.js";
 
 import HubManager from "./HubManager/HubManager.js";
+import HubDashboard from "./HubManager/HubDashboard.js";
 import HubCreateAccount from "./HubManager/HubCreateAccount.js";
 import HubEmployeeManagement from "./HubManager/HubEmployeeManagement.js";
 
@@ -65,6 +66,7 @@ export default function App() {
           />
         </Route>
         <Route path="/HubManager/*" element={<HubManager />}>
+          <Route path="Dashboard" element={<HubDashboard />} />
           <Route
             path="HubEmployeeManagement"
             element={<HubEmployeeManagement />}
