@@ -11,7 +11,22 @@ const BranchOrderManagement = () => {
   /* {tab2 là đơn hàng chuyển nhận từ điểm tập kết về điểm giao dịch} */
   const [currentTab, setCurrentTab] = useState("tab1");
 
-  const branchId = parseInt(localStorage.getItem("branchId"));
+  const [branchId, setBranchId] = useState();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/getData", {
+          withCredentials: true,
+        });
+        setBranchId(response.data.branchId);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []); // useEffect sẽ chạy sau khi component được render
 
   const [orders, setOrders] = useState([]);
 

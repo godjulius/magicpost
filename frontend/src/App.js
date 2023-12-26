@@ -1,5 +1,5 @@
 import Layout from "./LandingPage/Layout/Layout.js";
-import SearchPage from "./LandingPage/Layout/SearchPage.js"
+import SearchPage from "./LandingPage/Layout/SearchPage.js";
 import Admin from "./admin/admin.js";
 import { Routes, Route, Link, Outlet, Navigate } from "react-router-dom";
 import SignIn from "./signIn/SignIn.js";
@@ -11,6 +11,7 @@ import Dashboard from "./admin/Dashboard";
 import CreateAccount from "./CreateAccount/createAccount.js";
 
 import BranchManager from "./BranchManager/BranchManager.js";
+import BranchDashboard from "./BranchManager/BranchDashboard.js";
 import BranchCreateAccount from "./BranchManager/BranchCreateAccount.js";
 import BranchEmployeeManagement from "./BranchManager/BranchEmployeeManagement.js";
 
@@ -38,29 +39,45 @@ export default function App() {
         <Route path="/SearchPage" element={<SearchPage />} />
         <Route path="/admin/*" element={<Admin />}>
           <Route path="PaymentForm" element={<PaymentForm />} />
-          <Route path="Dashboard" element={<Dashboard/>}/>
-          <Route path="AccountManagement" element={<AccountManagement/>}/>
+          <Route path="Dashboard" element={<Dashboard />} />
+          <Route path="AccountManagement" element={<AccountManagement />} />
           <Route path="CreateAccount" element={<CreateAccount />} />
-          <Route path="BranchManagement" element={<BranchManagement/>}/>
+          <Route path="BranchManagement" element={<BranchManagement />} />
         </Route>
         <Route path="/BranchManager/*" element={<BranchManager />}>
-          <Route path="BranchEmployeeManagement" element={<BranchEmployeeManagement/>}/>
+          <Route path="Dashboard" element={<BranchDashboard />} />
+          <Route
+            path="BranchEmployeeManagement"
+            element={<BranchEmployeeManagement />}
+          />
           <Route path="BranchCreateAccount" element={<BranchCreateAccount />} />
         </Route>
         <Route path="/BranchEmployee/*" element={<BranchEmployee />}>
-          <Route path="BranchPaymentForm" element={<BranchPaymentForm/>}/>
-          <Route path="BranchOrderManagement" element={<BranchOrderManagement/>}/>
-          <Route path="BranchCurrentOrder" element={<BranchCurrentOrder/>}/>
-          <Route path="BranchTransshipment/:orderId" element={<BranchTransshipment/>}/>
+          <Route path="BranchPaymentForm" element={<BranchPaymentForm />} />
+          <Route
+            path="BranchOrderManagement"
+            element={<BranchOrderManagement />}
+          />
+          <Route path="BranchCurrentOrder" element={<BranchCurrentOrder />} />
+          <Route
+            path="BranchTransshipment/:orderId"
+            element={<BranchTransshipment />}
+          />
         </Route>
         <Route path="/HubManager/*" element={<HubManager />}>
-          <Route path="HubEmployeeManagement" element={<HubEmployeeManagement/>}/>
+          <Route
+            path="HubEmployeeManagement"
+            element={<HubEmployeeManagement />}
+          />
           <Route path="HubCreateAccount" element={<HubCreateAccount />} />
         </Route>
         <Route path="/HubEmployee/*" element={<HubEmployee />}>
-          <Route path="HubOrderManagement" element={<HubOrderManagement/>}/>
-          <Route path="HubCurrentOrder" element={<HubCurrentOrder/>}/>
-          <Route path="HubTransshipment/:orderId" element={<HubTransshipment/>}/>
+          <Route path="HubOrderManagement" element={<HubOrderManagement />} />
+          <Route path="HubCurrentOrder" element={<HubCurrentOrder />} />
+          <Route
+            path="HubTransshipment/:orderId"
+            element={<HubTransshipment />}
+          />
         </Route>
       </Routes>
     </>

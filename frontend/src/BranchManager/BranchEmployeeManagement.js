@@ -5,13 +5,23 @@ import { Link } from "react-router-dom";
 const BranchEmployeeManagement = () => {
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [employees, setEmployees] = useState([]);
-  const [branchId, setBranchId] = useState();
   const [isLoadingEmployeesList, setIsLoadingEmployeesList] = useState(true);
+  
+  const [branchId, setBranchId] = useState();
 
   useEffect(() => {
-    // Lấy thông tin từ localStorage
-    const temp = localStorage.getItem("branchId");
-    setBranchId(temp);
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/getData", {
+          withCredentials: true,
+        });
+        setBranchId(response.data.branchId);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
   }, []); // useEffect sẽ chạy sau khi component được render
 
   useEffect(() => {
@@ -73,7 +83,7 @@ const BranchEmployeeManagement = () => {
 
   const updatedEmployees = employees.filter(
     (employee) =>
-      employee.role_id === 6 && employee.branch_id === parseInt(branchId)
+      employee.role_id === 6 && employee.branch_id === branchId
   );
 
   // console.log("updatedEmployees: ", updatedEmployees);
