@@ -98,6 +98,11 @@ class BranchController {
 
     //GET /branch/:branchId/employee
     async getEmployeeOfBranch(req, res, next) {
+        if (!req.session.User) {
+            return res.status(401).json({
+                msg: "Login first",
+            });
+        }
         const schema = Joi.object({
             id: Joi.number().min(1).required(),
         });

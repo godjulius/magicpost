@@ -80,6 +80,10 @@ class OrderController {
 
     //POST /order/create
     async createOrder(req, res, next) {
+        if (!req.session.User) {
+            return res.status(401).send("Login first");
+        }
+
         const schema = Joi.object({
             name: Joi.string().pattern(
                 new RegExp("^[a-zA-ZàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳỵỷỹđĐ ]+$")
@@ -226,7 +230,7 @@ class OrderController {
         })
         const validateResult = schema.validate({
             orderId: req.params.orderId,
-            statusId: re.params.statusId,
+            statusId: req.params.statusId,
         });
         if (validateResult.error) {
             return res.status(403).send("Bad request");
