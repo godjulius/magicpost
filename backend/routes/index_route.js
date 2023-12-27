@@ -7,7 +7,7 @@ const customerRoute = require("./customer_route");
 const orderRoute = require("./order_route");
 const deliveryRoute = require("./delivery_route");
 const parcelRoute = require("./parcel_route");
-// const utilsRoute = require("./utils_route");
+const toolRoute = require("./tool_route");
 
 function routesInit(app) {
     app.use("/", employeeRoute);
@@ -19,7 +19,7 @@ function routesInit(app) {
     app.use("/", deliveryRoute);
 
     app.use("/", parcelRoute);
-    // app.use("/", utilsRoute);
+    app.use("/", toolRoute);
     app.use("/", sessionDataRoute);
 }
 

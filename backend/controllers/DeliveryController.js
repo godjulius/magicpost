@@ -1,6 +1,5 @@
 const {models: {Delivery, Order, Branch, Parcel}} = require("../models");
 const Joi = require("joi");
-const {or} = require("sequelize");
 
 class DeliveryController {
     //GET /delivery
@@ -16,6 +15,14 @@ class DeliveryController {
             return res.status(401).json({
                 msg: "Login first",
             })
+        }
+        const schema = Joi.object({
+            orderId: Joi.string().pattern(new RegExp('^[A-Z0-9]+$')).required(),
+            receiverId: Joi.number().integer().min(1).required(),
+        });
+        const validateResult = schema.validate(req.body);
+        if (validateResult.error) {
+            return res.status(403).send("Bad request");
         }
         const orderId = req.body.orderId;
         const sender = req.session.User.branchId;
@@ -70,11 +77,15 @@ class DeliveryController {
 
     //POST /delivery/:deliveryId/receive
     async receiveDelivery(req, res) {
-
         if (!req.session.User) {
             return res.status(401).json({
                 msg: "Login first",
             })
+        }
+        const schema = Joi.number().integer().min(1).required();
+        const validateResult = schema.validate(req.params.deliveryId);
+        if (validateResult.error) {
+            return res.status(403).send("Bad request");
         }
         const deliveryId = req.params.deliveryId;
         const receiveDate = new Date();
@@ -106,6 +117,11 @@ class DeliveryController {
 
     //GET /delivery/:orderId
     async getPath(req, res) {
+        const schema = Joi.string().pattern(new RegExp('^[A-Z0-9]+$')).required();
+        const validateResult = schema.validate(req.params.orderId);
+        if (validateResult.error) {
+            return res.status(403).send("Bad request");
+        }
         const orderId = req.params.orderId
         const order = await Order.findOne({
             where: {
