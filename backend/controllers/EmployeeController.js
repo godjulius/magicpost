@@ -150,6 +150,15 @@ class EmployeeController {
             roleId = req.session.User.roleId + 1;
             branchId = req.session.User.branchId;
         }
+
+        const branch = await Branch.findOne({
+            where: {
+                branch_id: branchId,
+            }
+        });
+        if (!branch) {
+            return res.status(404).send("Branch not found");
+        }
         const hashedPw = await bcrypt.hash(password, bcryptRound);
         if (!hashedPw) {
             throw new Error("Hashed password error");
@@ -164,7 +173,14 @@ class EmployeeController {
             last_name: last_name,
             dob: dob,
             address: address,
-        })
+        });
+        console.log(employee.role_id);
+        if (employee.role_id == 3 || employee.role_id == 5) {
+            console.log(employee.employee_id);
+            await branch.update({
+                manager_id: employee.employee_id,
+            })
+        }
         return res.status(200).json({
             msg: "Create account successfully!",
             employee: {

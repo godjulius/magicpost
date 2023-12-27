@@ -8,7 +8,7 @@ const Branch = function (sequelize, Sequelize) {
         },
         manager_id: {
             type: Sequelize.BIGINT.UNSIGNED,
-            allowNull: false,
+            allowNull: true,
             references: {
                 model: "employee",
                 key: "employee_id",
