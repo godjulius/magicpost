@@ -126,7 +126,7 @@ class DeliveryController {
         const order = await Order.findOne({
             where: {
                 order_id: orderId,
-            }
+            },
         });
         if (!order) {
             return res.status(404).json({
@@ -136,8 +136,25 @@ class DeliveryController {
         const path = await Delivery.findAll({
             where: {
                 order_id: orderId,
-            }
+            },
         });
+        for (let i = 0; i < path.length; ++i) {
+            const sender = await Branch.findOne({
+                where: {
+                    branch_id: path[i].sender_id,
+                }
+            });
+            const receiver = await Branch.findOne({
+                where: {
+                    branch_id: path[i].receiver_id,
+                }
+            });
+            path[i] = {
+                delivery: path[i],
+                sender: sender,
+                receiver: receiver,
+            }
+        }
         return res.status(200).json(path);
     }
 
