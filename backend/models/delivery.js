@@ -31,11 +31,11 @@ const Delivery = function (sequelize, Sequelize) {
             },
         },
         send_date: {
-            type: Sequelize.DATE,
+            type: Sequelize.DATEONLY,
             allowNull: true,
         },
         receive_date: {
-            type: Sequelize.DATE,
+            type: Sequelize.DATEONLY,
             allowNull: true,
         },
     }, {
