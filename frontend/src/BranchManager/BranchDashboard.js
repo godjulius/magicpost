@@ -85,7 +85,7 @@ const BranchDashboard = () => {
     });
 
     sendItems.forEach((item) => {
-      const currentDate = new Date(item.receive_date);
+      const currentDate = new Date(item.send_date);
       const month = currentDate.getMonth() + 1;
       const year = currentDate.getFullYear();
 

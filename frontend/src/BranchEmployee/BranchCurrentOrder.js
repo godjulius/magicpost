@@ -59,7 +59,6 @@ const BranchCurrentOrder = () => {
 
     fetchDeliveries();
   }, []);
-  
 
   const [selectedOrder, setSelectedOrder] = useState(null);
 
@@ -101,6 +100,10 @@ const BranchCurrentOrder = () => {
     }
   });
 
+  // updatedOrder = updatedOrder.map((order) => ({ ...order, delivered: false }));
+
+  console.log(updatedOrder);
+
   const totalItems = updatedOrder.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
@@ -125,6 +128,55 @@ const BranchCurrentOrder = () => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentOrders = updatedOrder.slice(startIndex, endIndex);
+
+  const [showNotification, setShowNotification] = useState(false);
+
+  const handleDelivery = (order) => {
+    // Thông báo cho người dùng
+    setShowNotification(true);
+
+    // Cập nhật thuộc tính delivered thành true
+    // const updatedOrders = orders.map(o => (o.order_id === order.order_id ? { ...o, delivered: true } : o));
+    // setOrders(updatedOrders);
+  };
+
+  const handleConfirmOrder = async (orderId) => {
+    try {
+      // Gửi yêu cầu API để cập nhật trạng thái của đơn hàng
+      const response = await axios.post(
+        `http://localhost:3000/order/${orderId}/${3}`,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+
+      setSelectedOrder(null);
+
+      // setForceUpdate((prev) => !prev);
+    } catch (error) {
+      console.error(`Error confirming order ${orderId}:`, error);
+    }
+  };
+
+  const handleRejectOrder = async (orderId) => {
+    try {
+      // Gửi yêu cầu API để cập nhật trạng thái của đơn hàng
+      const response = await axios.post(
+        `http://localhost:3000/order/${orderId}/${4}`,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+
+      setSelectedOrder(null);
+
+      // setForceUpdate((prev) => !prev);
+    } catch (error) {
+      console.error(`Error confirming order ${orderId}:`, error);
+    }
+  };
 
   return (
     <div className="w-full h-screen overflow-x-hidden border-t flex flex-col font-custom-sans-serif">
@@ -234,15 +286,22 @@ const BranchCurrentOrder = () => {
                       </p>
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <button className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">
-                        <Link
-                        // to={`/BranchEmployee/BranchTransshipment/${order.delivery_id}`}
-                        >
-                          Vận chuyển
-                        </Link>
+                      <button
+                        className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded"
+                        onClick={() => handleDelivery(order)}
+                      >
+                        Vận chuyển
                       </button>
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                      {/* {order.delivered && (
+                        <button
+                          onClick={() => showOrderDetails(order)}
+                          className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded"
+                        >
+                          Chi tiết
+                        </button>
+                      )} */}
                       <button
                         onClick={() => showOrderDetails(order)}
                         className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded"
@@ -250,82 +309,86 @@ const BranchCurrentOrder = () => {
                         Chi tiết
                       </button>
                     </td>
-
                   </tr>
                 ))}
               </tbody>
             )}
           </table>
-            {selectedOrder && (
-              <div className="fixed inset-0 flex items-center justify-center bg-opacity-50 bg-gray-500">
-                <div className="bg-white p-6 rounded-lg shadow-lg max-w-[600px]">
-                  <div className="mb-4 flex items-center">
-                    <h2 className="text-xl text-center font-bold leading-tight tracking-tight text-gray-900 md:text-2xl flex-1">
-                      Thông tin đơn hàng
-                    </h2>
-                    <button
-                      type="button"
-                      onClick={closeOrderDetails}
-                      className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
-                    >
-                      <svg
-                        className="w-5 h-5"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"></path>
-                      </svg>
-                    </button>
-                  </div>
-                  <p>
-                    <strong>Mã đơn hàng:</strong>{" "}
-                    {selectedOrder.order_id}
-                  </p>
-                  <p>
-                    <strong>Tên người nhận:</strong>{" "}
-                    {selectedOrder.receiver_name}
-                  </p>
-                  <p>
-                    <strong>Số điện thoại người nhận:</strong>{" "}
-                    {selectedOrder.receiver_phone}
-                  </p>
-                  <p>
-                    <strong>Địa chỉ người nhận:</strong>{" "}
-                    {selectedOrder.receiver_address}
-                  </p>
-                  <p>
-                    <strong>Cân nặng:</strong>{" "}
-                    {selectedOrder.parcel.weight}
-                  </p>
-                  <p>
-                    <strong>Giá tiền:</strong>{" "}
-                    {selectedOrder.parcel.price}
-                  </p>
-                  {/* Nút xác nhận đơn hàng đã đến tay người dùng */}
-                  <div className="flex flex-col sm:flex-row justify-center mt-4">
-                    <button
-                      className="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded mb-2 sm:mr-2 sm:mb-0"
-                      // onClick={() =>
-                      //   handleConfirmDelivery(selectedOrder.order_id)
-                      // }
-                    >
-                      Xác nhận đã giao
-                    </button>
 
-                    {/* Nút hoàn trả đơn hàng */}
-                    <button
-                      className="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded"
-                      // onClick={() =>
-                      //   handleRejectOrder(selectedOrder.order_id)
-                      // }
+          {showNotification && (
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-200 text-gray-800 p-6 rounded shadow-xl border border-gray-500">
+              <p>Đơn hàng đang được chuyển đến tay người nhận!</p>
+              <button
+                className="mt-4 bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded mx-auto block"
+                onClick={() => setShowNotification(false)}
+              >
+                Đóng
+              </button>
+            </div>
+          )}
+
+          {selectedOrder && (
+            <div className="fixed inset-0 flex items-center justify-center bg-opacity-50 bg-gray-500">
+              <div className="bg-white p-6 rounded-lg shadow-lg max-w-[600px]">
+                <div className="mb-4 flex items-center">
+                  <h2 className="text-xl text-center font-bold leading-tight tracking-tight text-gray-900 md:text-2xl flex-1">
+                    Thông tin đơn hàng
+                  </h2>
+                  <button
+                    type="button"
+                    onClick={closeOrderDetails}
+                    className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                  >
+                    <svg
+                      className="w-5 h-5"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      Hoàn trả đơn hàng
-                    </button>
-                  </div>
+                      <path d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"></path>
+                    </svg>
+                  </button>
+                </div>
+                <p>
+                  <strong>Mã đơn hàng:</strong> {selectedOrder.order_id}
+                </p>
+                <p>
+                  <strong>Tên người nhận:</strong> {selectedOrder.receiver_name}
+                </p>
+                <p>
+                  <strong>Số điện thoại người nhận:</strong>{" "}
+                  {selectedOrder.receiver_phone}
+                </p>
+                <p>
+                  <strong>Địa chỉ người nhận:</strong>{" "}
+                  {selectedOrder.receiver_address}
+                </p>
+                <p>
+                  <strong>Cân nặng:</strong> {selectedOrder.parcel.weight}
+                </p>
+                <p>
+                  <strong>Giá tiền:</strong> {selectedOrder.parcel.price}
+                </p>
+                {/* Nút xác nhận đơn hàng đã đến tay người dùng */}
+                <div className="flex flex-col sm:flex-row justify-center mt-4">
+                  <button
+                    className="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded mb-2 sm:mr-2 sm:mb-0"
+                    onClick={() => handleConfirmOrder(selectedOrder.order_id)}
+                  >
+                    Xác nhận đã giao
+                  </button>
+
+                  {/* Nút hoàn trả đơn hàng */}
+                  <button
+                    className="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded"
+                    onClick={() => handleRejectOrder(selectedOrder.order_id)}
+                  >
+                    Hoàn trả đơn hàng
+                  </button>
                 </div>
               </div>
-            )}
+            </div>
+          )}
         </div>
 
         <div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
