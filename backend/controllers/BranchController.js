@@ -29,7 +29,7 @@ class BranchController {
             })
         }
         const schema = Joi.object({
-            managerId: Joi.number().integer().min(1).required(),
+            managerId: Joi.number().integer().min(1),
             branchName: Joi.string().required(),
             province: Joi.string().required(),
             district: Joi.string().required(),
