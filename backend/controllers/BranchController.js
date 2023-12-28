@@ -1,5 +1,6 @@
 const {models: {Branch, Employee, Parcel, Delivery, Order, Customer, ParcelType, Status}} = require("../models");
 const Joi = require("joi");
+const {Op} = require("sequelize");
 
 class BranchController {
 
@@ -246,7 +247,12 @@ class BranchController {
         if (!req.session.User) {
             return res.status(401).json({
                 msg: "Login first",
-            })
+            });
+        }
+        if (req.session.User.roleId === 4 || req.session.roleId === 6) {
+            return res.status(401).json({
+                msg: "No authorize",
+            });
         }
         const schema = Joi.number().integer().min(1).required();
         const validateResult = schema.validate(req.params.branchId);
@@ -312,6 +318,11 @@ class BranchController {
         if (!req.session.User) {
             return res.status(401).json({
                 msg: "Login first",
+            });
+        }
+        if (req.session.User.roleId === 4 || req.session.User.roleId === 6) {
+            return res.status(401).json({
+                msg: "No authorize",
             })
         }
         const schema = Joi.number().integer().min(1).required();
@@ -333,6 +344,9 @@ class BranchController {
         const receive = await Delivery.findAll({
             where: {
                 receiver_id: req.params.branchId,
+                receive_date: {
+                    [Op.ne]: null,
+                },
             },
             include: [
                 {
