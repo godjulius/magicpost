@@ -245,8 +245,10 @@ class OrderController {
                 msg: "Order not found",
             });
         }
+        const today = new Date();
         await order.update({
             status_id: req.params.statusId,
+            receive_date: today,
         });
         return res.status(200).json({
             msg: "Update successfully",
