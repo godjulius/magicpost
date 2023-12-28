@@ -10,7 +10,7 @@ class BranchController {
             include: [
                 {
                     model: Employee,
-                    required: true,
+                    required: false,
                 },
             ],
         });
@@ -46,7 +46,7 @@ class BranchController {
         }
         const {managerId, branchName, province, district, detailAddress, isHub} = req.body;
         const newBranch = async () => {
-            if (isHub === 1) {
+            if (isHub === 0) {
                 return await Branch.create({
                     manager_id: managerId,
                     branch_name: branchName,
