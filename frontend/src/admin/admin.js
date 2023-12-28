@@ -10,6 +10,17 @@ import DesktopHeader from "./DesktopHeader.js";
 import MobileHeader from "./MobileHeader.js";
 import PaymentForm from "./paymentForm.js";
 
+const featuresName = [
+  "Dashboard",
+  "AccountManagement",
+  "BranchManagement"
+];
+const featuresPath = [
+  "/admin/Dashboard",
+  "/admin/AccountManagement",
+  "/admin/BranchManagement"
+];
+
 const Admin = () => {
   var UserRole = "null";
   
@@ -45,7 +56,7 @@ const Admin = () => {
       <Navbar onTabChange={handleTabChange} />
       <div className="relative w-full flex flex-col h-screen overflow-y-hidden">
         <DesktopHeader />
-        <MobileHeader />
+        <MobileHeader featuresPath={featuresPath} featuresName={featuresName}/>
 
         <Routes>
           {/* comment đống dưới này thì bỏ comment cái <Outlet /> là được */}
