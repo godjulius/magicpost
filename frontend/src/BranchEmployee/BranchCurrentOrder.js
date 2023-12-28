@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 const BranchCurrentOrder = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [forceUpdate, setForceUpdate] = useState(false);
 
   const [branchId, setBranchId] = useState();
 
@@ -39,7 +40,7 @@ const BranchCurrentOrder = () => {
     };
 
     fetchOrders();
-  }, []);
+  }, [forceUpdate]);
 
   const [deliveries, setDeliveries] = useState([]);
 
@@ -155,7 +156,7 @@ const BranchCurrentOrder = () => {
 
       setSelectedOrder(null);
 
-      // setForceUpdate((prev) => !prev);
+      setForceUpdate((prev) => !prev);
     } catch (error) {
       console.error(`Error confirming order ${orderId}:`, error);
     }
@@ -174,7 +175,7 @@ const BranchCurrentOrder = () => {
 
       setSelectedOrder(null);
 
-      // setForceUpdate((prev) => !prev);
+      setForceUpdate((prev) => !prev);
     } catch (error) {
       console.error(`Error confirming order ${orderId}:`, error);
     }
