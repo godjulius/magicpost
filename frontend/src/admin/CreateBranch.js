@@ -12,7 +12,6 @@ function CreateBranch() {
     district: "",
     detailAddress: "",
     isHub: "",
-    hubId: "",
   });
 
   const [branchs, setBranchs] = useState([]);
@@ -80,17 +79,16 @@ function CreateBranch() {
     });
   };
 
-//   const handleHubIdChange = (e) => {
-//     setFormData({
-//       ...formData,
-//       [e.target.name]: e.target.value,
-//     });
-//   };
-
   const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    const updatedValue = name === "hubId" ? parseInt(value, 10) : value;
+
+    console.log(updatedValue);
+
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: updatedValue,
     });
   };
 
@@ -109,7 +107,6 @@ function CreateBranch() {
         alert("Create Branch successfully!");
         navigate("../BranchManagement");
       }
-
     } catch (error) {
       console.error("Registration failed:", error.response.data);
     }
