@@ -28,7 +28,7 @@ const DesktopHeader = () => {
           className="relative z-10 w-12 h-12 rounded-full overflow-hidden border-4 border-gray-400 hover:border-gray-300 focus:border-gray-300 focus:outline-none"
         >
           <img
-            src="https://source.unsplash.com/uJ8LNVCBjFQ/400x400"
+            src="https://t4.ftcdn.net/jpg/00/65/77/27/360_F_65772719_A1UV5kLi5nCEWI0BNLLiFaBPEkUbv5Fv.jpg"
             alt="Profile"
           />
         </button>

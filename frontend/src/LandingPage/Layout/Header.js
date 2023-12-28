@@ -98,14 +98,17 @@ const Header = () => {
             </LinkScroll>
           </ul>
           <div className="col-start-10 col-end-12 font-medium flex justify-end items-center">
-            {/* <a href="/" className="text-black-600 mx-2 sm:mx-4 capitalize tracking-wide hover:text-orange_cus-500 transition-all">
-                  Sign In
-              </a> */}
-              <Link to="/SignIn">
-            <ButtonOutline>
+            <Link to="/SignIn">
+              {/* <ButtonOutline>
                 Sign In
-            </ButtonOutline>
-              </Link>
+            </ButtonOutline> */}
+              <button className="relative z-10 w-12 h-12 rounded-full overflow-hidden border-4 border-gray-400 hover:border-gray-300 focus:border-gray-300 focus:outline-none">
+                <img
+                  src="https://t4.ftcdn.net/jpg/00/65/77/27/360_F_65772719_A1UV5kLi5nCEWI0BNLLiFaBPEkUbv5Fv.jpg"
+                  alt="Profile"
+                />
+              </button>
+            </Link>
           </div>
         </nav>
       </header>

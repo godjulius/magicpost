@@ -16,8 +16,9 @@ const SearchPage = ({ children }) => {
   const [orderId, setOrderId] = useState("");
   const [isFound, setIsFound] = useState(false);
   const [orderDetail, setOrderDetail] = useState({});
-  const [path, setPath] = useState([]);
+  const [pathOrder, setPath] = useState([]);
   const [branchName, setBranchName] = useState();
+  const [isLoadingPath, setIsLoadingPath] = useState(true);
   useEffect(() => {
     console.log(id);
     const fetchData = async () => {
@@ -30,10 +31,23 @@ const SearchPage = ({ children }) => {
         console.log(response.data[0]);
         let path;
         if (response.data[0].isFound) {
-          path = await axios.get(`http://localhost:3000/${id}/path`, {
-            withCredentials: true,
-          });
-          setPath(path.data);
+          try {
+            path = await axios.get(`http://localhost:3000/${id}/path`, {
+              withCredentials: true,
+            });
+            setPath(path.data);
+            console.log(path.data);
+            setIsLoadingPath(false);
+          } catch (error) {
+            console.error("Error fetching orders", error);
+            setIsLoadingPath(true);
+          } finally {
+            setIsLoadingPath(false);
+          }
+          // path = await axios.get(`http://localhost:3000/${id}/path`, {
+          //   withCredentials: true,
+          // });
+          // setPath(path.data);
           console.log(path.data);
           let branch = await axios.get(
             `http://localhost:3000/branch/${response.data[0].order.branch_id}`,
@@ -42,6 +56,7 @@ const SearchPage = ({ children }) => {
             }
           );
           setBranchName(branch.data.branch_name);
+          console.log(branch.data.branch_name);
         }
       } catch (error) {
         console.error("Error fetching orders", error);
@@ -299,7 +314,7 @@ const SearchPage = ({ children }) => {
                 </h3>
                 <p>Nhân viên tạo đơn: {orderDetail.order.employee.fullName}</p>
               </li>
-              {path.map((deli) => {
+              {!isLoadingPath && pathOrder.path.map((deli) => {
                 return (
                   deli.delivery.receive_date != null && (
                     <li className="mb-5 ms-4" key={deli.delivery.delivery_id}>
@@ -319,45 +334,17 @@ const SearchPage = ({ children }) => {
                   )
                 );
               })}
-              {/* <li className="mb-5 ms-4">
-                <div className="absolute w-3 h-3 bg-orange_cus-500 rounded-full mt-1.5 -start-1.5 border border-white"></div>
-                <time className="mb-1 text-sm font-normal leading-none text-gray-400 ">
-                  6:00 AM, 29/12/2023
-                </time>
-                <h3 className="text-lg font-semibold text-gray-900 ">
-                  Đơn hàng tới kho Cầu Giấy 2 Hub
-                </h3>
-              </li>
-              <li className="mb-5 ms-4">
-                <div className="absolute w-3 h-3 bg-orange_cus-500 rounded-full mt-1.5 -start-1.5 border border-white  "></div>
-                <time className="mb-1 text-sm font-normal leading-none text-gray-400 ">
-                  6:00 AM, 29/12/2023
-                </time>
-                <h3 className="text-lg font-semibold text-gray-900 ">
-                  Đơn hàng tới kho Cầu Giấy 5 Hub
-                </h3>
-              </li> */}
-              {(orderDetail.order.status_id == 2 ||
-                orderDetail.order.status_id == 3) &&
-                (<li className="mb-5 ms-4">
-                <div className="absolute w-3 h-3 bg-amber-300 rounded-full mt-1.5 -start-1.5 border border-white  "></div>
-                <time className="mb-1 text-sm font-normal leading-none text-gray-400 ">
-                  6:00 AM, 29/12/2023
-                </time>
-                <h3 className="text-lg font-semibold text-gray-900 ">
-                  Đơn hàng đang được giao
-                </h3>
-              </li>)
-              }
-              <li className="mb-5 ms-4">
-                <div className="absolute w-3 h-3 bg-green-500 rounded-full mt-1.5 -start-1.5 border border-white  "></div>
-                <time className="mb-1 text-sm font-normal leading-none text-gray-400 ">
-                  6:00 AM, 29/12/2023
-                </time>
-                <h3 className="text-lg font-semibold text-gray-900 ">
-                  Giao hàng thành công
-                </h3>
-              </li>
+              {pathOrder.done && isFound && (
+                <li className="mb-5 ms-4">
+                  <div className="absolute w-3 h-3 bg-green-500 rounded-full mt-1.5 -start-1.5 border border-white  "></div>
+                  <time className="mb-1 text-sm font-normal leading-none text-gray-400 ">
+                    {pathOrder.receiveDate}
+                  </time>
+                  <h3 className="text-lg font-semibold text-gray-900 ">
+                    Giao hàng thành công
+                  </h3>
+                </li>
+              )}
             </ol>
           </div>
         </div>
