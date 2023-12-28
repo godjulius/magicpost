@@ -42,7 +42,7 @@ class ToolController {
         }
         const customerName = `${order.customer.first_name} ${order.customer.last_name}`;
         const customerAddress = order.customer.address;
-        const customerPhone = order.customer.address;
+        const customerPhone = order.customer.phone;
         const receiverName = order.receiver_name;
         const receiverAddress = order.receiver_address;
         const receiverPhone = order.receiver_phone
