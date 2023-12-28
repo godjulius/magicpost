@@ -8,7 +8,7 @@ const features = [
   "Giao hàng nhanh chóng.",
   "Theo dõi trực tuyến.",
   "Bảo hiểm và an toàn",
-  "Dịch vụ toàN quốc."
+  "Dịch vụ toàn quốc."
 ]
 
 const Feature = () => {

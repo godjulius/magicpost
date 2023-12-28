@@ -8,7 +8,6 @@ import CreateAccount from "../CreateAccount/createAccount.js";
 import "./admin.css";
 import DesktopHeader from "./DesktopHeader.js";
 import MobileHeader from "./MobileHeader.js";
-import PaymentForm from "./paymentForm.js";
 
 const featuresName = [
   "Dashboard",

@@ -154,12 +154,12 @@ const BranchManagement = () => {
                       </td>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p className="text-gray-900 whitespace-no-wrap">
-                          {branch.manager_id}
+                          {branch.manager_id!=null && branch.manager_id}
                         </p>
                       </td>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <p className="text-gray-900 whitespace-no-wrap">
-                          {branch.employee.first_name + " " + branch.employee.last_name}
+                          {branch.manager_id!=null && (branch.employee.first_name + " " + branch.employee.last_name)}
                         </p>
                       </td>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">

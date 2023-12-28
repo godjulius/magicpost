@@ -42,14 +42,14 @@ const Navbar = ({ onTabChange }) => {
           <i className="fas fa-table mr-2"></i>
           Branch Management
         </Link>
-        <Link
+        {/* <Link
           to="/admin/PaymentForm"
           onClick={() => handleTabClick('paymentForm')}
           className={`flex items-center ${currentTab === 'paymentForm' ? 'active-nav-item' : 'nav-item'} text-gray-600 py-4 pl-4 nav-item w-full ${currentTab === 'paymentForm' ? 'bg-gray-300' : 'hover:bg-gray-300'}`}
         >
           <i className="fas fa-align-left mr-3"></i>
           Payment Form
-        </Link>
+        </Link> */}
       </nav>
     </aside>
   );

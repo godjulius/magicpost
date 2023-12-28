@@ -11,7 +11,6 @@ import {
 } from "react-router-dom";
 import SignIn from "./signIn/SignIn.js";
 
-import PaymentForm from "./admin/paymentForm.js";
 import AccountManagement from "./admin/AccountManagement";
 import BranchManagement from "./admin/BranchManagement.js";
 import Dashboard from "./admin/Dashboard";
@@ -49,7 +48,6 @@ export default function App() {
         <Route path="/SearchPage" element={<SearchPage />}></Route>
         <Route path="/SearchPage/:id" element={<SearchPage />}></Route>
         <Route path="/admin/*" element={<Admin />}>
-          <Route path="PaymentForm" element={<PaymentForm />} />
           <Route path="Dashboard" element={<Dashboard />} />
           <Route path="AccountManagement" element={<AccountManagement />} />
           <Route path="CreateAccount" element={<CreateAccount />} />
