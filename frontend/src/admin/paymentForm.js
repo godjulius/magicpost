@@ -25,6 +25,7 @@ const PaymentForm = () => {
   const [codeTinhReceiver, setCodeTinhReceiver] = useState(0);
   const [cities, setCities] = useState(null);
   const [isLoadingCitiesList, setIsLoadingCitiesList] = useState(true);
+  
   useEffect(() => {
     const fetchData = async () => {
       try {

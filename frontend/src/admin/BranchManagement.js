@@ -59,7 +59,7 @@ const BranchManagement = () => {
         <div>
           <h1 className="text-3xl font-semibold mb-4">Branch Table</h1>
           <button className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 mb-4 rounded-full">
-            <Link to="/admin/CreateAccount">Create New Branch</Link>
+            <Link to="/admin/CreateBranch">Create New Branch</Link>
           </button>
         </div>
         <div className="my-2 flex sm:flex-row flex-col">
