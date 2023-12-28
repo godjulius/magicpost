@@ -63,6 +63,10 @@ const Order = function (sequelize, Sequelize) {
             type: Sequelize.STRING,
             allowNull: false,
         },
+        receive_date: {
+            type: Sequelize.DATEONLY,
+            allowNull: true,
+        },
     }, {
         sequelize,
         tableName: "order",
