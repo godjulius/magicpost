@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Link as LinkScroll } from "react-scroll";
 import ButtonOutline from "../misc/ButtonOutline.";
 import { Link } from "react-router-dom";
-const Header = () => {
+const Header = ({ isLoggedIn }) => {
   const [activeLink, setActiveLink] = useState(null);
   const [scrollActive, setScrollActive] = useState(false);
   useEffect(() => {
@@ -99,15 +99,25 @@ const Header = () => {
           </ul>
           <div className="col-start-10 col-end-12 font-medium flex justify-end items-center">
             <Link to="/SignIn">
+              {isLoggedIn ? (
+                <button className="relative z-10 w-12 h-12 rounded-full overflow-hidden border-4 border-gray-400 hover:border-gray-300 focus:border-gray-300 focus:outline-none">
+                  <img
+                    src="https://t4.ftcdn.net/jpg/00/65/77/27/360_F_65772719_A1UV5kLi5nCEWI0BNLLiFaBPEkUbv5Fv.jpg"
+                    alt="Profile"
+                  />
+                </button>
+              ) : (
+                <ButtonOutline>Sign In</ButtonOutline>
+              )}
               {/* <ButtonOutline>
                 Sign In
-            </ButtonOutline> */}
+            </ButtonOutline>
               <button className="relative z-10 w-12 h-12 rounded-full overflow-hidden border-4 border-gray-400 hover:border-gray-300 focus:border-gray-300 focus:outline-none">
                 <img
                   src="https://t4.ftcdn.net/jpg/00/65/77/27/360_F_65772719_A1UV5kLi5nCEWI0BNLLiFaBPEkUbv5Fv.jpg"
                   alt="Profile"
                 />
-              </button>
+              </button> */}
             </Link>
           </div>
         </nav>

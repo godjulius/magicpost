@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 const Layout = ({ children }) => {
   const navigate = useNavigate();
   const [orderId, setOrderId] = useState();
-
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const onChangeOrderId = function (event){
     setOrderId(event.target.value);
   }
@@ -26,20 +26,23 @@ const Layout = ({ children }) => {
           withCredentials: true,
         });
 
-        // if (response.data === "No data") {
-        //   navigate("/SignIn");
-        // }
+        if (response.data === "No data") {
+          setIsLoggedIn(false);
+        }
+        else {
+          setIsLoggedIn(true);
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
-  }, []); // useEffect sẽ chạy sau khi component được render
+  }, [isLoggedIn]); // useEffect sẽ chạy sau khi component được render
 
   return (
     <>
-      <Header />
+      <Header isLoggedIn={isLoggedIn}/>
       <Hero />
       <SearchBar handleSubmit={handleSubmit} onChangeOrderId={onChangeOrderId}/>
       <Feature />

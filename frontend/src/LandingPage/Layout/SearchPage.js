@@ -306,7 +306,7 @@ const SearchPage = ({ children }) => {
               <li className="mb-5 ms-4">
                 <div className="absolute w-3 h-3 bg-orange_cus-500 rounded-full mt-1.5 -start-1.5 border border-white"></div>
                 <time className="mb-1 text-sm font-normal leading-none text-gray-400">
-                  {orderDetail.order.order_date}
+                  {orderDetail.order.order_date.substr(0,10)}
                 </time>
                 <h3 className="text-lg font-semibold text-gray-900">
                   Xác nhận đơn hàng tại điểm giao dịch
