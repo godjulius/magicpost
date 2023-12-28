@@ -27,6 +27,7 @@ import BranchPaymentForm from "./BranchEmployee/BranchPaymentForm.js";
 import BranchOrderManagement from "./BranchEmployee/BranchOrderManagement.js";
 import BranchCurrentOrder from "./BranchEmployee/BranchCurrentOrder.js";
 import BranchTransshipment from "./BranchEmployee/BranchTransshipment.js";
+import BranchOrderStatistics from "./BranchEmployee/BranchOrderStatistics.js";
 
 import HubManager from "./HubManager/HubManager.js";
 import HubDashboard from "./HubManager/HubDashboard.js";
@@ -73,6 +74,10 @@ export default function App() {
           <Route
             path="BranchTransshipment/:orderId"
             element={<BranchTransshipment />}
+          />
+          <Route
+            path="BranchOrderStatistics"
+            element={<BranchOrderStatistics />}
           />
         </Route>
         <Route path="/HubManager/*" element={<HubManager />}>

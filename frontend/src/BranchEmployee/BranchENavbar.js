@@ -42,6 +42,14 @@ const BranchENavbar = ({ onTabChange }) => {
           <i className="fas fa-table mr-2"></i>
           Current Order
         </Link>
+        <Link
+          to="/BranchEmployee/BranchOrderStatistics"
+          onClick={() => handleTabClick('branchOrderStatistics')}
+          className={`flex items-center ${currentTab === 'branchOrderStatistics' ? 'active-nav-item' : 'nav-item'} text-gray-600 py-4 pl-4 nav-item w-full ${currentTab === 'branchOrderStatistics' ? 'bg-gray-300' : 'hover:bg-gray-300'}`}
+        >
+          <i className="fas fa-table mr-2"></i>
+          Order Statistics
+        </Link>
       </nav>
     </aside>
   );
