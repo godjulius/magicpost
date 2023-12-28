@@ -3,12 +3,12 @@ import Footer from "./Footer";
 import HeaderSearchPage from "./HeaderSearchPage.js";
 import SearchBar from "../SearchBar.js";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom"
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const trackingUrl = "http://localhost:3000/order/tracking";
-
+const orderPath = "/:orderId/path";
 const SearchPage = ({ children }) => {
   const navigate = useNavigate();
   let { id } = useParams();
@@ -16,7 +16,8 @@ const SearchPage = ({ children }) => {
   const [orderId, setOrderId] = useState("");
   const [isFound, setIsFound] = useState(false);
   const [orderDetail, setOrderDetail] = useState({});
-
+  const [path, setPath] = useState([]);
+  const [branchName, setBranchName] = useState();
   useEffect(() => {
     console.log(id);
     const fetchData = async () => {
@@ -27,21 +28,34 @@ const SearchPage = ({ children }) => {
         setOrderDetail(response.data[0]);
         setIsFound(response.data[0].isFound);
         console.log(response.data[0]);
+        let path;
+        if (response.data[0].isFound) {
+          path = await axios.get(`http://localhost:3000/${id}/path`, {
+            withCredentials: true,
+          });
+          setPath(path.data);
+          console.log(path.data);
+          let branch = await axios.get(
+            `http://localhost:3000/branch/${response.data[0].order.branch_id}`,
+            {
+              withCredentials: true,
+            }
+          );
+          setBranchName(branch.data.branch_name);
+        }
       } catch (error) {
         console.error("Error fetching orders", error);
         setIsFound(false);
       } finally {
-  
       }
     };
 
     fetchData();
-  }, [id])
-
+  }, [id]);
 
   const handleSubmit = async function (event) {
     event.preventDefault();
-    navigate(`/SearchPage/${orderId}`)
+    navigate(`/SearchPage/${orderId}`);
   };
 
   function onChangeOrderId(event) {
@@ -168,7 +182,9 @@ const SearchPage = ({ children }) => {
                             <span className="text-gray-300">
                               Loại hàng gửi:{" "}
                             </span>{" "}
-                            {orderDetail.order.parcel.type_id == 1 ? "Bưu phẩm" : "Tài liệu"}
+                            {orderDetail.order.parcel.type_id == 1
+                              ? "Bưu phẩm"
+                              : "Tài liệu"}
                           </p>
                           <p className="text-sm leading-none text-gray-800">
                             <span className="text-gray-300">
@@ -275,13 +291,35 @@ const SearchPage = ({ children }) => {
               <li className="mb-5 ms-4">
                 <div className="absolute w-3 h-3 bg-orange_cus-500 rounded-full mt-1.5 -start-1.5 border border-white"></div>
                 <time className="mb-1 text-sm font-normal leading-none text-gray-400">
-                  6:00 AM, 29/12/2023
+                  {orderDetail.order.order_date}
                 </time>
                 <h3 className="text-lg font-semibold text-gray-900">
-                  Xác nhận đơn hàng
+                  Xác nhận đơn hàng tại điểm giao dịch
+                  <span className="text-red-500"> {branchName}</span>
                 </h3>
+                <p>Nhân viên tạo đơn: {orderDetail.order.employee.fullName}</p>
               </li>
-              <li className="mb-5 ms-4">
+              {path.map((deli) => {
+                return (
+                  deli.delivery.receive_date != null && (
+                    <li className="mb-5 ms-4" key={deli.delivery.delivery_id}>
+                      <div className="absolute w-3 h-3 bg-orange_cus-500 rounded-full mt-1.5 -start-1.5 border border-white  "></div>
+                      <time className="mb-1 text-sm font-normal leading-none text-gray-400 ">
+                        {deli.delivery.receive_date}
+                      </time>
+                      <h3 className="text-lg font-semibold text-gray-900 ">
+                        Đơn hàng đã tới{" "}
+                        {deli.receiver.is_hub ? "kho " : "điểm giao dịch "}
+                        <span className="text-red-500">
+                          {" "}
+                          {deli.receiver.branch_name}
+                        </span>
+                      </h3>
+                    </li>
+                  )
+                );
+              })}
+              {/* <li className="mb-5 ms-4">
                 <div className="absolute w-3 h-3 bg-orange_cus-500 rounded-full mt-1.5 -start-1.5 border border-white"></div>
                 <time className="mb-1 text-sm font-normal leading-none text-gray-400 ">
                   6:00 AM, 29/12/2023
@@ -298,8 +336,10 @@ const SearchPage = ({ children }) => {
                 <h3 className="text-lg font-semibold text-gray-900 ">
                   Đơn hàng tới kho Cầu Giấy 5 Hub
                 </h3>
-              </li>
-              <li className="mb-5 ms-4">
+              </li> */}
+              {(orderDetail.order.status_id == 2 ||
+                orderDetail.order.status_id == 3) &&
+                (<li className="mb-5 ms-4">
                 <div className="absolute w-3 h-3 bg-amber-300 rounded-full mt-1.5 -start-1.5 border border-white  "></div>
                 <time className="mb-1 text-sm font-normal leading-none text-gray-400 ">
                   6:00 AM, 29/12/2023
@@ -307,7 +347,8 @@ const SearchPage = ({ children }) => {
                 <h3 className="text-lg font-semibold text-gray-900 ">
                   Đơn hàng đang được giao
                 </h3>
-              </li>
+              </li>)
+              }
               <li className="mb-5 ms-4">
                 <div className="absolute w-3 h-3 bg-green-500 rounded-full mt-1.5 -start-1.5 border border-white  "></div>
                 <time className="mb-1 text-sm font-normal leading-none text-gray-400 ">
@@ -324,8 +365,7 @@ const SearchPage = ({ children }) => {
         <div className="max-w-screen-xl px-8 xl:px-16 mx-auto">
           <div className="flex justify-start item-start space-y-2 flex-col mt-5">
             <h1 className="text-3xl lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800">
-              Không tìm thấy đơn hàng với mã #
-              {id}
+              Không tìm thấy đơn hàng với mã #{id}
             </h1>
           </div>
         </div>

@@ -44,14 +44,6 @@ const BranchEmployee = () => {
         <DesktopHeader />
         <MobileHeader />
 
-        <Routes>
-          {/* comment đống dưới này thì bỏ comment cái <Outlet /> là được */}
-          {/* <Route path="Dashboard" element={<Dashboard/>}/>
-          <Route path="AccountManagement" element={<AccountManagement/>}/>
-          <Route path="CreateAccount" element={<CreateAccount />} />
-          <Route path="PaymentForm" element={<PaymentForm />}/> */}
-        </Routes>
-
         <Outlet />
       </div>
     </div>
