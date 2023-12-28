@@ -5,12 +5,19 @@ import Hero from "../Hero.js";
 import Feature from "../Feature.js";
 import Pricing from "../Pricing.js";
 import SearchBar from "../SearchBar.js";
-import SearchBarLandingPage from "../SearchBarLandingPage.js";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 const Layout = ({ children }) => {
   const navigate = useNavigate();
+  const [orderId, setOrderId] = useState();
+
+  const onChangeOrderId = function (event){
+    setOrderId(event.target.value);
+  }
+  const handleSubmit = function (event) {
+    navigate(`SearchPage/${orderId}`)
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,7 +41,7 @@ const Layout = ({ children }) => {
     <>
       <Header />
       <Hero />
-      <SearchBarLandingPage />
+      <SearchBar handleSubmit={handleSubmit} onChangeOrderId={onChangeOrderId}/>
       <Feature />
       <Pricing />
       {/* {children} */}

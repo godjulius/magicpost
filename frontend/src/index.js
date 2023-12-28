@@ -4,7 +4,6 @@ import "./index.css";
 import "./tailwind_custom.css";
 
 import { BrowserRouter } from "react-router-dom";
-import CreateAccount from "./CreateAccount/createAccount.js";
 import App from "./App.js";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

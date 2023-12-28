@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 const searchApiUrl = "";
 
 export default function SearchBar({ handleSubmit, onChangeOrderId }) {
-  const [madonhang, setMadonhang] = useState("");
 
   return (
     <div className="mx-auto max-w-7xl sm:px-6 lg:px-8" id="searchbar">
@@ -19,6 +18,7 @@ export default function SearchBar({ handleSubmit, onChangeOrderId }) {
           >
             <input
               id="search-bar"
+              htmlFor="id"
               placeholder="Ví dụ: 28072003"
               name="q"
               className="px-6 py-2 w-full rounded-md flex-1 outline-none bg-white"
@@ -31,7 +31,7 @@ export default function SearchBar({ handleSubmit, onChangeOrderId }) {
             >
               <div className="flex items-center transition-all opacity-1">
                 <img
-                  src="./asset/search-white.png"
+                  src="../asset/search-white.png"
                   className="w-4 mx-auto"
                 ></img>
               </div>

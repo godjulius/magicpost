@@ -3,34 +3,45 @@ import Footer from "./Footer";
 import HeaderSearchPage from "./HeaderSearchPage.js";
 import SearchBar from "../SearchBar.js";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom"
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const trackingUrl = "http://localhost:3000/order/tracking";
 
 const SearchPage = ({ children }) => {
+  const navigate = useNavigate();
+  let { id } = useParams();
   window.scrollTo(0, 0);
   const [orderId, setOrderId] = useState("");
   const [isFound, setIsFound] = useState(false);
   const [orderDetail, setOrderDetail] = useState({});
-  const [haveFindYet, setHaveFindYet] = useState(false);
+
+  useEffect(() => {
+    console.log(id);
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${trackingUrl}/${id}`, {
+          withCredentials: true,
+        });
+        setOrderDetail(response.data[0]);
+        setIsFound(response.data[0].isFound);
+        console.log(response.data[0]);
+      } catch (error) {
+        console.error("Error fetching orders", error);
+        setIsFound(false);
+      } finally {
+  
+      }
+    };
+
+    fetchData();
+  }, [id])
+
+
   const handleSubmit = async function (event) {
     event.preventDefault();
-    // setIsFound(false);
-    setHaveFindYet(true);
-    try {
-      const response = await axios.get(`${trackingUrl}/${orderId}`, {
-        withCredentials: true,
-      });
-      setOrderDetail(response.data[0]);
-      setIsFound(response.data[0].isFound);
-      console.log(response.data[0]);
-    } catch (error) {
-      console.error("Error fetching orders", error);
-      setIsFound(false);
-    } finally {
-
-    }
+    navigate(`/SearchPage/${orderId}`)
   };
 
   function onChangeOrderId(event) {
@@ -309,16 +320,16 @@ const SearchPage = ({ children }) => {
             </ol>
           </div>
         </div>
-      ) : (haveFindYet && (
+      ) : (
         <div className="max-w-screen-xl px-8 xl:px-16 mx-auto">
           <div className="flex justify-start item-start space-y-2 flex-col mt-5">
             <h1 className="text-3xl lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800">
               Không tìm thấy đơn hàng với mã #
-              {orderId}
+              {id}
             </h1>
           </div>
         </div>
-      ))}
+      )}
       <Footer />
     </>
   );

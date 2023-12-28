@@ -54,7 +54,7 @@ const Hero = ({
                   height={383}
                   layout="responsive"
                 /> */}
-                <img src="./asset/Illustration1.png" alt="Illustration1.png"></img>
+                <img src="../asset/Illustration1.png" alt="Illustration1.png"></img>
               </motion.div>
             </div>
           </motion.div>
