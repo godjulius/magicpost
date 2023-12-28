@@ -426,7 +426,7 @@ function CreateAccount() {
                     branchs.map(
                       (branch) =>
                         branch.manager_id === null &&
-                        branch.is_hub === 1 && (
+                        branch.is_hub === true && (
                           <option
                             key={branch.branch_id}
                             value={branch.branch_id}
@@ -440,7 +440,7 @@ function CreateAccount() {
                     branchs.map(
                       (branch) =>
                         branch.manager_id === null &&
-                        branch.is_hub === 0 && (
+                        branch.is_hub === false && (
                           <option
                             key={branch.branch_id}
                             value={branch.branch_id}

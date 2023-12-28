@@ -16,6 +16,7 @@ import AccountManagement from "./admin/AccountManagement";
 import BranchManagement from "./admin/BranchManagement.js";
 import Dashboard from "./admin/Dashboard";
 import CreateAccount from "./CreateAccount/createAccount.js";
+import CreateBranch from "./admin/CreateBranch.js";
 
 import BranchManager from "./BranchManager/BranchManager.js";
 import BranchDashboard from "./BranchManager/BranchDashboard.js";
@@ -53,6 +54,7 @@ export default function App() {
           <Route path="AccountManagement" element={<AccountManagement />} />
           <Route path="CreateAccount" element={<CreateAccount />} />
           <Route path="BranchManagement" element={<BranchManagement />} />
+          <Route path="CreateBranch" element={<CreateBranch />} />
         </Route>
         <Route path="/BranchManager/*" element={<BranchManager />}>
           <Route path="Dashboard" element={<BranchDashboard />} />
