@@ -112,8 +112,7 @@ function CreateAccount() {
   useEffect(() => {
     const fetchRoles = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/role",
-        {
+        const response = await axios.get("http://localhost:3000/role", {
           withCredentials: true,
         });
         setRoles(response.data);
@@ -130,8 +129,7 @@ function CreateAccount() {
   useEffect(() => {
     const fetchBranchs = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/branch",
-        {
+        const response = await axios.get("http://localhost:3000/branch", {
           withCredentials: true,
         });
         setBranchs(response.data);
@@ -395,7 +393,7 @@ function CreateAccount() {
                   </option>
                   {roles.map(
                     (role) =>
-                      role.role_id > 2 && (
+                      (role.role_id === 3 || role.role_id === 5) && (
                         <option key={role.role_id} value={role.role_id}>
                           {role.role_name}
                         </option>
@@ -423,11 +421,34 @@ function CreateAccount() {
                   <option value="default" disabled hidden>
                     Select branch
                   </option>
-                  {branchs.map((branch) => (
-                    <option key={branch.branch_id} value={branch.branch_id}>
-                      {branch.branch_name}
-                    </option>
-                  ))}
+
+                  {formData.roleId === 3 &&
+                    branchs.map(
+                      (branch) =>
+                        branch.manager_id === null &&
+                        branch.is_hub === 1 && (
+                          <option
+                            key={branch.branch_id}
+                            value={branch.branch_id}
+                          >
+                            {branch.branch_name}
+                          </option>
+                        )
+                    )}
+
+                  {formData.roleId === 5 &&
+                    branchs.map(
+                      (branch) =>
+                        branch.manager_id === null &&
+                        branch.is_hub === 0 && (
+                          <option
+                            key={branch.branch_id}
+                            value={branch.branch_id}
+                          >
+                            {branch.branch_name}
+                          </option>
+                        )
+                    )}
                 </select>
               </div>
 

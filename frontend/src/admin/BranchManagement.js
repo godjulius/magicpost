@@ -31,13 +31,6 @@ const BranchManagement = () => {
   const totalItems = branchs.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-  // const deleteEmployee = (employeeId) => {
-  //   const updatedEmployyes = branchs.filter(
-  //     (employee) => employee.id !== employeeId
-  //   );
-  //   setBranchs(updatedEmployyes);
-  // };
-
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);

@@ -77,26 +77,28 @@ const BranchCurrentOrder = () => {
   let updatedOrder = [];
 
   orders.forEach((order) => {
-    let shouldIncludeOrder = false;
+    if (order.status_id === 2){
+      let shouldIncludeOrder = false;
 
-    deliveries.forEach((delivery) => {
-      if (
-        order.parcel.branch_id === branchId &&
-        delivery.order_id === order.order_id
-      ) {
+      deliveries.forEach((delivery) => {
         if (
-          delivery.receiver_id === branchId &&
-          delivery.receive_date !== null
+          order.parcel.branch_id === branchId &&
+          delivery.order_id === order.order_id
         ) {
-          shouldIncludeOrder = true;
-        } else if (delivery.sender_id === branchId) {
-          shouldIncludeOrder = false;
+          if (
+            delivery.receiver_id === branchId &&
+            delivery.receive_date !== null
+          ) {
+            shouldIncludeOrder = true;
+          } else if (delivery.sender_id === branchId) {
+            shouldIncludeOrder = false;
+          }
         }
+      });
+  
+      if (shouldIncludeOrder) {
+        updatedOrder.push(order);
       }
-    });
-
-    if (shouldIncludeOrder) {
-      updatedOrder.push(order);
     }
   });
 
