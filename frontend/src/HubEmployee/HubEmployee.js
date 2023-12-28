@@ -7,6 +7,15 @@ import "../admin/admin.css";
 import DesktopHeader from "../admin/DesktopHeader.js";
 import MobileHeader from "../admin/MobileHeader.js";
 
+const featuresName = [
+  "Order Management",
+  "Current Order",
+];
+const featuresPath = [
+  "/HubEmployee/HubOrderManagement",
+  "/HubEmployee/HubCurrentOrder",
+];
+
 const HubEmployee = () => {
   var UserRole = "null";
 
@@ -42,7 +51,7 @@ const HubEmployee = () => {
       <HubENavBar onTabChange={handleTabChange} />
       <div className="relative w-full flex flex-col h-screen overflow-y-hidden">
         <DesktopHeader />
-        <MobileHeader />
+        <MobileHeader featuresPath={featuresPath} featuresName={featuresName} />
 
         <Routes>
           {/* comment đống dưới này thì bỏ comment cái <Outlet /> là được */}

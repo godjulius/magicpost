@@ -35,7 +35,7 @@ const BranchNav = ({ onTabChange }) => {
           }`}
         >
           <i className="fas fa-table mr-2"></i>
-          Dashboard
+          Dash Board
         </Link>
         <Link
           to="/BranchManager/BranchEmployeeManagement"

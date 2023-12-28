@@ -45,10 +45,8 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Layout />} />
         <Route path="/SignIn" element={<SignIn />} />
-        <Route path="/SearchPage" element={<SearchPage />}>
-        </Route>
-        <Route path="/SearchPage/:id" element={<SearchPage />}>
-        </Route>
+        <Route path="/SearchPage" element={<SearchPage />}></Route>
+        <Route path="/SearchPage/:id" element={<SearchPage />}></Route>
         <Route path="/admin/*" element={<Admin />}>
           <Route path="PaymentForm" element={<PaymentForm />} />
           <Route path="Dashboard" element={<Dashboard />} />

@@ -1,8 +1,24 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom"
-const MobileHeader = () => {
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+const MobileHeader = ({ featuresPath, featuresName }) => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const navigate = useNavigate();
+  const handleClick = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/logout",
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+      console.log(response.data);
+      navigate("/");
+    } catch (error) {
+      console.error("Registration failed:", error.response.data);
+    }
+  };
   return (
     <header className={`w-full bg-gray-100 py-5 px-6 sm:hidden`}>
       <div className="flex items-center justify-between h-8">
@@ -10,7 +26,11 @@ const MobileHeader = () => {
           to="/"
           className="text-gray-500 text-3xl font-semibold uppercase hover:text-gray-700"
         >
-          <img src="./asset/Logo.png" alt="LOGO" className="h-12 py-0 px-0"></img>
+          <img
+            src="../asset/Logo.png"
+            alt="LOGO"
+            className="h-12 py-0 px-0"
+          ></img>
         </Link>
         <button
           onClick={() => setIsOpen(!isOpen)}
@@ -29,31 +49,25 @@ const MobileHeader = () => {
 
       {/* Dropdown Nav */}
       <nav className={`flex flex-col pt-4 ${isOpen ? "flex" : "hidden"}`}>
-        <Link
-          to="/admin/Dashboard"
-          className="flex items-center text-gray-600 opacity-75 hover:opacity-100 py-2 pl-4 nav-item"
+        {featuresPath.map((feature, index) => {
+          return (
+            <Link
+              key={index}
+              to={`${feature}`}
+              className="flex items-center text-gray-600 opacity-75 hover:opacity-100 py-2 pl-4 nav-item"
+            >
+              <i className="fas fa-th-list mr-2"></i>
+              {featuresName[index]}
+            </Link>
+          );
+        })}
+        <div
+          onClick={handleClick}
+          className="block px-4 py-2 account-link hover:bg-gray-300"
         >
-          <i className="fas fa-tachometer-alt mr-3"></i>
-          Dashboard
-        </Link>
-        <Link
-          to="/admin/AccountManagement"
-          className="flex items-center text-gray-600 opacity-75 hover:opacity-100 py-2 pl-4 nav-item"
-        >
-          <i className="fas fa-table mr-3"></i>
-          Tables
-        </Link>
-        <Link
-          to="/admin/PaymentForm"
-          className="flex items-center text-gray-600 py-2 pl-4 nav-item"
-        >
-          <i className="fas fa-align-left mr-3"></i>
-          Blank Page
-        </Link>
-        {/* Thêm các mục nav khác tương tự ở đây */}
-        {/* <button className="w-full bg-white cta-btn font-semibold py-2 mt-3 rounded-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
-          <i className="fas fa-arrow-circle-up mr-3"></i> Upgrade to Pro!
-        </button> */}
+          <i className="fas fa-sign-out mr-2"></i>
+          Sign Out
+        </div>
       </nav>
     </header>
   );

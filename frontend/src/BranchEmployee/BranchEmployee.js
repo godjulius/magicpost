@@ -7,6 +7,19 @@ import "../admin/admin.css";
 import DesktopHeader from "../admin/DesktopHeader.js";
 import MobileHeader from "../admin/MobileHeader.js";
 
+const featuresName = [
+  "Payment Form",
+  "Order Management",
+  "Current Order",
+  "Order Statistics",
+];
+const featuresPath = [
+  "/BranchEmployee/BranchPaymentForm",
+  "/BranchEmployee/BranchOrderManagement",
+  "/BranchEmployee/BranchCurrentOrder",
+  "/BranchEmployee/BranchOrderStatistics",
+];
+
 const BranchEmployee = () => {
   var UserRole = "null";
 
@@ -17,7 +30,7 @@ const BranchEmployee = () => {
   };
 
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -28,10 +41,9 @@ const BranchEmployee = () => {
         if (response.data === "No data" || response.data.roleId !== 6) {
           navigate("/SignIn");
         }
-
       } catch (error) {
         console.error("Error fetching data:", error);
-      } 
+      }
     };
 
     fetchData();
@@ -39,10 +51,10 @@ const BranchEmployee = () => {
 
   return (
     <div className="bg-gray-100 font-family-karla flex">
-        <BranchENavbar onTabChange={handleTabChange} />
+      <BranchENavbar onTabChange={handleTabChange} />
       <div className="relative w-full flex flex-col h-screen overflow-y-hidden">
         <DesktopHeader />
-        <MobileHeader />
+        <MobileHeader featuresPath={featuresPath} featuresName={featuresName} />
 
         <Outlet />
       </div>

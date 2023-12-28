@@ -7,6 +7,8 @@ import "../admin/admin.css";
 import DesktopHeader from "../admin/DesktopHeader.js";
 import MobileHeader from "../admin/MobileHeader.js";
 
+const featuresPath = ["/BranchManager/Dashboard", "/BranchManager/BranchEmployeeManagement"];
+const featuresName =["Dash board", "Employee Management"];
 const BranchManager = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
 
@@ -42,7 +44,7 @@ const BranchManager = () => {
       <BranchNavbar onTabChange={handleTabChange} />
       <div className="relative w-full flex flex-col h-screen overflow-y-hidden">
         <DesktopHeader />
-        <MobileHeader />
+        <MobileHeader featuresPath={featuresPath} featuresName={featuresName}/>
 
         <Routes>
           {/* comment đống dưới này thì bỏ comment cái <Outlet /> là được */}
