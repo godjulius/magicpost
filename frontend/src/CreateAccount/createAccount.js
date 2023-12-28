@@ -173,10 +173,8 @@ function CreateAccount() {
             withCredentials: true,
           }
         );
-        console.log("Registration successful:", response.data);
-        // console.log(response.data.msg + " " + passwordsMatch);
+
         setCreateAccountError(response.data.msg);
-        // console.log(createAccountError);
 
         if (response.data.msg === "Create account successfully!") {
           alert("Registration successful");
@@ -422,7 +420,7 @@ function CreateAccount() {
                     Select branch
                   </option>
 
-                  {formData.roleId === 3 &&
+                  {formData.roleId === "3" &&
                     branchs.map(
                       (branch) =>
                         branch.manager_id === null &&
@@ -436,7 +434,7 @@ function CreateAccount() {
                         )
                     )}
 
-                  {formData.roleId === 5 &&
+                  {formData.roleId === "5" &&
                     branchs.map(
                       (branch) =>
                         branch.manager_id === null &&
