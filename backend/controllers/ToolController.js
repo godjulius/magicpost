@@ -48,7 +48,7 @@ class ToolController {
         const receiverPhone = order.receiver_phone
         const weight = order.parcel.weight;
         const price = order.parcel.price;
-        const qrCodeDataURL = await QRCode.toDataURL("https://www.google.com.vn");
+        const qrCodeDataURL = await QRCode.toDataURL(`http://localhost:8081/SearchPage/${req.params.orderId}`);
         try {
             const browser = await puppeteer.launch();
             const page = await browser.newPage();
