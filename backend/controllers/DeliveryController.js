@@ -154,7 +154,17 @@ class DeliveryController {
                 receiver: receiver,
             }
         }
-        return res.status(200).json(path);
+        if (order.receive_date !== null) {
+            return res.status(200).json({
+                path: path,
+                done: true,
+                receiveDate: order.receive_date,
+            })
+        }
+        return res.status(200).json({
+            path: path,
+            done: false,
+        });
     }
 
 }
