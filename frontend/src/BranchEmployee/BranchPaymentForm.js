@@ -79,7 +79,7 @@ const BranchPaymentForm = () => {
         lastName,
         [name]: value,
       };
-      // console.log(firstName + "-" + lastName);
+
       setOrder(temp);
     } else {
       const temp = {
@@ -89,34 +89,69 @@ const BranchPaymentForm = () => {
 
       setOrder(temp);
     }
-
-    // const temp = {
-    //   ...order,
-    //   [event.target.name]: event.target.value
-    // };
-    // setOrder(temp);
   };
 
+  const [tempOrder, setTempOrder] = useState([]);
+
   const [showNotification, setShowNotification] = useState(false);
+  const [showPrint, setShowPrint] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(order);
+    // console.log(order);
     // Call api gửi dữ liệu lên server
 
     try {
-      const response = await axios.post(submitURL, order,
-        {
-          withCredentials: true,
-        });
+      const response = await axios.post(submitURL, order, {
+        withCredentials: true,
+      });
       setShowNotification(true);
 
       console.log(response.data);
-      console.log("Submit success", response.data);
+      // console.log("Submit success", response.data);
+
+      const response1 = await axios.get(`http://localhost:3000/order/${1}`, {
+        withCredentials: true,
+      });
+
+      console.log(response1.data);
+
+      setTempOrder(response1.data);
+      setShowPrint(true);
     } catch (err) {
       console.error("Submit fail", err.response.data);
     }
   };
+
+  let printOrder = [];
+
+  if (tempOrder.length > 0) {
+    printOrder = tempOrder[0];
+    tempOrder.forEach((order) => {
+      if (order.parcel_id > printOrder.parcel_id) {
+        printOrder = order;
+      }
+    });
+
+    console.log(printOrder);
+  }
+
+  const handlePrint = async () => {
+    try {
+      const orderId = printOrder.order_id;
+      const response = await axios.get(`http://localhost:3000/print/${orderId}`, {
+        withCredentials: true,
+      });
+
+      setShowPrint(false);
+
+      console.log(response.data);
+      // console.log("Submit success", response.data);
+
+    } catch (err) {
+      console.error("Submit fail", err.response.data);
+    }
+  }
 
   return (
     <div className="w-full h-screen overflow-x-hidden border-t flex flex-col font-custom-sans-serif">
@@ -410,6 +445,16 @@ const BranchPaymentForm = () => {
               Tạo đơn
             </button>
           </div>
+          {showPrint && (
+            <div className="mt-6 mx-auto">
+              <button
+                className="px-4 py-1 text-white font-light tracking-wider bg-gray-900 rounded"
+                onClick={handlePrint}
+              >
+                In đơn hàng
+              </button>
+            </div>
+          )}
         </form>
         {/* <div className="flex flex-wrap">
           <div className="w-full lg:w-1/2 my-6 pr-0 lg:pr-2">
