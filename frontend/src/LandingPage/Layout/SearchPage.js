@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 const trackingUrl = "http://localhost:3000/order/tracking";
 const orderPath = "/:orderId/path";
 const SearchPage = ({ children }) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const navigate = useNavigate();
   let { id } = useParams();
   window.scrollTo(0, 0);
@@ -19,6 +20,26 @@ const SearchPage = ({ children }) => {
   const [pathOrder, setPath] = useState([]);
   const [branchName, setBranchName] = useState();
   const [isLoadingPath, setIsLoadingPath] = useState(true);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/getData", {
+          withCredentials: true,
+        });
+
+        if (response.data === "No data") {
+          setIsLoggedIn(false);
+        }
+        else {
+          setIsLoggedIn(true);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [isLoggedIn]);
   useEffect(() => {
     console.log(id);
     const fetchData = async () => {
@@ -79,7 +100,7 @@ const SearchPage = ({ children }) => {
 
   return (
     <>
-      <HeaderSearchPage />
+      <HeaderSearchPage isLoggedIn={isLoggedIn}/>
       <div className="pt-10"></div>
       <SearchBar
         handleSubmit={handleSubmit}
