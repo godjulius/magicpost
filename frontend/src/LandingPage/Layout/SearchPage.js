@@ -69,7 +69,6 @@ const SearchPage = ({ children }) => {
           //   withCredentials: true,
           // });
           // setPath(path.data);
-          console.log(path.data);
           let branch = await axios.get(
             `http://localhost:3000/branch/${response.data[0].order.branch_id}`,
             {
@@ -362,7 +361,7 @@ const SearchPage = ({ children }) => {
                     {pathOrder.receiveDate}
                   </time>
                   <h3 className="text-lg font-semibold text-gray-900 ">
-                    Giao hàng thành công
+                    {orderDetail.order.status_id == 4 ? "Hoàn trả đơn hàng" : "Giao hàng thành công"}
                   </h3>
                 </li>
               )}

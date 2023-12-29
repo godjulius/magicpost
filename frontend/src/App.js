@@ -39,10 +39,13 @@ import HubOrderManagement from "./HubEmployee/HubOrderManagement.js";
 import HubCurrentOrder from "./HubEmployee/HubCurrentOrder.js";
 import HubTransshipment from "./HubEmployee/HubTransshipment.js";
 
+import NotFound from "./notFound/notFound.js";
+
 export default function App() {
   return (
     <>
       <Routes>
+        <Route path="*" element={<NotFound />} />
         <Route path="/" element={<Layout />} />
         <Route path="/SignIn" element={<SignIn />} />
         <Route path="/SearchPage" element={<SearchPage />}></Route>
