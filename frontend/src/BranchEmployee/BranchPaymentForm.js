@@ -22,7 +22,8 @@ const BranchPaymentForm = () => {
     price: 0,
     details: "something...",
   });
-
+  const [orderId, setOrderId] = useState();
+  const [printOrder, setPrintOrder] = useState(false);
   // Fetch API province thanh pho
   const [codeTinh, setCodeTinh] = useState(0);
   const [codeTinhReceiver, setCodeTinhReceiver] = useState(0);
@@ -105,12 +106,15 @@ const BranchPaymentForm = () => {
     // Call api gửi dữ liệu lên server
 
     try {
-      const response = await axios.post(submitURL, order,
-        {
-          withCredentials: true,
-        });
-      setShowNotification(true);
+      const response = await axios.post(submitURL, order, {
+        withCredentials: true,
+      });
+      // try {
 
+      // } catch (error) {}
+      setShowNotification(true);
+      setOrderId(response.data.order.order_id);
+      setPrintOrder(true);
       console.log(response.data);
       console.log("Submit success", response.data);
     } catch (err) {
@@ -332,14 +336,15 @@ const BranchPaymentForm = () => {
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-200 text-gray-800 p-6 rounded shadow-xl border border-gray-500">
               <p>Ghi nhận đơn hàng thành công!</p>
               <button
-                className="mt-4 bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded mx-auto block"
-                onClick={() => setShowNotification(false)}
+                className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded mx-auto block"
+                onClick={() => {
+                  setShowNotification(false);
+                }}
               >
                 Đóng
               </button>
             </div>
           )}
-
           <div className="w-full lg:w-full my-6 pr-0 lg:pr-2 font-custom-sans-serif">
             <div className="w-full text-xl pb-6 items-center text-center">
               <i className="fas fa-list mr-3"></i> Chi tiết đơn hàng
@@ -403,6 +408,16 @@ const BranchPaymentForm = () => {
 
           {/* btn submit */}
           <div className="mt-6 mx-auto">
+            {printOrder && (
+              <a
+                href={`http://localhost:3000/print/${orderId}`}
+                target="_blank"
+                className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded mr-10"
+              >
+                In đơn hàng
+              </a>
+            )}
+
             <button
               className="px-4 py-1 text-white font-light tracking-wider bg-gray-900 rounded"
               type="submit"
