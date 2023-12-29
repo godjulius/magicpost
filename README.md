@@ -26,5 +26,5 @@ Thực hiện tương tự với bên frontend
 
 **Client:** React, TailwindCSS
 
-**Server:** Express, MySQL
+**Server:** Express, MySQL, NodeJS
 
